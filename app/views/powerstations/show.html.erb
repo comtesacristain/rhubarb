@@ -1,0 +1,25 @@
+<html>
+<head><title>Test</title>
+<%= GMap.header %>
+<%= @map.to_html %>
+        </head><body>
+		
+ <%= @map.div(:width => 640, :height => 480) %>
+<p>
+  <b>Name:</b>
+  <%=h @powerstation.name %>
+</p>
+
+<p>
+<b>Longitude:</b>
+  <%=h @powerstation.longitude %>
+</p>
+
+<p>
+<b>Latitude:</b>
+  <%=h @powerstation.latitude %>
+</p>
+
+
+<%= link_to 'Back', powerstations_path %>
+</body></html>

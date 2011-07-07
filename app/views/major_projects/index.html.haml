@@ -1,0 +1,27 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Name
+            %th Longitude
+            %th Latitude
+            %th Qualifier
+            %th Commodity
+        - for major_project in @major_projects
+            %tr
+                %td= h major_project.eno
+                %td=link_to major_project.entityid, major_project
+                %td.number= "%3.4f" % major_project.geom.sdo_point.x if major_project.geom != nil
+                %td.number= "%3.4f" % major_project.geom.sdo_point.y if major_project.geom != nil
+                %td= major_project.eid_qualifier
+                %td= major_project.entity_attributes.commodity
+- content_for(:title_bar) do
+    ==Major Projects: Index
+- content_for(:controller_nav) do
+    %p= render :partial => "major_projects/links"
+- content_for(:sidebar) do
+    %p= render :partial => "major_projects/query"
+- content_for(:sidebar_download) do
+    %p= render :partial => "major_projects/format"
+%p= will_paginate @major_projects
+                

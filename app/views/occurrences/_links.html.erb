@@ -1,0 +1,10 @@
+<% if params[:action]=="index" %>
+  <b>Index</b>
+<% else %>
+  <%= link_to "Index", url_for(params.merge(:action => :index)) %>
+<% end %> |
+<% if params[:action]=="map" %>
+  <b>Map (best with small datasets)</b>
+<% else %>
+  <%= link_to "Map (best with small datasets)", url_for(params.merge(:action => :map)) %>
+<% end %>

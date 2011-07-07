@@ -1,0 +1,20 @@
+- if  params[:action]=="index"
+    %b Index
+- else
+    = link_to "Index", url_for(params.merge(:action => :index))
+|
+- if params[:action]=="aimr"
+    %b Australia's Identified Mineral Resources
+- else
+    = link_to "Australia's Identified Mineral Resources", url_for(params.merge(:action => :aimr))
+|
+- if params[:action]=="state"
+    %b Resources by State
+- else
+    = link_to "Resources by State", url_for(params.merge(:action => :state))
+|
+- if params[:action]=="year"
+    %b Resources by Year
+- else
+    = link_to "Resources by Year", url_for(params.merge(:action => :year))
+|

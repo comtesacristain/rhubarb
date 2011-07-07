@@ -1,0 +1,25 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Name
+            %th State
+            %th Longitude
+            %th Latitude
+            %th Commodities
+        - @occurrences.each do |occurrence|
+            %tr
+                %td= h occurrence.minlocno
+                %td=link_to occurrence.name, occurrence
+                %td= h occurrence.state
+                %td.number= "%3.4f" % occurrence.longitude
+                %td.number= "%3.4f" % occurrence.latitude
+                %td= h occurrence.commdnames
+- content_for(:sidebar) do
+    %p= render :partial => "occurrences/query"
+- content_for(:controller_nav) do
+    %p= render :partial => "occurrences/links"
+- content_for(:sidebar_download) do
+    %p= render :partial => "occurrences/format"
+%p= will_paginate @occurrences
+                

@@ -1,0 +1,26 @@
+- states = [["Australia" , "All"],["Australian Capital Territory","ACT"],["New South Wales","NSW"],["Northern Territory","NT"],["Queensland","QLD"],["South Australia","SA"],["Tasmania","TAS"],["Victoria","VIC"],["Western Australia","WA"]]
+- status = [["All","All"],["Operating Mines","operating mine"],["Historic Mines","historic mine"],["Mineral Deposits","mineral deposit"]]
+-  years=(2000..Date.today.year).to_a
+%h2 Query
+%p
+    - form_tag url_for(params), :method => :get do
+        %table
+            %tr
+                %td Name:
+                %td= text_field_tag "name", params[:name]
+            %tr
+                %td State:
+                %td= select_tag "state", options_for_select(states, params[:state])
+            %tr
+                %td Commodity:
+                %td= select_tag "commodity", options_for_select(CommodityType.all_commodities.sort, params[:commodity])
+            %tr
+                %td Status:
+                %td= select_tag "status", options_for_select(status, params[:status])
+            - if params[:action] == "resources"
+                %tr
+                    %td Year:
+                    %td= select_tag "year", options_for_select(years, params[:year])
+        - if params[:action] =="resources"
+            =render :partial => "resources"
+        =submit_tag "Search", :name=>nil

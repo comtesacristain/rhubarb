@@ -1,0 +1,24 @@
+- if  params[:action]=="index"
+    %b Index
+- else
+    = link_to "Index", url_for(params.merge(:action => :index))
+|
+- if params[:action]=="map"
+    %b Map
+- else
+    = link_to "Map", url_for(params.merge(:action => :map))
+|
+- if params[:action]=="resources"
+    %b Economic Resources
+- else
+    = link_to "Economic Resources", url_for(params.merge(:action => :resources))
+|
+- if params[:action]=="mineral_system"
+    %b Mineral System
+- else
+    = link_to "Mineral System", url_for(params.merge(:action => :mineral_system))
+|
+- if params[:action]=="quality_check"
+    %b Quality Check
+- else
+    = link_to "Quality Check", url_for(params.merge(:action => :quality_check))

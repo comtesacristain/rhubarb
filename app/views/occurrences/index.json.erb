@@ -1,0 +1,9 @@
+{"points":[<%- @occurrences.each do |occurrence| -%>
+{"minlocno":<%=occurrence.minlocno-%>,
+"name":"<%=occurrence.name.gsub(/"/, '\"')-%>",
+"state":"<%=occurrence.state-%>",
+"longitude":<%=occurrence.longitude-%>,
+"latitude":<%=occurrence.latitude-%>,
+"commodids":"<%=occurrence.commods-%>"}
+<%= "," if occurrence != @occurrences.last -%>
+<%- end -%>]}

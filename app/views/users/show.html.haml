@@ -1,0 +1,19 @@
+%h3= @user.full_name
+- if @user.role == "viewer"
+    - admin = User.find_by_role("admin")
+    %i
+        Please contact
+        =link_to admin.full_name, "mailto:#{admin.email}"
+        for advanced access.
+%p 
+    %strong Email:
+    = @user.email
+%p 
+    %strong Office phone:
+    = @user.office_phone
+%p 
+    %strong Department:
+    =@user.department
+%p 
+    %strong Role:
+    =@user.role.upcase

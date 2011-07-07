@@ -1,0 +1,84 @@
+=content_for(:head) do
+    %script{:type=>"text/javascript",:src=>"http://openlayers.org/api/2.10/OpenLayers.js"}
+    %script{:type=>"text/javascript",:src=>"http://maps.google.com/maps/api/js?v=3.2&amp&sensor=false"}
+    = javascript_include_tag "map"
+    %script{:type => "text/javascript"}
+        init_opts = {
+        controller: "#{params[:controller].singularize}",
+        - unless @major_project.geom == nil
+            longitude: #{@major_project.geom.sdo_point.x},
+            latitude: #{@major_project.geom.sdo_point.y},
+            zoom: 14
+        - else
+            longitude: 149.158362,
+            latitude: -35.344028,
+            zoom: 17
+        }
+        $(document).ready(function(){initialize(init_opts);});
+%p
+    #map.smallmap
+- content_for(:controller_nav) do
+    %p= render :partial => "major_projects/links"
+- content_for(:sidebar) do
+    %p
+        %h2= @major_project.entityid
+        - if @major_project.activity_code == "I"
+            %div.warn
+                This major project is inactive.
+            %br
+        %table{:width=>"100%"}
+            %tr
+                %td Qualifier
+                %td= @major_project.eid_qualifier
+            %tr
+                %td Project type
+                %td= @major_project.entity_attributes.project_type
+            %tr
+                %td Commodity
+                %td= @major_project.entity_attributes.commodity
+            %tr
+                %td State
+                %td= @major_project.entity_attributes.state
+
+        %h3== Location
+        %p
+            %i= @major_project.entity_attributes.location
+        %table{:width=>"100%"}
+            %tr
+                %td Longitude
+                %td= @major_project.geom.sdo_point.x
+            %tr
+                %td Latitude
+                %td= @major_project.geom.sdo_point.y
+            %tr
+                %td Datum
+                %td GDA94
+        %h3 Project information
+        %table{:width=>"100%"}
+            %tr
+                %td Principal Company
+                %td= @major_project.entity_attributes.principal_company
+            %tr
+                %td Capacity
+                %td= @major_project.entity_attributes.capacity
+            %tr
+                %td Status
+                %td= @major_project.entity_attributes.status
+            %tr
+                %td Commencement
+                %td= @major_project.entity_attributes.commencement
+            %tr
+                %td &nbsp;
+                %td &nbsp;
+            %tr
+                %td Capital Expenditure
+                %td= @major_project.entity_attributes.capital_expenditure
+            %tr
+                %td Employment
+                %td= @major_project.entity_attributes.employment
+            %tr
+                %td Technology
+                %td= @major_project.entity_attributes.technology
+        %h3 Comments
+        %p= @major_project.entity_attributes.comments
+        

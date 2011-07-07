@@ -1,0 +1,16 @@
+<html>
+<head><title>Test</title>
+<%= GMap.header %>
+<%= @map.to_html %>
+        </head><body>
+
+<h1>Mapping <%= @occurrences_all.size %> occurrences</h1>
+
+<%= render :partial => "links" %>
+
+ <%= @map.div(:width => 640, :height => 480) %>
+
+
+<br />
+
+</body></html>

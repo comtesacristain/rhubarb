@@ -1,0 +1,22 @@
+%p
+    %h3 Deposits
+    =link_to "Index", deposits_path
+    |
+    =link_to "Map", :controller => "deposits", :action => "map"
+    |
+    =link_to "Mineral System", :controller => "deposits", :action => "mineral_system"
+    |
+    =link_to "Economic Resources", :controller => "deposits", :action => "resources"
+    |
+    =link_to "Quality Check", :controller => "deposits", :action => "quality_check"
+    %h3 Occurrences
+    =link_to "Index", occurrences_path
+    |
+    =link_to "Map", :controller => "occurrences", :action => "map"
+    %h3 Provinces
+    =link_to "Index", provinces_path
+    %h3 Powerstations
+    =link_to "Index", powerstations_path
+    %h3 Atlas Ready Data
+    =link_to "Index", deposits_path
+    =current_user.username

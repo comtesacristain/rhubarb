@@ -1,0 +1,187 @@
+<html>
+<head><title></title>
+<%- states = ["ACT","NSW","NT","QLD","SA","TAS","VIC","WA","Australia"] -%>
+<%= javascript_include_tag "jquery" %>
+<style type="text/css">
+	body {
+	 font-family: Verdana;
+	}
+	table{
+	    border-spacing: 0px;
+	    border-collapse: collapse;
+		border: 2px  solid #000000;
+	}
+	th {
+    text-align: center;
+    font-weight: bold;
+	padding: 2px;
+	border: 1px solid #000000;}
+	
+	th.state {background: #eaeff4;
+    color: #000000;
+	}
+	
+    th.economic {background: #3c516c;
+    color: #FFFFFF;
+	}
+	th.paramarginal {background: #5A79A5;
+    color: #FFFFFF;
+	}
+	
+	th.submarginal {background: #9CAAC6;
+    color: #000000;
+	}
+	
+	th.inferred {background: #DEE7EF;
+    color: #000000;
+	}
+	
+td {
+	background: #eaeff4;
+    text-align: center;
+    padding: 2px;
+	border: 1px solid #000000;
+	color: #000000;
+	}
+    
+	
+	td.state {
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	border-top: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	}
+	
+	td.total {
+    font-weight: bold;
+	border-top: 2px solid #000000;
+	border-bottom: 2px solid #000000;
+	}
+	
+	td.totalLeft {
+    font-weight: bold;
+	border-left: 2px solid #000000;
+	border-right: 1px solid #000000;
+	border-top: 2px solid #000000;
+	border-bottom: 2px solid #000000;
+	}
+	
+	td.totalRight {
+    font-weight: bold;
+	border-right: 2px solid #000000;
+	border-top: 2px solid #000000;
+	border-bottom: 2px solid #000000;
+	}
+	
+	
+	</style>
+<script>
+<%- ajax_string = String.new -%>
+<%- year = 2000 -%> 
+<%- while year <= Date.today.year do -%>
+<%- ajax_string = "/resources/commodity.json?year="+year.to_s+"&commodity="+params[:commodity] -%>		
+<% if params[:state] != "Australia" %>
+<% ajax_string += "&state=" + params[:state] %>
+<% end %>
+$.getJSON('<%= ajax_string %>', null, function(data){
+				
+                $("#<%=year%>_edr_commodity").html(Math.round(data.edr.commodity/data.commodity_factor*10)/10);
+				$("#<%=year%>_dmp_commodity").html(Math.round(data.dmp.commodity/data.commodity_factor*10)/10);
+				$("#<%=year%>_dms_commodity").html(Math.round(data.dms.commodity/data.commodity_factor*10)/10);
+				$("#<%=year%>_ifr_commodity").html(Math.round(data.ifr.commodity/data.commodity_factor*10)/10);
+				$("#<%=year%>_edr_ore").html(Math.round(data.edr.ore/data.ore_factor*10)/10);
+				$("#<%=year%>_dmp_ore").html(Math.round(data.dmp.ore/data.ore_factor*10)/10);
+				$("#<%=year%>_dms_ore").html(Math.round(data.dms.ore/data.ore_factor*10)/10);
+				$("#<%=year%>_ifr_ore").html(Math.round(data.ifr.ore/data.ore_factor*10)/10);
+				$("#<%=year%>_edr_grade").html(Math.round(data.edr.grade/data.grade_factor*1000)/1000);
+				$("#<%=year%>_dmp_grade").html(Math.round(data.dmp.grade/data.grade_factor*1000)/1000);
+				$("#<%=year%>_dms_grade").html(Math.round(data.dms.grade/data.grade_factor*1000)/1000);
+				$("#<%=year%>_ifr_grade").html(Math.round(data.ifr.grade/data.grade_factor*1000)/1000);
+				<% if year==2000 %>
+				oreUnits=document.getElementsByName("ore_units");
+				commodityUnits=document.getElementsByName("commodity_units");
+				gradeUnits=document.getElementsByName("grade_units");
+				for (i=0;i<oreUnits.length;i++) {
+					oreUnits[i].innerHTML=data.ore_unit;
+					commodityUnits[i].innerHTML=data.commodity_unit;
+					gradeUnits[i].innerHTML=data.grade_unit;
+				}
+				<% end %>
+		})
+<%- year += 1 -%>
+<%- end -%>
+</script></head>
+<body>
+<p align='center'>
+<%- aimr_commodities = CommodityType.aimr -%>
+<%- ordered_aimr_commodities = aimr_commodities.keys.sort -%>
+<%- i = 0 -%>
+<%- while i < ordered_aimr_commodities.length do -%>
+	<% if ordered_aimr_commodities[i]=="Mineral sands" %>
+		<i><%=ordered_aimr_commodities[i]%></i>
+	<% else %>
+		<%- if aimr_commodities[ordered_aimr_commodities[i]] == params[:commodity] -%>
+			<b><%=ordered_aimr_commodities[i]%></b>
+		<%- else -%>
+			<%= link_to ordered_aimr_commodities[i], url_for(:commodity=>aimr_commodities[ordered_aimr_commodities[i]],:state=>params[:state]) %>
+		<%- end -%>
+	<%- end -%>
+	<%- i += 1 -%>
+	<%- if i%10 == 0 or i==ordered_aimr_commodities.length -%>
+		<br />
+	<%- else -%>
+		|
+	<%- end -%>
+<%- end -%>
+</p>
+<p align="center"><b>State</b><br />
+<% i=0 %> 
+<%- while i < states.size do -%> 
+	<% if params[:state] == states[i] %>
+		<b><%= states[i] %></b> |
+	<% else %>
+	<%= link_to states[i], url_for(:state=>states[i], :commodity=>params[:commodity]) %> |
+	<% end %>
+	<% i += 1 %>
+<% end %></p>
+<table>
+<tr><th class='state' rowspan=2>Year</th><th class='economic' colspan=3>EDR</th><th class='paramarginal' colspan=3>Paramarginal</th>
+	<th class='submarginal' colspan=3>Submarginal</th><th class='inferred' colspan=3>Inferred</th>
+</tr>
+<tr><th class='economic'>Ore (<span name='ore_units'></span>)</th><th class='economic'>Contained Commodity (<span name='commodity_units'></span>)</th>
+		<th class='economic'>Overall Grade (<span name='grade_units'></span>)</th>
+	<th class='paramarginal'>Ore (<span name='ore_units'></span>)</th><th class='paramarginal'>Contained Commodity (<span name='commodity_units'></span>)</th>
+		<th class='paramarginal'>Overall Grade (<span name='grade_units'></span>)</th>
+	<th class='submarginal'>Ore (<span name='ore_units'></span>)</th><th class='submarginal'>Contained Commodity (<span name='commodity_units'></span>)</th>
+		<th class='submarginal'>Overall Grade (<span name='grade_units'></span>)</th>
+	<th class='inferred'>Ore (<span name='ore_units'></span>)</th><th class='inferred'>Contained Commodity (<span name='commodity_units'></span>)</th>
+		<th class='inferred'>Overall Grade (<span name='grade_units'></span>)</th>
+</tr>
+<%- year =2000 -%>
+<%- while year <= Date.today.year do -%>
+<tr>
+
+
+<td class='state'><%= year %></td>
+<td class='state' id='<%= year%>_edr_ore'></td>
+<td class='state' id='<%= year%>_edr_commodity'></td>
+<td class='state' id='<%= year%>_edr_grade'></td>
+<td class='state' id='<%= year%>_dmp_ore'></td>
+<td class='state' id='<%= year%>_dmp_commodity'></td>
+<td class='state' id='<%= year%>_dmp_grade'></td>
+<td class='state' id='<%= year%>_dms_ore'></td>
+<td class='state' id='<%= year%>_dms_commodity'></td>
+<td class='state' id='<%= year%>_dms_grade'></td>
+<td class='state' id='<%= year%>_ifr_ore'></td>
+<td class='state' id='<%= year%>_ifr_commodity'></td>
+<td class='state' id='<%= year%>_ifr_grade'></td>
+</tr>
+<%- year += 1 -%>
+<%- end -%>
+</table>
+
+<p><%= link_to "View by state", url_for(:action=>:state, :commodity=>params[:commodity]) %></p>
+
+<br />
+
+</body></html>

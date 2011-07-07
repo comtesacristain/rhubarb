@@ -1,0 +1,20 @@
+%p= will_paginate @deposits
+%table
+    %tr
+        %th &nbsp;
+        %th Name
+        %th State
+        %th Status
+        %th Longitude
+        %th Latitude
+        %th Commodities
+    - for deposit in @deposits
+        %tr
+            %td= h deposit.eno
+            %td=link_to deposit.entityid, deposit
+            %td= h deposit.deposit_status.state
+            %td= h deposit.deposit_status.operating_status.titleize
+            %td.number= "%3.4f" % deposit.try(:longitude) rescue nil
+            %td.number= "%3.4f" % deposit.try(:latitude) rescue nil
+            %td= h deposit.commodity_list.try(:commodnames) rescue nil
+%p= will_paginate @deposits

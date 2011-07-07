@@ -1,0 +1,13 @@
+{ "type": "FeatureCollection", "features": [
+<%- @deposits.each do |deposit| -%>
+  { "type": "Feature",
+  "properties": {"eno":<%=deposit.eno-%>,
+  "name":"<%=deposit.name.gsub(/"/, '\"')-%>",
+  "state":"<%=deposit.synonym.try(:state)-%>",
+  "operating_status":"<%=deposit.synonym.try(:operating_status)-%>",
+  "longitude":<%=deposit.longitude-%>,
+  "latitude":<%=deposit.latitude-%>,
+  "commodids":"<%=deposit.commodity_list.try(:commodids)-%>"},
+  "geometry": { "type": "Point", "coordinates": [ <%=deposit.longitude-%>, <%=deposit.latitude-%> ] } }
+  <%= "," if deposit != @deposits.last -%>
+<%- end -%>]}

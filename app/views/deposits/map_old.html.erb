@@ -1,0 +1,45 @@
+<html>
+  <head><title>Test</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <!-- 5000 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAvjZkhGnOq5IjSHm6NGE83xR88Pdy88TJobm7wdTRvMIaXc0SrhTHeWTz_pp_V9KvFO78Hkqi51g3mw" type="text/javascript" ></script> -->
+    <!-- 5001 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAvjZkhGnOq5IjSHm6NGE83xR0wSaEStyoeXUoJsyTetp9GqUISRTu0G9CqlHgXkRes3E6nGmK6LEQkA" type="text/javascript" ></script> -->
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAvjZkhGnOq5IjSHm6NGE83xR0wSaEStyoeXUoJsyTetp9GqUISRTu0G9CqlHgXkRes3E6nGmK6LEQkA" type="text/javascript" ></script>
+    <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
+<%# javascript_include_tag "jquery" %>
+<%# javascript_include_tag "OpenLayers" %>
+    <%= javascript_include_tag "map" %>
+    <script type="text/javascript" >
+      init_opts = {
+        state: "<%= params[:state] %>",
+        status: "<%= params[:status]  %>",
+        commodity: "<%= params[:commodity]  %>"
+      }
+    </script>
+
+
+
+  </head><body onload="initialize(init_opts)">
+    <h1>Listing deposits</h1>
+
+    <%= render :partial => "links" %>
+    <br />
+    <table> <tr><td>
+          <div id="map" style="width:640px;height:480px" ></div>
+        </td><td>
+          <table>
+            <tr><td>Operating Mine</td><td><img alt="Operating Mine icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png"/></td></tr>
+            <tr><td>Historic Mine</td><td><img alt="Historic Mine icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png"/></td></tr>
+            <tr><td>Mineral Deposit</td><td><img alt="Mineral Deposit icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png"/></td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>Occurrence</td><td><img alt="Occurrence icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"/></td></tr>
+            <tr><td>Prospect</td><td><img alt="Prospect icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png"/></td></tr>
+            <tr><td>Unknown</td><td><img alt="Unknown icon"  src="http://maps.google.com/intl/en_us/mapfiles/ms/micons/purple-dot.png"/></td></tr>
+          </table>
+
+        </td></tr></table>
+
+
+
+    <br />
+  </body>
+</html>

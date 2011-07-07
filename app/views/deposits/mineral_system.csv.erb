@@ -1,0 +1,38 @@
+<%- commodity_headers = ["PRODUCTION","PRODUNIT","PRODYEAR","RESOURCES","GRADE","GRADEUNIT","TOTCOMMOD","TOTUNIT","REMARK","PRODMONTH","PRODDATE","PRODORE",
+  "PRODOREUNIT","PRODGRADE","PRODGRADEUNIT","PRODTOTAL","PRODTOTALUNIT","RESDATE","RESORE","RESOREUNIT","RESGRADE","RESGRADEUNIT","GLOBALORE",
+  "GLOBALOREUNIT","GLOBALGRADE","GLOBALGRADEUNIT","GLOBALTOTAL","GLOBALTOTALUNIT"] -%>
+<%- commod = String.new -%>
+<%- aliased_commodities = CommodityType.aliases -%>
+<%- if aliased_commodities.include?(params[:commodity]) -%>
+  <%- commod=aliased_commodities[params[:commodity]] -%>
+<%- else -%>
+  <%- commod=params[:commodity].split if params[:commodity] -%>
+<%- end -%>
+<%- headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS", "REGNAME","MINAGE_GP","MINSYS_GP","MINSYS_SGP","MINSYS_TYP","CLASSIFICATION","DEPOSIT_TYPE"] -%>
+<%- if commod!="All" -%>
+  <%- i = 0 -%>
+  <%- while i < commod.length -%>
+    <%- j = 0 -%>
+    <%- while j < commodity_headers.length -%>
+      <%- headers << commod[i]+"_"+commodity_headers[j]-%>
+      <%- j += 1 -%>
+    <%- end -%>
+    <%- i += 1 -%>
+  <%- end -%>
+<%- end -%>
+<%= raw FasterCSV.generate_line headers, :row_sep => "\r" %>
+<%- @deposits.each do |deposit| -%>
+  <%- commodity = deposit.commodities.mineral commod -%>
+  <%- row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms),
+    deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude,
+    deposit.commodity_list.try(:commodids),deposit.regname, deposit.minage_gp,deposit.minsys_gp,
+    deposit.minsys_sgp,deposit.minsys_typ,deposit.classification,deposit.deposit_type] -%>
+  <%- if commod!="All" -%>
+    <%- i = 0 -%>
+    <%- while i < commod.length -%>
+      <%- commodity = deposit.commodities.mineral commod[i] -%>
+      <%-	row <<	commodity.first.try(:production)<<commodity.first.try(:produnit) << commodity.first.try(:prodyear)<<commodity.first.try(:resources)<<commodity.first.try(:grade)<<commodity.first.try(:gradeunit)<<commodity.first.try(:totcommod)<<commodity.first.try(:totunit)<<commodity.first.try(:remark)<<commodity.first.try(:prodmonth)<<commodity.first.try(:proddate)<<commodity.first.try(:prodore)<<commodity.first.try(:prodoreunit)<<commodity.first.try(:prodgrade)<<commodity.first.try(:prodgradeunit)<<commodity.first.try(:prodtotal)<<commodity.first.try(:prodtotalunit)<<commodity.first.try(:resdate)<<commodity.first.try(:resore)<<commodity.first.try(:resoreunit)<<commodity.first.try(:resgrade)<<commodity.first.try(:resgradeunit)<<commodity.first.try(:globalore)<<commodity.first.try(:globaloreunit)<<commodity.first.try(:globalgrade)<<commodity.first.try(:globalgradeunit)<<commodity.first.try(:globaltotal)<<commodity.first.try(:globaltotalunit) -%><%- i += 1 -%>
+    <%- end -%>
+  <%- end -%>
+  <%= raw FasterCSV.generate_line row, :row_sep => "\r" %>
+<%- end -%>

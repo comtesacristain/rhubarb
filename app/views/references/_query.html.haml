@@ -1,0 +1,9 @@
+%h2 Query
+%p
+    - form_tag url_for(params), :method => :get do
+        %table
+            %tr
+                %td Author/Source:
+                %td= text_field_tag "source", params[:source]
+        %br
+        =submit_tag "Search", :name=>nil

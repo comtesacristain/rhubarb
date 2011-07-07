@@ -1,0 +1,27 @@
+
+    <%  if @province.geom %>
+    <%- elem = @province.geom.sdo_elem_info.to_ary.collect! {|x| x.to_f} -%>
+    {
+    "type": "Feature",
+      <%- coordinates = @province.geom.sdo_ordinates.to_ary.collect! {|x| x.to_f} -%>
+      "geometry": {
+        "type": "Polygon",
+        "coordinates":[[
+          <%- i=0 -%>
+          <%- while i< coordinates.length -%>
+            [<%=coordinates[i]-%>, <%=coordinates[i+1]-%>, <%= coordinates[i+2] -%>]
+            <%-  if i+3 >= coordinates.length -%>
+            <%-  else -%>
+              ,
+            <%- end -%>
+            <%i+=3%>
+          <%- end -%>
+        ]]
+      },
+      "properties": {
+        "eno":<%=@province.eno-%>,
+        "name":"<%=@province.entityid.gsub(/"/, '\"')-%>"
+      }
+  }
+  <% end %>
+  

@@ -1,0 +1,23 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Title
+            %th Source
+            %th Authors
+        - for reference in @references
+            %tr
+                %td= h reference.refid
+                %td=link_to reference.title, reference
+                %td= h reference.source
+                %td
+                    - authors = Array.new
+                    - for author in reference.authors
+                        - authors << author.author
+                    = authors.to_sentence
+- content_for(:sidebar) do
+    %p= render :partial => "references/query"
+- content_for(:sidebar_download) do
+    %p= render :partial => "references/format"
+%p= will_paginate @references
+                

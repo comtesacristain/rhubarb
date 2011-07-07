@@ -1,0 +1,97 @@
+%p
+    = @resource.recorddate.to_formatted_s(:long)
+    - @resource.resource_references.each do |rr|
+        %p
+            %i
+                == #{rr.reference.source}, #{rr.reference.year}, #{rr.reference.title}
+- tonnage_style = String.new
+- if @resource.access_code != "O"  or @resource.access_code == "U"
+    - tonnage_style="invisible"
+%table
+    %tr
+        %th{:colspan=>"2", :rowspan=>"2", :class=>"blank"} &nbsp;
+        - if @resource.ppr?
+            - reserves_colspan = 1
+        - else
+            - reserves_colspan = 2
+        - if @resource.mid?
+            - resources_colspan = 2
+        - else
+            - resources_colspan = 3
+        - unless @resource.pvr.nil? and @resource.pbr.nil? and @resource.ppr.nil?
+            %th{:colspan=>reserves_colspan, :class=>"header"} Ore Reserves
+        - unless @resource.mrs.nil? and @resource.idr.nil? and @resource.mid.nil? and @resource.ifr.nil?
+            %th{:colspan=>resources_colspan, :class=>"header"} Mineral Resources
+        - if @resource.other
+            %th{:rowspan=>2,:class=>"header"}Other
+    %tr
+        - if @resource.pvr? and @resource.pbr? and @resource.ppr?
+            - unless @resource.ppr?
+                %th{:class=>"header"} Proved
+                %th{:class=>"header"} Probable
+            - else
+                %th{:class=>"header"} Proved and Probable
+        - unless @resource.mrs.nil? and @resource.idr.nil? and @resource.mid.nil? and @resource.ifr.nil?
+            - unless @resource.mid?
+                %th{:class=>"header"} Measured
+                %th{:class=>"header"} Indicated
+            - else
+                %th{:class=>"header"} Measured and Indicated
+                %th{:class=>"header"} Inferred
+    %tr{:class=>tonnage_style}
+        %th Tonnage
+        %th= @resource.unit_quantity
+        - unless @resource.pvr.nil? and @resource.pbr.nil? and @resource.ppr.nil?
+            - unless @resource.ppr?
+                %td=  @resource.try(:pvr)
+                %td=  @resource.try(:pbr)
+            - else
+                %td=  @resource.try(:ppr)
+        - unless @resource.mrs.nil? and @resource.idr.nil? and @resource.mid.nil? and @resource.ifr.nil?
+            - unless @resource.mid
+                %td=  @resource.try(:mrs)
+                %td=  @resource.try(:idr)
+            - else
+                %td= @resource.try(:mid)
+                %td= @resource.try(:ifr)
+        - if @resource.other
+            %td= @resource.try(:other)
+    - grades = @resource.resource_grades
+    - unless (current_user && current_user.ozmin?)
+        - grades = grades.public
+    - grades.each do |grade|
+        - style = String.new
+        - unless grade.access_code == "O"
+            - style="invisible"
+        %tr{:class=>style}
+            %th= grade.try(:commodid)
+            %th= grade.try(:unit_grade)
+            - unless @resource.pvr.nil? and @resource.pbr.nil? and @resource.ppr.nil?
+                - unless @resource.ppr
+                    %td=  grade.try(:pvr)
+                    %td=  grade.try(:pbr)
+                - else
+                    %td=  grade.try(:ppr)
+            - unless @resource.mrs.nil? and @resource.idr.nil? and @resource.mid.nil? and @resource.ifr.nil?
+                - unless @resource.mid
+                    %td= grade.try(:mrs)
+                    %td= grade.try(:idr)
+                - else
+                    %td= grade.try(:mid)
+                    %td= grade.try(:ifr)
+            - if @resource.other
+                %td= grade.try(:other)
+- index = @resource.zone.resources.order(:recorddate).index(@resource)
+- length = @resource.zone.resources.length
+%table
+    %tr
+        %td
+            - if index > 0
+                =link_to "Previous", @resource.zone.resources[index-1]
+            - else
+                Previous
+        %td
+            - if index < length - 1
+                =link_to "Next", @resource.zone.resources[index+1]
+            - else
+                Next

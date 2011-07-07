@@ -1,0 +1,20 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Name
+            %th Geometry
+            %th Deposits
+        - @provinces.each do |province|
+            %tr
+                %td= h province.eno
+                %td=link_to province.entityid, province
+                %td='Yes' unless province.geom.nil?
+                %td='Yes' unless province.province_deposits.empty?
+- content_for(:sidebar) do
+    %p= render :partial => "provinces/query"
+%p= will_paginate @provinces
+- content_for(:sidebar) do
+    %h2 Download
+    %p
+        =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))

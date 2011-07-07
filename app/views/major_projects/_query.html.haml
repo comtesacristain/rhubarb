@@ -1,0 +1,9 @@
+%h2 Query
+%p
+    - form_tag url_for(params), :method => :get do
+        %table
+            %tr
+                %td Name:
+                %td= text_field_tag "name", params[:name]
+        %br
+        =submit_tag "Search", :name=>nil

@@ -1,0 +1,15 @@
+<%- headers = ["ENO", "Name", "Qualifier", "State", "Status","Commodity","Project_type",
+  "Principal_company", "Capacity", "Comments", "Employment","Location","Reference",
+  "Capital_expenditure","Technology","Commencement","GDA94long", "GDA94lat" ]-%>
+<%= raw FasterCSV.generate_line headers, :row_sep => "\r" %>
+<%- @major_projects.each do |major_project| -%>
+<%- row = [ major_project.eno, major_project.entityid, major_project.eid_qualifier,
+		major_project.entity_attributes.state, major_project.entity_attributes.commodity,
+                major_project.entity_attributes.project_type, major_project.entity_attributes.principal_company,
+                major_project.entity_attributes.capacity, major_project.entity_attributes.status,
+                major_project.entity_attributes.comments, major_project.entity_attributes.employment,
+                major_project.entity_attributes.location, major_project.entity_attributes.reference,
+                major_project.entity_attributes.capital_expenditure, major_project.entity_attributes.technology,
+                major_project.entity_attributes.commencement, major_project.geom.sdo_point.x, major_project.geom.sdo_point.y] -%>
+<%= raw FasterCSV.generate_line row, :row_sep => "\r" %>
+<%- end -%>

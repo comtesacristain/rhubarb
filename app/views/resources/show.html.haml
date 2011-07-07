@@ -1,0 +1,47 @@
+=content_for(:head) do
+    %script{:type=>"text/javascript",:src=>"http://openlayers.org/api/2.10/OpenLayers.js"}
+    %script{:type=>"text/javascript",:src=>"http://maps.google.com/maps/api/js?v=3.2&amp&sensor=false"}
+    = javascript_include_tag "map"
+    %script{:type => "text/javascript"}
+        - deposit = @resource.zone.deposit
+        init_opts = {
+        - unless @resource.zone.deposit.geom == nil
+            longitude: #{@resource.zone.deposit.longitude},
+            latitude: #{@resource.zone.deposit.latitude},
+            zoom: 14
+        - else
+            longitude: 149.158362,
+            latitude: -35.344028,
+            zoom: 17
+        }
+        $(document).ready(function(){initialize(init_opts);});
+%p
+    %p
+        %h2= "#{@resource.zone.deposit.name} - #{@resource.zone.name}"
+        %table{:width=>"100%"}
+            %tr
+                %td State
+                %td= @resource.zone.deposit.deposit_status.state
+            %tr
+                %td Commodities
+                %td= @resource.zone.deposit.commodity_list.commodids rescue nil
+            %tr
+                %td Commodity Names
+                %td= @resource.zone.deposit.commodity_list.commodnames rescue nil
+        %h3 Location
+        %table{:width=>"100%"}
+            %tr
+                %td Longitude
+                %td= "%3.6f" % @resource.zone.deposit.longitude
+            %tr
+                %td Latitude
+                %td= "%3.6f" % @resource.zone.deposit.latitude
+            %tr
+                %td Datum
+                %td GDA94
+        %h4== #{link_to @resource.zone.deposit.name, @resource.zone.deposit} - #{link_to @resource.zone.name, @resource.zone}
+        = render('resource')
+- content_for(:sidebar) do
+    #map.smallmap
+- content_for(:controller_nav) do
+    %p= render :partial => "resources/links"

@@ -1,0 +1,59 @@
+=content_for(:head) do
+    %script{:type=>"text/javascript",:src=>"http://openlayers.org/api/2.10/OpenLayers.js"}
+    %script{:type=>"text/javascript",:src=>"http://maps.google.com/maps/api/js?v=3.2&amp&sensor=false"}
+    = javascript_include_tag "province"
+    %script{:type => "text/javascript"}
+        - unless @province.geom == nil
+            bounds = new OpenLayers.Bounds();
+            bounds.extend(new OpenLayers.LonLat(#{@province.geom.as_georuby.bounding_box.first.x},#{@province.geom.as_georuby.bounding_box.first.y}));
+            bounds.extend(new OpenLayers.LonLat(#{@province.geom.as_georuby.bounding_box.second.x},#{@province.geom.as_georuby.bounding_box.second.y}));
+        - else
+            bounds = null;
+        init_opts = {
+        eno: #{@province.eno},
+        bounds: bounds
+        }
+        $(document).ready(function(){initialize(init_opts);});
+%p
+    #map.smallmap
+    - unless @province.province_attribute.overview == nil
+        #overview
+            %h2 Overview
+            - paragraphs = @province.province_attribute.overview.split(/\.\s+(?=[A-Z])/)
+            - paragraphs.each do |para|
+                %p= para+"."
+- content_for(:sidebar) do
+    %p
+        %h2= @province.entityid
+        %table{:width=>"100%"}
+            %tr
+                %td Type:
+                %td= @province.province_attribute.provtype.titleize
+            %tr
+                %td Subtype:
+                %td= @province.province_attribute.provsubtype.titleize rescue nil
+            %tr
+                %td Status:
+                %td= @province.province_attribute.status.titleize
+        %h3 Summary
+        #summary
+            =@province.province_attribute.summary
+       
+        - province_deposits = @province.province_deposits
+        %h3 Deposits
+        - unless province_deposits.empty?          
+            %table{:width=>"100%"}
+                %tr
+                    %th Name
+                    %th Commodities
+                - province_deposits.each do |province_deposit|
+                    %tr
+                        %td= link_to province_deposit.deposit.name, province_deposit.deposit
+                        %td= province_deposit.deposit.commodity_list.commodids
+        - else
+            %p
+                %i This province has no deposits associated with it.
+- content_for(:sidebar) do
+    %h2 Download
+    %p
+        =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))

@@ -1,0 +1,8 @@
+%h2 Downloads
+%h3 Internal use only
+%p
+    =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv))
+    =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))
+%h3 Public safe
+%p
+    =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv,:public=>true))

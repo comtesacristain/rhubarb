@@ -1,0 +1,89 @@
+!!! Strict
+%html{html_attrs}
+    %head
+        %title
+            = (yield(:title_bar) || "Untitled")
+        %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}
+        = stylesheet_link_tag 'application' #, 'pagination', 'formtastic', 'formtastic_changes', 'thickbox', :cache => "base"
+        - if params[:controller]=="resources"
+            = stylesheet_link_tag 'resources'
+        - else
+            = stylesheet_link_tag 'main'
+        = javascript_include_tag 'jquery', 'jquery-ui'
+        = yield(:head)
+    %body
+        #container
+            #banner
+                = link_to image_tag('globe-sextant-icon.png', :title => "Australian Mineral Deposits Database - OZMIN", :alt => "Australian Mineral Deposits Database - OZMIN"), root_path
+            #topbar
+                %span.notification=link_to "new features!", new_features_path #
+                |
+                =link_to "help", help_path
+                //|
+                //=link_to "contact us", '/emails/new'+"?"#+thickbox_iframe_params, :class=>'thickbox'
+            #header
+                %h2=link_to "Australian Mineral Deposits Database - OZMIN", root_path
+            #nav
+                %span.user_nav
+                    - if current_user
+                        = link_to "View Profile" , user_path(:current)
+                        |
+                        = link_to "Logout", logout_path
+                    - else
+                        =# link_to "Register", new_user_path
+                        //|
+                        = link_to "Login", login_path
+                -if params[:controller]=="deposits"
+                    %b Deposits
+                -else
+                    =link_to "Deposits", deposits_path
+                |
+                -if params[:controller]=="resources"
+                    %b Resources
+                -else
+                    =link_to "Resources", resources_path
+                |
+                -if params[:controller]=="occurrences"
+                    %b Occurrences
+                -else
+                    =link_to "Occurrences", occurrences_path
+                |
+                -if params[:controller]=="provinces"
+                    %b Provinces
+                -else
+                    =link_to "Provinces", provinces_path
+                |
+                -if params[:controller]=="powerstations"
+                    %b Powerstations
+                -else
+                    =link_to "Powerstations", powerstations_path
+                |
+                -if params[:controller]=="major_projects"
+                    %b Major Projects
+                -else
+                    =link_to "Major Projects", major_projects_path
+                |
+                -if params[:controller]=="references"
+                    %b References
+                -else
+                    =link_to "References", references_path
+                |
+            #content
+                #main
+                    #controller_nav
+                        %span
+                        =yield(:controller_nav)
+                        - flash.each do |name, msg|
+                            = content_tag :div, msg, :id => "flash_#{name}"
+                        %h2= yield(:title)
+                    #action_content
+                        = yield
+                #sidebar
+                    = yield(:sidebar)
+                    = yield(:sidebar_download)
+            #footer
+                %p
+                    Resources Advice and Promotions - Geoscience Australia
+                    |
+                    =link_to "Australian Mines Atlas", 'http://www.australianminesatlas.gov.au'
+                =h yield(:footer)

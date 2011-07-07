@@ -1,0 +1,15 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Deposit & Zone
+            %th Record date
+            %th Reference
+        - for resource in @resources
+            %tr
+                %td= resource.resourceno
+                %td=link_to "#{resource.zone.deposit.entityid} - #{resource.zone.entityid}", resource
+                %td= resource.recorddate.to_formatted_s(:long)
+- content_for(:controller_nav) do
+    %p= render :partial => "resources/links"
+%p= will_paginate @resources

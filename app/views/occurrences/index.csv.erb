@@ -1,0 +1,13 @@
+<%- headers = ["MINLOCNO", "Name", "Project",
+    "State", "Longitude", "Latitude","Accuracy", "Commodity Names", "Commodities",
+  "Easting", "Northing", "Zone","HMAPNO","HMAPNAME","QMAPID","QMAPNAME","SOURCE","GA_LIBRARY_KEY"]-%>
+<%= raw FasterCSV.generate_line headers, :row_sep => "\r" %>
+<%- @occurrences.each do |occurrence| -%>
+<%- row = [ occurrence.minlocno, occurrence.name, occurrence.project, occurrence.state,
+		occurrence.longitude, occurrence.latitude, occurrence.accuracy,
+                occurrence.commdnames,occurrence.commods,
+                occurrence.easting, occurrence.northing, occurrence.zone, occurrence.hmapno, occurrence.hmapname,
+                occurrence.qmapid, occurrence.qmapname, occurrence.source, #popular(occurrence.longitude,occurrence.latitude)
+		] -%>
+<%= raw FasterCSV.generate_line row, :row_sep => "\r" %>
+<%- end -%>

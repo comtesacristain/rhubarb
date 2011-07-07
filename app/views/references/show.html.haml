@@ -1,0 +1,14 @@
+= @reference.title
+%p
+    = @reference.year
+%p
+    = @reference.source
+- resources = @reference.resources
+- unless resources.length == 0
+    - resources.each do |resource|
+        %p
+            = link_to resource.zone.deposit.entityid, resource.zone.deposit
+            = '-'
+            = link_to resource.zone.entityid, resource.zone
+            == (#{link_to resource.recorddate.to_formatted_s, resource})
+%p

@@ -1,0 +1,37 @@
+%p
+    %h3 Tuesday 17 August 2010
+    Added longitude and latitude columns to
+    =link_to 'quality check', quality_check_deposits_path
+    page and
+    =link_to 'XLS', url_for({:controller=>:deposits, :action=>:quality_check, :format=>:xls})
+    download. Bug fixed in
+    =link_to 'economic resources CSV', url_for({:controller=>:deposits, :action=>:resources, :format=>:csv})
+    %h3 Tuesday 10 August 2010
+    %i Source
+    added to quality check page and XLS download. Colour highlighting in XLS download also changed to be less 'bold'.
+    %h3 Monday 9 August 2010
+    =link_to 'Occurrences model', occurrences_path
+    migrated to new layout. Bugs fixed regarding Oracle connection.
+    %h3 Friday 30 July 2010
+    New
+    %i zone commodities
+    column added to quality check page, as well as XLS download.
+    =link_to 'Provinces model', provinces_path
+    also migrated to new layout
+    %h3 Thursday 29 July 2010
+    Individual deposit view now tailored to suit new layout. Example found at
+    =link_to 'Mt Whaleback.', Deposit.find(334554)
+    %h3 Wednesday 28 July 2010
+    =link_to 'Economic resources,', resources_deposits_path
+    =link_to 'mineral system', mineral_system_deposits_path
+    and quality check pages in
+    =link_to 'Deposits model', deposits_path
+    migrated to new layout. Bug in
+    =link_to 'CSV', url_for({:controller=>:occurrences, :format=>:csv})
+    for Occurrences model fixed.
+    %h3 Tuesday 27 July 2010
+    Migrated to new layout for pages
+    =link_to 'index', deposits_path
+    and
+    =link_to 'map', map_deposits_path
+    for the Deposits model. Other views within Deposits model still to be migrated.

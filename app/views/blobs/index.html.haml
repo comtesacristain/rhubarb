@@ -1,0 +1,16 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Title
+        - for blob in @blobs
+            %tr
+                %td= h blob.blobno
+                %td=link_to blob.name, blob
+              
+- content_for(:sidebar) do
+    %p= render :partial => "references/query"
+- content_for(:sidebar_download) do
+    %p= render :partial => "references/format"
+%p= will_paginate @references
+                

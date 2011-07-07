@@ -1,0 +1,40 @@
+<html>
+<head><title>Test</title>
+
+        </head><body>
+
+ <table>
+  <tr>
+<td>
+
+
+
+
+<table>
+<% @powerstations.each do |powerstation| %>
+
+  <tr>
+	<td><%= powerstation.name %></td>
+	<td><%= powerstation.longitude %></td>
+	<td><%= powerstation.latitude %></td>
+    <td><%= link_to 'Show', powerstation %></td>
+  </tr>
+<% end %>
+</table>
+</td>
+<td>
+
+</td>
+</tr>
+</table>
+
+<%= will_paginate @powerstations %>
+
+<br />
+<p>
+<% content_for(:sidebar) do %>
+
+    <%= render :partial => "powerstations/query" %>
+  <% end %>
+</p>
+</body></html>

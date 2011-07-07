@@ -1,0 +1,32 @@
+- type = []
+- type = params[:type]  if  params[:type]
+- resource = []
+- resource = params[:resource]  if  params[:resource]
+
+- if params[:commodity].nil? || params[:commodity] == "All" || params[:type].nil?
+    %p{:style=>"color: green;"} You must select a <b>Commodity</b>, <b>Resource</b> and <b>Economic Status</b>
+
+- if params[:type].nil?
+    - type_class='warn'
+#resource{:class=>type_class}
+    %h3 Resource
+    = check_box_tag("type[]", "ore", type.include?("ore"))
+    Ore
+    = check_box_tag("type[]", "commodity", type.include?("commodity"))
+    Contained Commodity
+    = check_box_tag("type[]", "grade", type.include?("grade"))
+    Grade
+%br
+- if params[:resource].nil?
+    - economic_class='warn'
+#economic{:class=>economic_class}
+    %h3 Economic Status
+    = check_box_tag("resource[]", "edr", resource.include?("edr"))
+    EDR
+    = check_box_tag("resource[]", "dmp", resource.include?("dmp"))
+    Paramarginal
+    = check_box_tag("resource[]", "dms", resource.include?("dms"))
+    Submarginal
+    = check_box_tag("resource[]", "ifr", resource.include?("ifr"))
+    Inferred
+%br
