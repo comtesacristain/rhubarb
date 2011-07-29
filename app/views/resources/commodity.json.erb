@@ -1,5 +1,6 @@
 <%- @grades.each do |grade| -%>
   {
+  "total":{"ore":<%=grade.total_ore -%>,"commodity":<%=grade.total_commodity -%>,"grade":<%=grade.total_grade -%>},
   "edr":{"ore":<%=grade.edr_ore -%>,"commodity":<%=grade.edr_commodity -%>,"grade":<%=grade.edr_grade -%>},
   "dmp":{"ore":<%=grade.dmp_ore -%>,"commodity":<%=grade.dmp_commodity -%>,"grade":<%=grade.dmp_grade -%>},
   "dms":{"ore":<%=grade.dms_ore -%>,"commodity":<%=grade.dms_commodity -%>,"grade":<%=grade.dms_grade -%>},

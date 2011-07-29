@@ -65,6 +65,12 @@ class DepositsController < ApplicationController
     if !params[:year]
       params[:year] = 2010
     end
+    if !params[:type]
+      params[:type] = ['ore','commodity','grade']
+    end
+    if !params[:resource]
+      params[:resource] = ['total']
+    end
     date = '31-DEC-'+params[:year].to_s
     @scope = @scope.includes(:zones => {:resources => :resource_grades}).merge(Resource.year(date))
     if params[:commodity] and params[:commodity] != "All"

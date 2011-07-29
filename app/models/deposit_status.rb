@@ -3,11 +3,12 @@ class DepositStatus < ActiveRecord::Base
 
 	set_table_name "mgd.deposits"
 	set_primary_key :eno
-
+  
+  #belongs_to :zone, :class_name => "Zone",  :foreign_key => :parent
 
 	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :eno
 
-	named_scope :state, lambda { |s| { :conditions=> ["state = ?", s] } }
+	scope :state, lambda { |s| { :conditions=> ["state = ?", s] } }
 
 	def self.atlas_statuses
     ['operating mine','mineral deposit','historic mine']

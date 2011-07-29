@@ -28,7 +28,22 @@ class IdentifiedResource
     self.grade_factor = UnitCode.find(self.grade_unit).unitvalue if self.grade_unit
     self.ore_factor = UnitCode.find(self.ore_unit).unitvalue if  self.ore_unit
   end
-  
+
+  def total_ore
+    return edr_ore + dmp_ore + dms_ore + ifr_ore
+  end
+
+  def total_commodity
+    return edr_commodity + dmp_commodity + dms_commodity + ifr_commodity
+  end
+
+  def total_grade
+    if total_ore != 0
+      return total_commodity/total_ore
+    else
+      return 0
+    end
+  end
 	
   def edr_grade
     if edr_ore != 0

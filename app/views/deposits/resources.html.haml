@@ -1,9 +1,9 @@
 %p
-    - resource_types = {"EDR"=>"Economic","DMP"=>"Paramarginal","DMS"=>"Submarginal","IFR"=>"Inferred"}
-    - type = []
-    - type = params[:type]  if  params[:type]
-    - resource = []
-    - resource = params[:resource]  if  params[:resource]
+    - resource_types = {"EDR"=>"Economic","DMP"=>"Paramarginal","DMS"=>"Submarginal","IFR"=>"Inferred", "TOTAL"=>"Total"}
+    -# type = []
+    - type = params[:type]  #if  params[:type]
+    -# resource = []
+    - resource = params[:resource] # if  params[:resource]
     - commod = String.new
     - aliased_commodities = CommodityType.aliases
     - if aliased_commodities.include?(params[:commodity])
@@ -105,6 +105,13 @@
                                         %td.number= "%.3f" % (grade.ifr_commodity/grade.commodity_factor)
                                     - if type.include?("grade")
                                         %td.number= "%3.2f" % (grade.ifr_grade/grade.grade_factor)
+                                - if resource.include?("total")
+                                    - if type.include?("ore")
+                                        %td.number= "%.3f" % (grade.total_ore/grade.ore_factor)
+                                    - if type.include?("commodity")
+                                        %td.number= "%.3f" % (grade.total_commodity/grade.commodity_factor)
+                                    - if type.include?("grade")
+                                        %td.number= "%3.2f" % (grade.total_grade/grade.grade_factor)
                                 - if type.include?("ore")
                                     %td= grade.ore_unit
                                 - if type.include?("commodity")

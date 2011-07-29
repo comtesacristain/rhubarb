@@ -3,9 +3,14 @@ class CommodityType < ActiveRecord::Base
 	set_table_name "mgd.commodtypes"
 	set_primary_key :commodid
 
-	belongs_to :commodity, :class_name => "Commodity", :foreign_key => :commodid
+	#belongs_to :commodity, :class_name => "Commodity", :foreign_key => :commodid
+  has_many :commodities, :class_name => "Commodity", :foreign_key => :commodid
+  has_many :deposits, :through => :commodities
 
-	def self.aliases
+  has_many :resource_grades, :class_name => "ResourceGrade", :foreign_key => :commodid
+	has_many :resources, :through => :resource_grades
+
+  def self.aliases
 	  return {'base_metals'=>['Zn','Pb','Cu'],'black_coal'=>['Cbl'],'brown_coal'=>['Cbr'],'chromium'=>['Cr','Cr2O3'],'coal'=>['Cbl','Cbr','Coal'],
       'fluorine'=>['F','Fl','Toz'],'gypsum'=>['Gp'],'kaolin'=>'Kln','lithium'=>['Li','Li2O'],'manganese'=>['MnOre','Mn'],
       'magnesite'=>['Mgs','MgO'],'molybdenum'=>['Mo','MoS2'],'niobium'=>['Nb','Nb2O5'],'zinc_lead'=>['Pb','Zn'],'mineral_sands'=>['Ilm','Rt','Zrn'],

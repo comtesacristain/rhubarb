@@ -9,3 +9,4 @@ config/rhubarb_prod.yml
 ldap.yml
 config/ldap.yml
 lib/init_ga.rb
+README.old

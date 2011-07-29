@@ -13,4 +13,4 @@ require File.join('lib', 'as_polyline.rb')
 #require 'gchart'
 include GeoRuby::SimpleFeatures
 require File.join('lib', 'array')
-ENV['http_proxy']="http://u10301:spitfire@proxy.ga.gov.au:8080"
+ENV['http_proxy']="http://u10301:omholdings@proxy.ga.gov.au:8080"

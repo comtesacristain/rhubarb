@@ -57,7 +57,7 @@
         <%- end -%>
         <%- row << grade.try(:commodity) << grade.try(:recorddate) << grade.try(:material) -%>
       <%- else -%>
-        <%- blank_cells_length = ((type.length * resource.length)+type.length + 2) -%>
+        <%- blank_cells_length = ((type.length * resource.length)+type.length + 3) -%>
         <%- cells = 0 -%>
         <%- while cells < blank_cells_length -%>
           <%-	row << "" -%>

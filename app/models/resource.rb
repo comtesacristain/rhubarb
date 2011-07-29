@@ -5,8 +5,9 @@ class Resource < ActiveRecord::Base
 	has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => "resourceno"
 
   belongs_to :zone, :class_name => "Zone", :foreign_key => :eno
+  has_one :deposit, :through => :zone
 
-
+  
   has_many :resource_references, :class_name => "ResourceReference", :foreign_key => :resourceno
 
   set_date_columns :recorddate, :entrydate, :qadate, :lastupdate
@@ -14,12 +15,13 @@ class Resource < ActiveRecord::Base
 
 	scope :recent, where("recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
 	scope :nonzero, :conditions => "(pvr <> 0 or pbr <> 0 or ppr <> 0 or mrs <> 0 or idr <> 0 or mid <> 0 or ifr <> 0 or other <> 0)"
-
+  scope :recoverable, :conditions => {:rec_recoverable => 'Y'}
+  scope :insitu, :conditions => {:rec_recoverable => 'Y'}
   scope :public, :conditions=> "mgd.resources.access_code = 'O' and mgd.resources.qa_status_code = 'C'"
 
   scope :zeroed, :conditions => "(pvr = 0 and pbr = 0 and ppr = 0 and mrs = 0 and idr = 0 and mid = 0 and ifr = 0 and other = 0)"
 
-	scope :year , lambda  { |y| {:conditions => ["recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno and recorddate < ?)", y] } }
+	scope :year , lambda  { |y| {:conditions => ["recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno and recorddate <= ?)", y] } }
 
 	scope :mineral, lambda { |min| { :include=>:resource_grades, :conditions=> ["mgd.resource_grades.commodid in (:mineral)", {:mineral => min}] } }
 
@@ -89,7 +91,7 @@ class Resource < ActiveRecord::Base
   end
 
   def self.ore_factors
-	return  {nil=>0,'Kt'=>1000,'m3'=>1,'Kton'=>1016,'t'=>1,'Mc'=>1000000,'bcm'=>1,'Mt'=>1000000,'Kg'=>0.001,'Mm3'=>1000000,
+	return  {nil=>0,'Kt'=>1000,'m3'=>1,'Kton'=>1016,'t'=>1,'bcm'=>1,'Mt'=>1000000,'Kg'=>0.001,'Mm3'=>1000000,
 		'ton'=>1.016,'c'=>1,'Mc'=>1000000,'GL'=>1000000000,'Gt'=>1000000000}
   end
 

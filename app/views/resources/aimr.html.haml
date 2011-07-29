@@ -33,9 +33,9 @@
             == $.getJSON('#{ajax_string}&commodity=#{commodid}&coal=recoverable', null, function(data){
             == $('##{commodid.try(:downcase)}_recoverable_unit').html(data.commodity_unit);
             == $('##{commodid.try(:downcase)}_recoverable_edr').html(Math.round(data.edr.commodity/data.commodity_factor*10)/10);
-            == $('##{commodid.try(:downcase)}_recoverable_dmp').html(Math.round(data.edr.commodity/data.commodity_factor*10)/10);
-            == $('##{commodid.try(:downcase)}_recoverable_dms').html(Math.round(data.edr.commodity/data.commodity_factor*10)/10);
-            == $('##{commodid.try(:downcase)}_recoverable_ifr').html(Math.round(data.edr.commodity/data.commodity_factor*10)/10);
+            == $('##{commodid.try(:downcase)}_recoverable_dmp').html(Math.round(data.dmp.commodity/data.commodity_factor*10)/10);
+            == $('##{commodid.try(:downcase)}_recoverable_dms').html(Math.round(data.dms.commodity/data.commodity_factor*10)/10);
+            == $('##{commodid.try(:downcase)}_recoverable_ifr').html(Math.round(data.ifr.commodity/data.commodity_factor*10)/10);
             == })
         - elsif aimr_commodities[i] == "Diamond"
             - commodid = CommodityType.aimr[aimr_commodities[i]]
