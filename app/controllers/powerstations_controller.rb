@@ -16,7 +16,7 @@ class PowerstationsController < ApplicationController
 
       format.html # index.html.erb
       format.xml  { render :xml => @powerstations }
-      format.kml { render :action => 'index_kml', :layout => false }
+      format.kml
       format.csv
     end
   end

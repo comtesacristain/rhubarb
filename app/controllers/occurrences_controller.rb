@@ -14,7 +14,7 @@ class OccurrencesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @occurrences }
-      format.kml { render :action => 'index_kml', :layout => false }
+      format.kml
       format.csv
     end
   end

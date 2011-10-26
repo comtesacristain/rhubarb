@@ -17,7 +17,7 @@ class MajorProjectsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @major_projects }
       format.csv
-      format.kml { render :action => 'index_kml', :layout => false }
+      format.kml 
     end
   end
 
