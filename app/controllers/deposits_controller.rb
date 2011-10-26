@@ -3,9 +3,6 @@ class DepositsController < ApplicationController
   before_filter :require_ozmin_user, :only => [:resources, :quality_check]
 
   def index
-
-
-
     unless params[:format]
       @scope = @scope.paginate :page => params[:page] , :order => 'entityid ASC' if !params[:format]
 	  else
@@ -17,14 +14,13 @@ class DepositsController < ApplicationController
 
       format.html # index.html.erb
       format.xml  { render :xml => @deposits }
-      format.kml { render :action => 'index_kml', :layout => false }
-      format.gsml #{ render :action => 'index_gsml', :layout => false }
-      format.js
-      format.json
+      format.kml 
+      #format.gsml #{ render :action => 'index_gsml', :layout => false }
       format.csv
-      format.pdf { render :layout => false }
     end
   end
+
+ 
 
   def quality_check
 
@@ -71,19 +67,16 @@ class DepositsController < ApplicationController
     if !params[:resource]
       params[:resource] = ['total']
     end
-    date = '31-DEC-'+params[:year].to_s
-    @scope = @scope.includes(:zones => {:resources => :resource_grades}).merge(Resource.year(date))
+    @date = '31-DEC-'+params[:year].to_s
+    #@scope = @scope.includes(:resources => :resource_grades)
     if params[:commodity] and params[:commodity] != "All"
       if CommodityType.aliases.keys.include?(params[:commodity])
-        commodity = CommodityType.aliases[params[:commodity]]
+        @commodity = CommodityType.aliases[params[:commodity]]
       else
-        commodity = params[:commodity]
+        @commodity = params[:commodity]
       end
-      scope = @scope.merge(ResourceGrade.mineral(commodity))
+      #@scope = @scope.merge(Resource.mineral(@commodity).year(@date))
 	  end
-
-
-
 
     #@scope = @scope.merge(ResourceGrade.mineral(params[:commodity])) if params[:commodity] and params[:commodity] != "All"
     unless params[:format]
@@ -92,6 +85,8 @@ class DepositsController < ApplicationController
       @scope = @scope.all
     end
 	  @deposits = @scope #Deposit.mineral('Au').includes(:zones => {:resources => :resource_grades}).merge(Resource.year('31-DEC-2010')).merge(ResourceGrade.mineral('Au'))
+
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -135,10 +130,12 @@ class DepositsController < ApplicationController
 
   private
   def define_scope
-	  scope = Deposit
-#    unless (current_user && current_user.ozmin?)
-#      scope = scope.public
-#    end
+	  scope =  if params[:province_id]
+      Province.find(params[:province_id]).deposits
+    else
+      Deposit
+    end
+    
 	  if params[:commodity] and params[:commodity] != "All"
       if CommodityType.aliases.keys.include?(params[:commodity])
         commodity = CommodityType.aliases[params[:commodity]]
@@ -151,12 +148,13 @@ class DepositsController < ApplicationController
         scope = scope.mineral(commodity)
       end
 	  end
-#
+    #
 	  scope = scope.state(params[:state]) if params[:state] and params[:state] != "All"
 	  scope = scope.status(params[:status]) if params[:status] and params[:status] != "All"
 	  scope = scope.bounds(eval("["+params[:bbox]+"]")) if params[:bbox]
     scope = scope.by_name(params[:name]) unless params[:name].nil?
 	  @scope = scope
 	end
+
 
 end

@@ -7,11 +7,11 @@ module ResourcesHelper
       concat(raw("<td class='#{style}'>#{commodity.keys.first}</td>"))
     end
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_unit'></td>"))
+    concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_reserves'></td>"))
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_edr'></td>"))
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_dmp'></td>"))
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_dms'></td>"))
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_ifr'></td>"))
-    concat(raw("<td class='#{style}'></td>"))
     concat(raw("<td class='#{style}'></td>"))
     concat(raw("<td class='#{style}'></td>"))
     concat(raw("<td class='#{style}'></td>"))

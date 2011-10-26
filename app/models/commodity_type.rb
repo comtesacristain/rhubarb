@@ -15,7 +15,7 @@ class CommodityType < ActiveRecord::Base
       'fluorine'=>['F','Fl','Toz'],'gypsum'=>['Gp'],'kaolin'=>'Kln','lithium'=>['Li','Li2O'],'manganese'=>['MnOre','Mn'],
       'magnesite'=>['Mgs','MgO'],'molybdenum'=>['Mo','MoS2'],'niobium'=>['Nb','Nb2O5'],'zinc_lead'=>['Pb','Zn'],'mineral_sands'=>['Ilm','Rt','Zrn'],
       'ni_co_cu_pt_sc'=>['Ni','Co','Cu','Pt','Sc'],'platinum_group_elements'=>['Pt','PGE','Pd','Os','Ir','Rh','Ru'],
-      'rare_earths'=>['REO','Y2O3','REE'],'tantalum'=>['Ta','Ta2O5'],'tin'=>['Sn','SnO2'],'tungsten'=>['W','WO3'],
+      'rare_earths'=>['REO','Y2O3','REE','Sc'],'tantalum'=>['Ta','Ta2O5'],'tin'=>['Sn','SnO2'],'tungsten'=>['W','WO3'],
       'uranium'=>['U3O8','U'],'vanadium'=>['V','V2O5']}
 	end
 

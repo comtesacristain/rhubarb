@@ -11,11 +11,17 @@ Rhubarb::Application.routes.draw do
     end
   end
 
-  resources :provinces
+  resources :provinces do
+    resources :deposits do
+      collection do
+        'resources'
+      end
+    end
+  end
 
   resources :resources do
     collection do
-      get 'aimr', 'year', 'state', 'commodity'
+      get 'aimr', 'year', 'state', 'identified'
     end
   end
 

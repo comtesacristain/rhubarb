@@ -1,8 +1,14 @@
 #require File.join('utils', 'mars_helper.rb')
 require File.join('lib', 'sdo_geometry.rb')
+
+
 require File.join('lib', 'oci8_hack.rb')
+require File.join('lib', 'identified_resource_set.rb')
 require File.join('lib', 'identified_resource.rb')
-require File.join('lib', 'resource_class.rb')
+require File.join('lib', 'resource_code.rb')
+require File.join('lib', 'jorc_resource.rb')
+require File.join('lib', 'calculated_resource.rb')
+require File.join('lib', 'remnant_resource.rb')
 require File.join('lib', 'gmap_polyline_encoder.rb')
 require File.join('lib', 'as_polyline.rb')
 #require File.join('utils', 'schema_dev.rb')

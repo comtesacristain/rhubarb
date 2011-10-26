@@ -1,9 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', "~> 3.1.0"
+
 
 # Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# gem 'rails', '3.1.0'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'i18n'
@@ -18,11 +19,12 @@ gem 'ruby-net-ldap', :require => 'net/ldap'
 gem 'formtastic'
 gem 'GeoRuby', :require => 'geo_ruby'
 gem 'fastercsv'
-
 gem 'prawn'
 
 gem 'nifty-generators'
-
+gem 'rails-units'
+gem 'parallel'
+#gem 'peach'
 # Use unicorn as the web server
 # gem 'unicorn'
 

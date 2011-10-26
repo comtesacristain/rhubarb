@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.url
   end
 
   def redirect_back_or_default(default)
@@ -75,4 +75,6 @@ class ApplicationController < ActionController::Base
   def admin_is_logged_in?
     current_user && current_user.admin?
   end
+
+
 end

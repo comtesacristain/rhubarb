@@ -3,7 +3,7 @@
 -  years=(2000..Date.today.year).to_a
 %h2 Query
 %p
-    - form_tag url_for(params), :method => :get do
+    = form_tag url_for(params), :method => :get do
         %table
             %tr
                 %td Name:

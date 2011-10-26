@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
     if ldap.bind
       return true
     else
-      errors.add_to_base "Result: #{ldap.get_operation_result.code}"
-      errors.add_to_base "Message: #{ldap.get_operation_result.message}"
+      self.errors.add_to_base "Result: #{ldap.get_operation_result.code}"
+      self.errors.add_to_base "Message: #{ldap.get_operation_result.message}"
       return false
     end
   end

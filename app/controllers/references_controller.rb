@@ -13,7 +13,7 @@ class ReferencesController < ApplicationController
 
       format.html # index.html.erb
       format.xml  { render :xml => @references }
-      format.kml { render :action => 'index_kml', :layout => false }
+      
       format.xls
     end
   end

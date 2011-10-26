@@ -1,0 +1,24 @@
+<%- @grades.each do |grade| -%>
+  {
+  "total":{"ore":<%=grade.total_ore -%>,"commodity":<%=grade.total_commodity -%>,"grade":<%=grade.total_grade -%>},
+  "reserves":{"ore":<%=grade.reserves_ore -%>,"commodity":<%=grade.reserves_commodity -%>,"grade":<%=grade.reserves_grade -%>},
+  "edr":{"ore":<%=grade.edr_ore -%>,"commodity":<%=grade.edr_commodity -%>,"grade":<%=grade.edr_grade -%>},
+  "dmp":{"ore":<%=grade.dmp_ore -%>,"commodity":<%=grade.dmp_commodity -%>,"grade":<%=grade.dmp_grade -%>},
+  "dms":{"ore":<%=grade.dms_ore -%>,"commodity":<%=grade.dms_commodity -%>,"grade":<%=grade.dms_grade -%>},
+  "ifr":{"ore":<%=grade.ifr_ore -%>,"commodity":<%=grade.ifr_commodity -%>,"grade":<%=grade.ifr_grade -%>},
+  "commodid":"<%=grade.commodity%>",
+  "ore_unit":"<%=grade.ore_unit%>",
+  "ore_factor":<%=grade.ore_factor%>,
+  "commodity_unit":"<%=grade.commodity_unit%>",
+  "commodity_factor":<%=grade.commodity_factor%>,
+  "grade_unit":"<%=grade.grade_unit%>",
+  "grade_factor":<%=grade.grade_factor%>,
+  "year":<%=grade.year%>
+  <%-if grade.recorddate-%>
+    ,"recorddate":"<%=grade.recorddate%>"
+  <%-end-%>
+  <%-if grade.material-%>
+    ,"material":"<%=grade.material%>"
+  <%-end-%>
+  }
+<%- end -%>

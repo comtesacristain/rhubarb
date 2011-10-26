@@ -2,6 +2,7 @@
     %script{:type=>"text/javascript",:src=>"http://openlayers.org/api/2.10/OpenLayers.js"}
     %script{:type=>"text/javascript",:src=>"http://maps.google.com/maps/api/js?v=3.2&amp&sensor=false"}
     = javascript_include_tag "map"
+    = stylesheet_link_tag 'jorc'
     %script{:type => "text/javascript"}
         - deposit = @zone.deposit
         init_opts = {
@@ -43,8 +44,19 @@
             %tr
                 %td Datum
                 %td GDA94
-        - @resource = @zone.resources.recent.first
-        - unless !@resource
+        %h3 Current resources
+        - resources = @zone.resources
+        - @resource = resources.shift
+        - unless @resource.nil?
             = render :partial => 'resources/resource'
+        %h3 Older resources
+        - resources.each do |r|
+            %p
+                -if r.zero?
+                    =link_to r.recorddate.to_formatted_s(:long), r
+                -else
+                    =link_to r.recorddate.to_formatted_s(:long), r
 - content_for(:sidebar) do
     #map.smallmap
+- content_for(:title_bar) do
+    ==Zones: #{@zone.name} (#{@zone.deposit.name})

@@ -1,7 +1,7 @@
-ldap_root   = YAML.load_file("#{RAILS_ROOT}/config/ldap_root_user.yml")
+ldap_root   = YAML.load_file("#{Rails.root}/config/ldap_root_user.yml")
 user        = ldap_root["username"]
 pass        = ldap_root["password"]
-LDAP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/ldap.yml")
+LDAP_CONFIG = YAML.load_file("#{Rails.root}/config/ldap.yml")
 LDAP_CONNECTION = Net::LDAP.new
 LDAP_CONNECTION.host = LDAP_CONFIG["host"]
 LDAP_CONNECTION.port = LDAP_CONFIG["port"]

@@ -8,16 +8,20 @@ class DepositStatus < ActiveRecord::Base
 
 	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :eno
 
-	scope :state, lambda { |s| { :conditions=> ["state = ?", s] } }
+  scope :state, lambda { |s| where(:state=>s) }
+  scope :status, lambda { |s| where(:operating_status=>s) }
 
-	def self.atlas_statuses
-    ['operating mine','mineral deposit','historic mine']
+	def self.statuses
+    return ActiveSupport::OrderedHash["All",nil,"Operating Mines","operating mine","Historic Mines","historic mine","Mineral Deposits","mineral deposit"]
+  end
+
+  def self.atlas_statuses
+    return ActiveSupport::OrderedHash["Operating Mines","operating mine","Historic Mines","historic mine","Mineral Deposits","mineral deposit"]
   end
 
   def self.states
     {}
   end
-
 
 	set_date_columns :entrydate, :qadate, :lastupdate
 end

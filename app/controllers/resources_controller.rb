@@ -61,62 +61,38 @@ class ResourcesController < ApplicationController
   
   # GET /zones/1
   # GET /zones/1.xml
-  def commodity
+  def identified
     if CommodityType.aliases.keys.include?(params[:commodity])
       commodity = CommodityType.aliases[params[:commodity]]
     else
       commodity = params[:commodity]
     end
+
     if params[:year]
       year = params[:year].to_i
-      year_end = year+1
     else
-      year = 1995
-      year_end = 2010
+      year=Date.today.year.to_i
     end
-    @grades = Array.new
-    options = Hash.new
-    while year < year_end
-      grade = IdentifiedResource.new
-      grade.year=year
-	 
-      grade.set_commodity(params[:commodity])
-      grade.commodity_unit = CommodityType.find(grade.commodity).displayunit
-      grade.grade_unit = CommodityType.find(grade.commodity).gradeunit
-      grade.ore_unit = CommodityType.find(grade.commodity).oreunit
-	 
-      grade.commodity_factor = UnitCode.find(grade.commodity_unit).unitvalue
-      grade.grade_factor = UnitCode.find(grade.grade_unit).unitvalue if grade.grade_unit
-      grade.ore_factor = UnitCode.find(grade.ore_unit).unitvalue if  grade.ore_unit
-      if params[:state] == "All"
-        state = nil
-      else
-        state = params[:state]
-      end
-      resources = Resource.grade(commodity, year, {:state=>state,:eno=>params[:eno]})
-      options["coal"]=params[:coal] if params[:coal]
-      grade.set_resources(resources,options)
-      # resources.each do |resource|
-      #
-      # grade.edr_commodity += get_resources(resource,'edr',options)[0]
-      # grade.edr_ore += get_resources(resource,'edr',options)[1]
-      # grade.dmp_commodity += get_resources(resource,'dmp',options)[0]
-      # grade.dmp_ore += get_resources(resource,'dmp',options)[1]
-      # grade.dms_commodity += get_resources(resource,'dms',options)[0]
-      # grade.dms_ore += get_resources(resource,'dms',options)[1]
-      # grade.ifr_commodity += get_resources(resource,'ifr',options)[0]
-      # grade.ifr_ore += get_resources(resource,'ifr',options)[1]
-      # grade.recorddate=resource.recorddate
-		
-		
-      # end
-	  
-	 
-      @grades << grade
-      year += 1
+    date=Date.new(year+1)-1
+
+    scope = Resource.mineral(commodity).year(date).nonzero
+
+    if params[:recoverability] == 'recoverable'
+      scope=scope.recoverable
+    elsif params[:recoverability] == 'insitu'
+      scope=scope.insitu
     end
 
-	
+    if !params[:state].blank? || !params[:status].blank?
+      scope = scope.includes(:deposit_status)
+      scope=scope.merge(DepositStatus.state(params[:state])) if !params[:state].blank?
+      scope=scope.merge(DepositStatus.status(params[:status])) if !params[:status].blank?
+    end
+   
+    resources = scope.all
+
+    @identified_resources = IdentifiedResourceSet.new(resources)
+
     respond_to do |format|
       format.json #{ render :json => @grades.to_json }# grade.html.erb
     end
@@ -124,7 +100,7 @@ class ResourcesController < ApplicationController
 
   private
   def define_scope
-	  scope = Resource
+    scope = Resource
     unless (current_user && current_user.ozmin?)
       scope = scope.public
     end

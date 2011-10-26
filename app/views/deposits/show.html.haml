@@ -2,6 +2,7 @@
     %script{:type=>"text/javascript",:src=>"http://openlayers.org/api/2.10/OpenLayers.js"}
     %script{:type=>"text/javascript",:src=>"http://maps.google.com/maps/api/js?v=3.2&amp&sensor=false"}
     = javascript_include_tag "map"
+    = stylesheet_link_tag "jorc"
     %script{:type => "text/javascript"}
         init_opts = {
         - unless @deposit.geom == nil
@@ -50,7 +51,7 @@
                 %td GDA94
     %br
     - status = @deposit.deposit_status.operating_status
-    - if @deposit.access_code != "O" or @deposit.qa_status_code == "U" or @deposit.deposit_status.restricted == "Y" or !DepositStatus.atlas_statuses.include?(status) or @deposit.geom.nil?
+    - if @deposit.access_code != "O" or @deposit.qa_status_code == "U" or @deposit.deposit_status.restricted == "Y" or !DepositStatus.atlas_statuses.values.include?(status) or @deposit.geom.nil?
         %div.warn
             This #{status} is not visible in the Mines Atlas because
             %ul
@@ -63,7 +64,7 @@
                 - if @deposit.geom == nil
                     %li it has no coordinates
                 - if !DepositStatus.atlas_statuses.include?(status)
-                    %li== it is not an #{DepositStatus.atlas_statuses.to_sentence(:last_word_connector=>", or ")}
+                    %li== it is not an #{DepositStatus.statuses.values.compact.to_sentence(:last_word_connector=>", or ")}
     - else
         %p
             %i
@@ -82,95 +83,13 @@
         %h3 Reserves and resources
         - dead_zones = Array.new
         - zones.each do |zone|
-            - resource = zone.resources.recent.nonzero.first
-            - if resource.nil? 
+            - @resource = zone.resources.recent.nonzero.first
+            - if @resource.nil?
                 - dead_zones << zone
             - else
                 %p
                     %h4= link_to zone.name, zone
-                    %p
-                        == #{resource.recorddate.to_formatted_s(:long)}
-                    - resource.resource_references.each do |rr|
-                        %p
-                            %i
-                                == #{rr.reference.source}, #{rr.reference.year}, #{link_to rr.reference.title, rr.reference}
-                    - tonnage_style = String.new
-                    - if resource.access_code != "O"  or resource.access_code == "U"
-                        - tonnage_style="invisible"
-                    %table
-                        %tr
-                            %th{:colspan=>"2", :rowspan=>"2", :class=>"blank"} &nbsp;
-                            - if resource.ppr
-                                - reserves_colspan = 1
-                            - else
-                                - reserves_colspan = 2
-                            - if resource.mid
-                                - resources_colspan = 2
-                            - else
-                                - resources_colspan = 3
-                            - unless resource.pvr.nil? and resource.pbr.nil? and resource.ppr.nil?
-                                %th{:colspan=>reserves_colspan, :class=>"header"} Ore Reserves
-                            - unless resource.mrs.nil? and resource.idr.nil? and resource.mid.nil? and resource.ifr.nil?
-                                %th{:colspan=>resources_colspan, :class=>"header"} Mineral Resources
-                            - if resource.other
-                                %th{:rowspan=>2,:class=>"header"}Other
-                        %tr
-                            - unless resource.pvr.nil? and resource.pbr.nil? and resource.ppr.nil?
-                                - unless resource.ppr
-                                    %th{:class=>"header"} Proved
-                                    %th{:class=>"header"} Probable
-                                - else
-                                    %th{:class=>"header"} Proved and Probable
-                            - unless resource.mrs.nil? and resource.idr.nil? and resource.mid.nil? and resource.ifr.nil?
-                                - unless resource.mid
-                                    %th{:class=>"header"} Measured
-                                    %th{:class=>"header"} Indicated
-                                - else
-                                    %th{:class=>"header"} Measured and Indicated
-                                %th{:class=>"header"} Inferred
-                        %tr{:class=>tonnage_style}
-                            %th Tonnage
-                            %th= resource.unit_quantity
-                            - unless resource.pvr.nil? and resource.pbr.nil? and resource.ppr.nil?
-                                - unless resource.ppr
-                                    %td=  resource.try(:pvr)
-                                    %td=  resource.try(:pbr)
-                                - else
-                                    %td=  resource.try(:ppr)
-                            - unless resource.mrs.nil? and resource.idr.nil? and resource.mid.nil? and resource.ifr.nil?
-                                - unless resource.mid
-                                    %td=  resource.try(:mrs)
-                                    %td=  resource.try(:idr)
-                                - else
-                                    %td=  resource.try(:mid)
-                                %td= resource.try(:ifr)
-                            - if resource.other
-                                %td= resource.try(:other)
-                        - grades = resource.resource_grades.order('access_code desc, commodid asc')
-                        - unless (current_user && current_user.ozmin?)
-                            - grades = grades.public
-                        - grades.each do |grade|
-                            - style = String.new
-                            - unless grade.access_code == "O"
-                                - style="invisible"
-                            %tr{:class=>style}
-                                %th= grade.try(:commodid)
-                                %th= grade.try(:unit_grade)
-                                - unless resource.pvr.nil? and resource.pbr.nil? and resource.ppr.nil?
-                                    - unless resource.ppr
-                                        %td=  grade.try(:pvr)
-                                        %td=  grade.try(:pbr)
-                                    - else
-                                        %td=  grade.try(:ppr)
-                                - unless resource.mrs.nil? and resource.idr.nil? and resource.mid.nil? and resource.ifr.nil?
-                                    - unless resource.mid
-                                        %td=  grade.try(:mrs)
-                                        %td=  grade.try(:idr)
-                                    - else
-                                        %td=  grade.try(:mid)
-                                    %td= grade.try(:ifr)
-                                - if resource.other
-                                    %td= grade.try(:other)
+                    =render('resources/resource')
         - if dead_zones.length > 0 
             - if dead_zones.length == zones.length
                 %i There are no active reserves or resources associated with this deposit.

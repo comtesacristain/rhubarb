@@ -4,7 +4,7 @@ class Commodity < ActiveRecord::Base
 	set_primary_key :eno
     
 	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :eno
-	named_scope :mineral, lambda  { |min| {:conditions => ["commodid = ?" , min] } }
+	scope :mineral, lambda  { |min| {:conditions => ["commodid = ?" , min] } }
 	set_date_columns :entrydate, :qadate, :lastupdate
 
 

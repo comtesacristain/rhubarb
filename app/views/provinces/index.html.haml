@@ -10,10 +10,12 @@
                 %td= h province.eno
                 %td=link_to province.entityid, province
                 %td='Yes' unless province.geom.nil?
-                %td='Yes' unless province.province_deposits.empty?
+                %td='Yes' unless province.deposits.empty?
 - content_for(:sidebar) do
     %p= render :partial => "provinces/query"
 %p= will_paginate @provinces
+- content_for(:controller_nav) do
+    %p= render :partial => "provinces/links"
 - content_for(:sidebar) do
     %h2 Download
     %p

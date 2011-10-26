@@ -1,0 +1,18 @@
+{
+"reserves":{"ore":<%= @identified_resources.reserves[:ore] -%>,
+"commodity":<%= @identified_resources.reserves[:mineral] -%>,
+"grade":<%= @identified_resources.reserves[:grade] -%>},
+"edr":{"ore":<%= @identified_resources.economic[:ore] -%>,
+"commodity":<%= @identified_resources.economic[:mineral] -%>,
+"grade":<%= @identified_resources.economic[:grade] -%>},
+"dmp":{"ore":<%= @identified_resources.paramarginal[:ore] -%>,
+"commodity":<%= @identified_resources.paramarginal[:mineral] -%>,
+"grade":<%= @identified_resources.paramarginal[:grade] -%>},
+"dms":{"ore":<%= @identified_resources.submarginal[:ore] -%>,
+"commodity":<%= @identified_resources.submarginal[:mineral] -%>,
+"grade":<%= @identified_resources.submarginal[:grade] -%>},
+"ifr":{"ore":<%= @identified_resources.inferred[:ore] -%>,
+"commodity":<%= @identified_resources.inferred[:mineral] -%>,
+"grade":<%= @identified_resources.inferred[:grade] -%>},
+"commodity_unit":"<%=@identified_resources.units[:mineral] rescue "-"%>"
+}

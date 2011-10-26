@@ -1,13 +1,9 @@
-%p= will_paginate @deposits
 %table
     %tr
         %th &nbsp;
         %th Name
-        %th State
-        %th Status
         %th Longitude
         %th Latitude
-        %th Commodities
     - for deposit in @deposits
         %tr
             %td= h deposit.eno

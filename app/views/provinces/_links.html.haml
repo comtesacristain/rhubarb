@@ -1,0 +1,5 @@
+- if  params[:action]=="index"
+    %b Index
+- else
+    = link_to "Index", url_for(params.merge(:action => :index))
+|

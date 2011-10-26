@@ -16,10 +16,10 @@
         $(document).ready(function(){initialize(init_opts);});
 %p
     #map.smallmap
-    - unless @province.province_attribute.overview == nil
+    - unless @province.province_status.overview == nil
         #overview
             %h2 Overview
-            - paragraphs = @province.province_attribute.overview.split(/\.\s+(?=[A-Z])/)
+            - paragraphs = @province.province_status.overview.split(/\.\s+(?=[A-Z])/)
             - paragraphs.each do |para|
                 %p= para+"."
 - content_for(:sidebar) do
@@ -27,32 +27,68 @@
         %h2= @province.entityid
         %table{:width=>"100%"}
             %tr
-                %td Type:
-                %td= @province.province_attribute.provtype.titleize
-            %tr
-                %td Subtype:
-                %td= @province.province_attribute.provsubtype.titleize rescue nil
+                %td Compiled by:
+                %td= @province.province_status.interpreted_by
             %tr
                 %td Status:
-                %td= @province.province_attribute.status.titleize
+                %td= @province.province_status.status
+            %tr
+                %td Type:
+                %td= @province.province_status.provtype.titleize
+            %tr
+                %td Subtype:
+                %td= @province.province_status.provsubtype.titleize rescue nil
         %h3 Summary
         #summary
-            =@province.province_attribute.summary
+            =@province.province_status.summary
        
-        - province_deposits = @province.province_deposits
+        
+        %h3 Province relationships
+        %table{:width=>"100%"}
+            %tr
+                %td Parent:
+                %td= link_to @province.parent_province.entityid, @province.parent_province rescue "N/A"
+            %tr
+                %td Children:
+                %td
+                    - provinces=@province.provinces
+                    = raw provinces.map{|province| link_to province.entityid, province}.to_sentence
+            - unless @province.adjoining_provinces.empty?
+                %tr
+                    %td Adjoins
+                    %td= raw @province.adjoining_provinces.map{|province| link_to province.entityid, province}.to_sentence
+            - unless @province.overlying_provinces.empty?
+                %tr
+                    %td Overlays
+                    %td= raw @province.overlying_provinces.map{|province| link_to province.entityid, province}.to_sentence
+            - unless @province.underlying_provinces.empty?
+                %tr
+                    %td Underlies
+                    %td= raw @province.underlying_provinces.map{|province| link_to province.entityid, province}.to_sentence
+            - unless @province.intruding_provinces.empty?
+                %tr
+                    %td Intrudes
+                    %td= raw @province.intruding_provinces.map{|province| link_to province.entityid, province}.to_sentence
+            - unless @province.interfingering_provinces.empty?
+                %tr
+                    %td Interfingers
+                    %td= raw @province.interfingering_provinces.map{|province| link_to province.entityid, province}.to_sentence
         %h3 Deposits
-        - unless province_deposits.empty?          
+        - deposits = @province.deposits
+        - unless deposits.empty?          
             %table{:width=>"100%"}
                 %tr
                     %th Name
                     %th Commodities
-                - province_deposits.each do |province_deposit|
+                - deposits.each do |deposit|
                     %tr
-                        %td= link_to province_deposit.deposit.name, province_deposit.deposit
-                        %td= province_deposit.deposit.commodity_list.commodids
+                        %td= link_to deposit.name, deposit
+                        %td= deposit.commodity_list.commodids
         - else
             %p
                 %i This province has no deposits associated with it.
+- content_for(:controller_nav) do
+    %p= render :partial => "provinces/links"
 - content_for(:sidebar) do
     %h2 Download
     %p

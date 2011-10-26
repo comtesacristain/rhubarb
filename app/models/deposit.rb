@@ -1,6 +1,6 @@
 class Deposit < Entity
   
-  default_scope :conditions => {:entity_type => 'MINERAL DEPOSIT'}#, :order => "entityid"
+  default_scope where(:entity_type => 'MINERAL DEPOSIT')#, :order => "entityid"
 
   has_one :deposit_status, :class_name => "DepositStatus", :foreign_key => :eno
 
@@ -9,6 +9,9 @@ class Deposit < Entity
   has_many :zones, :class_name => "Zone",  :foreign_key => :parent
 
   has_many :resources, :through => :zones
+  has_many :resource_grades, :through => :resources
+
+  has_many :regrocks, :class_name => "Regrock", :foreign_key => :eno
 
   has_many :commodities, :class_name => "Commodity",  :foreign_key => :eno
 
@@ -18,6 +21,10 @@ class Deposit < Entity
   has_many :websites, :through => :weblinks, :class_name => "Website", :foreign_key => :websiteno
 
   has_many :bloblinks, :class_name => "Bloblink", :foreign_key => :source_no
+
+  # Provinces
+  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :eno
+  belongs_to :provinces
 
   scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }
 	scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }

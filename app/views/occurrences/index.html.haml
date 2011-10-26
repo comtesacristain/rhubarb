@@ -21,5 +21,7 @@
     %p= render :partial => "occurrences/links"
 - content_for(:sidebar_download) do
     %p= render :partial => "occurrences/format"
+- content_for(:title_bar) do
+    ==Occurrences: Index
 %p= will_paginate @occurrences
                 

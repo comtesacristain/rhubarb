@@ -1,71 +1,30 @@
-<%- type = [] -%>
-<%- type = params[:type]  if  params[:type] -%>
-<%- resource = [] -%>
-<%- resource = params[:resource]  if  params[:resource] -%>
-<%- aliased_commodities = CommodityType.aliases -%>
-<%- commod = String.new -%>
-<%- if aliased_commodities.include?(params[:commodity]) -%>
-  <%- commod=aliased_commodities[params[:commodity]] -%>
+<%- deposit_headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"] -%>
+<%- resource_headers = ["RECORDDATE","MATERIAL","RESERVES_ORE","RESERVES_MINERAL","RESERVES_GRADE","EDR_ORE","EDR_MINERAL","EDR_GRADE","PMR_ORE","PMR_MINERAL","PMR_GRADE","SBM_ORE","SBM_MINERAL","SBM_GRADE","IFR_ORE","IFR_MINERAL","IFR_GRADE"]-%>
+<%- units_headers = ["ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]-%>
+<%# TOTAL HEADERS - INCLUDE LATER ["TOTAL_ORE","TOTAL_MINERAL","TOTAL_GRADE"] %>
+<%- if @commodity.in?(['Cbl', 'Cbr'])-%>
+  <%- r_units_headers = units_headers.map{|uh| "RECOVERABLE_#{uh}"}-%>
+  <%- recoverable_headers = resource_headers.map{|rh| "RECOVERABLE_#{rh}"}-%>
+  <%- i_units_headers = units_headers.map{|uh| "INSITU_#{uh}"}-%>
+  <%- insitu_headers = resource_headers.map{|rh| "INSITU_#{rh}"}-%>
+  <%- resource_headers = r_units_headers + recoverable_headers + i_units_headers+ insitu_headers -%>
 <%- else -%>
-  <%- commod=params[:commodity].split if params[:commodity] -%>
+  <%- resource_headers =  units_headers + resource_headers-%>
 <%- end -%>
-<%- headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"] -%>
-<%- unless commod[0] == "All" -%>
-  <%- i = 0 -%>
-  <%- while i < commod.length -%>
-    <%- j = 0 -%>
-    <%- while j < resource.length -%>
-      <%- k = 0 -%>
-      <%- while k < type.length -%>
-        <%- headers << commod[i]+"_"+resource[j].upcase+"_"+type[k].upcase -%>
-        <%- k += 1 -%>
-      <%- end -%>
-      <%- j += 1 -%>
-    <%- end -%>
-    <%- k = 0 -%>
-    <%- while k < type.length -%>
-      <%- headers <<  commod[i]+"_"+type[k].upcase+"_UNITS" -%>
-      <%- k += 1 -%>
-    <%- end -%>
-    <%- headers << commod[i]+"_REPORTED_COMMODITY" << commod[i]+"_RESOURCEDATE" << commod[i]+"_MATERIAL" -%>
-    <%- i += 1 -%>
-  <%- end -%>
-<%- end -%>
+<%- headers = deposit_headers + resource_headers-%>
 <%= raw FasterCSV.generate_line headers, :row_sep => "\r" -%>
 <%- @deposits.each do |deposit| -%>
-  <%- row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms), deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude, deposit.commodity_list.try(:commodids)] -%>
-  <%- if commod!="All" -%>
-    <%- i = 0 -%>
-    <%- while i < commod.length -%>
-      <%- resources = Resource.grade(commod[i], params[:year], {:eno=>deposit.eno}) -%>
-      <%- grade = IdentifiedResource.new -%>
-      <%- grade.set_resources(resources) -%>
-      <%- if resources.first -%>
-        <%- j = 0 -%>
-        <%- while j < resource.length -%>
-          <%- k = 0 -%>
-          <%- while k < type.length -%>
-            <%-	row << grade.try(resource[j]+"_"+type[k])/grade.try(type[k]+"_factor") rescue nil-%>
-            <%- k += 1 -%>
-          <%- end -%>
-          <%- j += 1 -%>
-        <%- end -%>
-        <%- k = 0 -%>
-        <%- while k < type.length -%>
-          <%- row << grade.try(type[k]+"_unit") -%>
-          <%- k += 1 -%>
-        <%- end -%>
-        <%- row << grade.try(:commodity) << grade.try(:recorddate) << grade.try(:material) -%>
-      <%- else -%>
-        <%- blank_cells_length = ((type.length * resource.length)+type.length + 3) -%>
-        <%- cells = 0 -%>
-        <%- while cells < blank_cells_length -%>
-          <%-	row << "" -%>
-          <%- cells += 1 -%>
-        <%- end -%>
-      <%- end -%>
-      <%- i += 1 -%>
-    <%- end -%>
+  <%- if @commodity.in?(['Cbl', 'Cbr'])-%>
+    <%- recoverable = deposit.resources.merge(Resource.mineral(@commodity).recoverable.nonzero.year(@date)).all -%>
+    <%- insitu = deposit.resources.merge(Resource.mineral(@commodity).insitu.nonzero.year(@date)).all -%>
+    <%- recoverable_row = build_resource_csv(recoverable)-%>
+    <%- insitu_row = build_resource_csv(insitu)-%>
+    <%- resources_row = recoverable_row + insitu_row -%>
+  <%- else -%>
+    <%- resources = deposit.resources.merge(Resource.mineral(@commodity).nonzero.year(@date)).all -%>
+    <%- resources_row = build_resource_csv(resources) -%>
   <%- end -%>
+  <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms), deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude, deposit.commodity_list.try(:commodids)] -%>
+  <%- row =  deposit_row + resources_row -%>
   <%= raw FasterCSV.generate_line row, :row_sep => "\r" -%>
 <%- end -%>

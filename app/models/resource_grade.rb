@@ -10,5 +10,7 @@ class ResourceGrade < ActiveRecord::Base
 
   scope :public, :conditions=> "mgd.resource_grades.access_code = 'O'"
 
-	scope :mineral, lambda { |min| { :conditions=> ["mgd.resource_grades.commodid = ?", min] } }
+  default_scope :order =>'access_code desc, commodid asc'
+
+	scope :mineral, lambda { |min| { :conditions=> ["mgd.resource_grades.commodid in (?)", min] } }
 end

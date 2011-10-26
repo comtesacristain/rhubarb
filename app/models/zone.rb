@@ -5,7 +5,7 @@ class Zone < Entity
 
   has_many :resource_grades, :through => :resources
 
-  has_one :deposit_status, :class_name => "DepositStatus", :primary_key=>:parent, :foreign_key => :eno
+  has_one :status, :class_name => "DepositStatus", :primary_key=>:parent, :foreign_key => :eno
   scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
   #has_many :resource_grades, :through=> :resource
 
