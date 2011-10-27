@@ -46,4 +46,15 @@ Rhubarb::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  config.middleware.use ExceptionNotifier,
+  :email_prefix => "[rhubarb] ",
+  :sender_address => %{"rhubarb exception" <rhubarb@rhubarb.com>},
+  :exception_recipients => %w{michael.sexton@ga.gov.au}
+end
+
+
+class ActionDispatch::Request
+ def local?
+   false
+ end
 end

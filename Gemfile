@@ -22,8 +22,12 @@ gem 'fastercsv'
 gem 'prawn'
 
 gem 'nifty-generators'
-gem 'rails-units'
-gem 'parallel'
+gem 'exception_notification', :require => 'exception_notifier'
+
+#gem 'rails-units'
+#gem 'parallel'
+
+
 #gem 'peach'
 # Use unicorn as the web server
 # gem 'unicorn'
