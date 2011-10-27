@@ -77,7 +77,7 @@ class DepositsController < ApplicationController
 
     #@scope = @scope.merge(ResourceGrade.mineral(params[:commodity])) if params[:commodity] and params[:commodity] != "All"
     unless params[:format]
-  		@scope = @scope.paginate :page => params[:page] , :order => 'a.entities.entityid ASC'
+  		 @scope = @scope.page(params[:page]).order('entityid ASC')
     else
       @scope = @scope.all
     end

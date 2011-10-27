@@ -6,7 +6,6 @@ commods= {"bauxite"=>"ff00aa00","chromium"=>"ff00aaaa","coal"=>"ff000068","cobal
   "tantalum"=>"ff216bff","tin"=>"ff916e44","tungsten"=>"ffffaa55","uranium"=>"ff825537",
   "vermiculite"=>"ff005500","zinc"=>"ff009100"}
 
-
 #commods= {"black_coal"=>"ff333333","brown_coal"=>"ff000068"}
 
 xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do

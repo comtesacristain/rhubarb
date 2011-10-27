@@ -13,7 +13,7 @@ gem 'activerecord-oracle_enhanced-adapter'
 
 gem 'haml'
 gem 'sass'
-gem 'will_paginate', '3.0.pre2'
+gem 'will_paginate'
 gem 'authlogic'
 gem 'ruby-net-ldap', :require => 'net/ldap'
 gem 'formtastic'

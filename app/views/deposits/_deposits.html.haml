@@ -13,4 +13,4 @@
             %td.number= "%3.4f" % deposit.try(:longitude) rescue nil
             %td.number= "%3.4f" % deposit.try(:latitude) rescue nil
             %td= h deposit.commodity_list.try(:commodnames) rescue nil
-%p= will_paginate @deposits
+%p= will_paginate @deposits, :inner_window => 3
