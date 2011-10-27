@@ -1,16 +1,21 @@
-%table
-    %tr
-        %th &nbsp;
-        %th Name
-        %th Longitude
-        %th Latitude
+%p
     - for deposit in @deposits
-        %tr
-            %td= h deposit.eno
-            %td=link_to deposit.entityid, deposit
-            %td= h deposit.deposit_status.state
-            %td= h deposit.deposit_status.operating_status.titleize
-            %td.number= "%3.4f" % deposit.try(:longitude) rescue nil
-            %td.number= "%3.4f" % deposit.try(:latitude) rescue nil
-            %td= h deposit.commodity_list.try(:commodnames) rescue nil
+        - unless deposit.quality_checked
+            - deposit_class = [:invisible,:deposit]
+        - else
+            - deposit_class = :deposit
+        %div{:class=>deposit_class}
+            %div.coordinates
+                - unless deposit.geom.nil?
+                    =link_to deposit_path(deposit, :format=> :kml), :title=> "Click for KML" do
+                        = image_tag( 'globe-icon.png', :size=>'12x12')
+                        ==#{'%3.4f' % deposit.try(:longitude) rescue nil}, #{'%3.4f' % deposit.try(:latitude) rescue nil}
+                - else
+                    No coordinates
+            %div.eno
+                =deposit.eno
+            %div.name
+                =link_to truncate(deposit.entityid), deposit, :title=>deposit.entityid
+            %div.commodities
+                = truncate(deposit.commodity_list.try(:commodnames), :length=>80)
 %p= will_paginate @deposits, :inner_window => 3

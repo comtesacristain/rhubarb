@@ -4,7 +4,7 @@
         %title
             = (yield(:title_bar) || "Untitled")
         %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}
-        = stylesheet_link_tag 'application' #, 'pagination', 'formtastic', 'formtastic_changes', 'thickbox', :cache => "base"
+        = stylesheet_link_tag 'application', 'pagination', 'deposits' #'formtastic', 'formtastic_changes', 'thickbox', :cache => "base"
         - if params[:controller]=="resources"
             = stylesheet_link_tag 'resources'
         - else

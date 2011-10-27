@@ -66,4 +66,8 @@ class Deposit < Entity
 	def deposit_type
     return deposit_attributes.deposit_type.first.try(:valuename)
   end
+
+  def quality_checked
+    return qa_status_code == "C"
+  end
 end
