@@ -1,0 +1,22 @@
+%p
+    #powerstations
+        %table
+            %tr
+                %th &nbsp;
+                %th Name
+                %th Longitude
+                %th Latitude
+            - for powerstation in @powerstations
+                %tr
+                    %td= h powerstation.eno
+                    %td=link_to powerstation.name, powerstation
+                    %td.number= "%3.4f" % powerstation.try(:longitude) rescue nil
+                    %td.number= "%3.4f" % powerstation.try(:latitude) rescue nil
+%p= will_paginate @powerstations
+- content_for(:sidebar) do
+    %p= render :partial => "powerstations/query"
+- content_for(:controller_nav) do
+    %p= render :partial => "powerstations/links"
+- content_for(:title_bar) do
+    ==Powerstations: Index
+                
