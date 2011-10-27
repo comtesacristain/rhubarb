@@ -104,7 +104,7 @@ class DepositsController < ApplicationController
     @deposits = Deposit.status('operating mine').major.public
 
     respond_to do |format|
-      format.kml { render :action => 'atlas_kml', :layout => false }
+      format.kml
     end
   end
 
