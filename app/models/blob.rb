@@ -4,6 +4,8 @@ class Blob < ActiveRecord::Base
     
 	set_primary_key :blobno
 
+  default_scope :limit => 50
+
 	#has_many :deposits, :class_name => "Deposit", :foreign_key => :eno
 	has_many :bloblinks, :class_name => "Bloblink", :foreign_key => :blobno
 	
