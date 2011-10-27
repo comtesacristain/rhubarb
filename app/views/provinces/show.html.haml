@@ -73,7 +73,7 @@
                 %tr
                     %td Interfingers
                     %td= raw @province.interfingering_provinces.map{|province| link_to province.entityid, province}.to_sentence
-        %h3 Deposits
+        %h3= link_to 'Deposits', province_deposits_path(@province)
         - deposits = @province.deposits
         - unless deposits.empty?          
             %table{:width=>"100%"}
