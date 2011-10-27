@@ -36,6 +36,9 @@ class Deposit < Entity
 
   scope :public, :include=>:commodities, :conditions=> "a.entities.access_code = 'O' and a.entities.qa_status_code = 'C'"
 
+  self.per_page = 10
+
+
   def regname
     return deposit_attributes.regname.first.try(:valuename)
   end

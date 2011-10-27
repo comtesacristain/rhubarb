@@ -4,7 +4,7 @@ class DepositsController < ApplicationController
 
   def index
     unless params[:format]
-      @scope = @scope.paginate :page => params[:page] , :order => 'entityid ASC' if !params[:format]
+      @scope = @scope.page(params[:page]).order('entityid ASC')
 	  else
       @scope = @scope.all
 	  end
@@ -19,8 +19,6 @@ class DepositsController < ApplicationController
       format.csv
     end
   end
-
- 
 
   def quality_check
 
@@ -39,7 +37,6 @@ class DepositsController < ApplicationController
       format.xls if params[:format] == 'xls'
     end
   end
-
 
   def mineral_system
     if !params[:format]
@@ -80,12 +77,11 @@ class DepositsController < ApplicationController
 
     #@scope = @scope.merge(ResourceGrade.mineral(params[:commodity])) if params[:commodity] and params[:commodity] != "All"
     unless params[:format]
-  		@scope = @scope.paginate :page => params[:page]# , :order => 'a.entities.entityid ASC'
+  		@scope = @scope.paginate :page => params[:page] , :order => 'a.entities.entityid ASC'
     else
       @scope = @scope.all
     end
 	  @deposits = @scope #Deposit.mineral('Au').includes(:zones => {:resources => :resource_grades}).merge(Resource.year('31-DEC-2010')).merge(ResourceGrade.mineral('Au'))
-
 
 
     respond_to do |format|
