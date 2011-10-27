@@ -40,7 +40,7 @@ class PowerstationsController < ApplicationController
     @powerstations = Powerstation.renewable
 
     respond_to do |format|
-      format.kml { render :action => 'renewable_kml', :layout => false }
+      format.kml 
     end
   end
 
@@ -48,7 +48,7 @@ class PowerstationsController < ApplicationController
     @powerstations = Powerstation.fossil_fuel
 
     respond_to do |format|
-      format.kml { render :action => 'fossil_kml', :layout => false }
+      format.kml 
     end
   end
 
@@ -56,12 +56,12 @@ class PowerstationsController < ApplicationController
   # GET /powerstations/1.xml
   def show
     @powerstation = Powerstation.find(params[:id])
-
-    @map = GMap.new("map_div")
-    @map.set_map_type_init(GMapType::G_SATELLITE_MAP)
-    @map.control_init(:small_map => true,:map_type => false)
-    @map.center_zoom_init([@powerstation.latitude,@powerstation.longitude],15)
-    @map.overlay_init(GMarker.new([@powerstation.latitude,@powerstation.longitude],:title => "#{@powerstation.name}", :info_window => "#{@powerstation.name}"))
+#
+#    @map = GMap.new("map_div")
+#    @map.set_map_type_init(GMapType::G_SATELLITE_MAP)
+#    @map.control_init(:small_map => true,:map_type => false)
+#    @map.center_zoom_init([@powerstation.latitude,@powerstation.longitude],15)
+#    @map.overlay_init(GMarker.new([@powerstation.latitude,@powerstation.longitude],:title => "#{@powerstation.name}", :info_window => "#{@powerstation.name}"))
 
 
     respond_to do |format|
