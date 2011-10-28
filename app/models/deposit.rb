@@ -23,7 +23,7 @@ class Deposit < Entity
   has_many :bloblinks, :class_name => "Bloblink", :foreign_key => :source_no
 
   # Provinces
-  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :eno
+  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :deposno
   belongs_to :provinces
 
   scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }

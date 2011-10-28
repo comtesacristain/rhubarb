@@ -1,9 +1,6 @@
 class Province < Entity
+  default_scope where(:entity_type => 'PROVINCE')#, :order => "entityid"
 
-
- default_scope where(:entity_type => 'PROVINCE')#, :order => "entityid"
-
-  
   has_one :province_status, :class_name => "ProvinceStatus", :foreign_key => :eno
 
   #Province parent/child
@@ -25,7 +22,7 @@ class Province < Entity
   
 
   # Deposits
-  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :proveno
+  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :eno
   has_many :deposits, :through => :province_deposits
 
   scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
