@@ -18,4 +18,3 @@
                 =link_to truncate(deposit.entityid), deposit, :title=>deposit.entityid
             %div.commodities
                 = truncate(deposit.commodity_list.try(:commodnames), :length=>80)
-%p= will_paginate @deposits, :inner_window => 3

@@ -1,6 +1,7 @@
 %p
     #deposits
         =render('deposits')
+%p= will_paginate @deposits, :inner_window => 3
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
