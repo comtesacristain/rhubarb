@@ -132,7 +132,7 @@ class DepositsController < ApplicationController
       Deposit
     end
     
-	  if params[:commodity] and params[:commodity] != "All"
+	 unless params[:commodity].blank?
       if CommodityType.aliases.keys.include?(params[:commodity])
         commodity = CommodityType.aliases[params[:commodity]]
       else

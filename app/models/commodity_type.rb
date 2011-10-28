@@ -33,7 +33,7 @@ class CommodityType < ActiveRecord::Base
     self.aliases.each_key do |k|
       a[k.titleize]=k
     end
-    a["All"]="All"
+    a["All"]=nil
     return self.aimr.merge(a)
   end
 end
