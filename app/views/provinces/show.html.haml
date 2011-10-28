@@ -75,7 +75,7 @@
                     %td= raw @province.interfingering_provinces.map{|province| link_to province.entityid, province}.to_sentence
         %h3= link_to 'Deposits', province_deposits_path(@province)
         - deposits = @province.deposits
-        - unless deposits.empty?          
+        - unless deposits.empty?
             %table{:width=>"100%"}
                 %tr
                     %th Name
@@ -93,3 +93,5 @@
     %h2 Download
     %p
         =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))
+- content_for(:title_bar) do
+    ==Provinces: #{@province.name} (#{@province.eno})
