@@ -17,7 +17,7 @@
             %tr
                 %td Status:
                 %td= select_tag "status", options_for_select(status, params[:status])
-            - if params[:action] == "resources"
+            - unless params[:commodity].blank?
                 %tr
                     %td Year:
                     %td= select_tag "year", options_for_select(years, params[:year])
