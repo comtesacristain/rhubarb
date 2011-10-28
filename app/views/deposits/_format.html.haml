@@ -1,9 +1,17 @@
-%h2 Download
+%h2 Downloads
+%h3 Basic
 %p
-    - if params[:action] =="resources"
-        =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv))
-    - elsif params[:action] =="quality_check"
-        = link_to image_tag( 'xls64.png', :title => "Download Excel Spreadsheet", :alt => "Download Excel Spreadsheet"), url_for(params.merge(:format=>:xls))
-    - else
-        =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv))
-        =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))
+    =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv))
+    =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))
+%h3 Quality Check
+%p
+    = link_to image_tag( 'xls64.png', :title => "Download Excel Spreadsheet", :alt => "Download Excel Spreadsheet"), url_for(params.merge(:format=>:xls,:action=>:quality_check))
+- unless params[:commodity].blank?
+    %h3 Resources
+    %p
+        =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV of Identified Resources"), url_for(params.merge(:format=>:csv,:action=>:resources))
+    %h3 Mineral System
+    %p
+        =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV of Mineral System Data"), url_for(params.merge(:format=>:csv,:action=>:mineral_system))
+-else
+    %i Further downloads are avilable if you select a commodity
