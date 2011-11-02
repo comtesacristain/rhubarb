@@ -21,35 +21,15 @@ class DepositsController < ApplicationController
   end
 
   def quality_check
-
-    unless params[:format]
-      @scope = @scope.paginate :page => params[:page] , :order => 'entityid ASC' if !params[:format]
-	  else
-      @scope = @scope.all
-	  end
-	  @deposits = @scope
-
+	  @deposits = @scope.all
     respond_to do |format|
-
-      format.html # index.html.erb
-      format.xml  { render :xml => @deposits }
-      format.kml { render :action => 'index_kml', :layout => false }
-      format.xls if params[:format] == 'xls'
+      format.xls
     end
   end
 
   def mineral_system
-    if !params[:format]
-      @scope = @scope.paginate :page => params[:page] , :order => 'entityid ASC' if !params[:format]
-    else
-      @scope = @scope.all
-	  end
-	  @deposits = @scope
-
+	  @deposits = @scope.all
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => Deposit.all }
-      format.kml { render :action => 'mineral_system_kml', :layout => false }
       format.csv
     end
   end
@@ -77,7 +57,7 @@ class DepositsController < ApplicationController
 
     #@scope = @scope.merge(ResourceGrade.mineral(params[:commodity])) if params[:commodity] and params[:commodity] != "All"
     unless params[:format]
-  		 @scope = @scope.page(params[:page]).order('entityid ASC')
+      @scope = @scope.page(params[:page]).order('entityid ASC')
     else
       @scope = @scope.all
     end
@@ -85,8 +65,6 @@ class DepositsController < ApplicationController
 
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => Deposit.all }
   	  format.csv
     end
   end
@@ -96,13 +74,11 @@ class DepositsController < ApplicationController
 	  @deposits = @scope
 	  respond_to do |format|
       format.html # map.html.erb
-      format.xml  { render :xml => @deposits }
     end
   end
 
   def atlas
     @deposits = Deposit.status('operating mine').major.public
-
     respond_to do |format|
       format.kml
     end
@@ -132,7 +108,7 @@ class DepositsController < ApplicationController
       Deposit
     end
     
-	 unless params[:commodity].blank?
+    unless params[:commodity].blank?
       if CommodityType.aliases.keys.include?(params[:commodity])
         commodity = CommodityType.aliases[params[:commodity]]
       else

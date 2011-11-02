@@ -63,7 +63,7 @@
                     %li it is flagged as restricted
                 - if @deposit.geom == nil
                     %li it has no coordinates
-                - if !DepositStatus.atlas_statuses.include?(status)
+                - if !DepositStatus.atlas_statuses.values.include?(status)
                     %li== it is not an #{DepositStatus.statuses.values.compact.to_sentence(:last_word_connector=>", or ")}
     - else
         %p

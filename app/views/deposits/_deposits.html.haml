@@ -1,6 +1,6 @@
 %p
     - for deposit in @deposits
-        - unless deposit.quality_checked
+        - unless deposit.atlas_visible?
             - deposit_class = [:invisible,:deposit]
         - else
             - deposit_class = :deposit

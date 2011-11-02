@@ -67,7 +67,23 @@ class Deposit < Entity
     return deposit_attributes.deposit_type.first.try(:valuename)
   end
 
-  def quality_checked
+  def atlas_visible?
+    return quality_checked? && open_access? && geom?
+  end
+
+  def atlas_status?
+    deposit_status.atlas_status?
+  end
+
+  def quality_checked?
     return qa_status_code == "C"
+  end
+
+  def open_access?
+    return access_code == "O"
+  end
+
+  def confidential?
+    return access_code == "C"
   end
 end
