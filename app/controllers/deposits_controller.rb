@@ -91,7 +91,7 @@ class DepositsController < ApplicationController
     unless (current_user && current_user.ozmin?)
       deposit = deposit.public
     end
-    @deposit = deposit.find(params[:id])
+    @deposit = deposit.find(params[:id].to_i)
 
     respond_to do |format|
       format.html # show.html.erb

@@ -83,7 +83,7 @@ xml.Workbook({
 
       # Rows
       for deposit in @deposits
-        if deposit.qa_status_code == "U" or deposit.access_code !="O" or deposit.geom == nil or !DepositStatus.atlas_statuses.include?(deposit.deposit_status.operating_status)
+        unless deposit.atlas_visible?
           atlas_visible = false
           visibility_style = 'invisible'
         else

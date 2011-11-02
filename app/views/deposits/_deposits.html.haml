@@ -15,6 +15,17 @@
             %div.eno
                 =deposit.eno
             %div.name
+                - status=deposit.deposit_status.operating_status
+                - case status
+                - when 'operating mine'
+                    - image = 'red-circle.png'
+                - when 'mineral deposit'
+                    - image = 'yellow-circle.png'
+                - when 'historic mine'
+                    - image = 'green-circle.png'
+                - else
+                    - image = 'blank-circle.png'
+                =image_tag(image, :alt=>status.titleize, :title=>status.titleize)
                 =link_to truncate(deposit.entityid), deposit, :title=>deposit.entityid
             %div.commodities
                 = truncate(deposit.commodity_list.try(:commodnames), :length=>80)

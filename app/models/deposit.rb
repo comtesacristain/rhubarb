@@ -86,4 +86,8 @@ class Deposit < Entity
   def confidential?
     return access_code == "C"
   end
+
+  def to_param
+    "#{eno}-#{entityid.parameterize}"
+  end 
 end

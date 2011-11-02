@@ -2,8 +2,20 @@
     background: #eeeeee;
     border: 1px solid #e5e5e5;
     height: 100px;
-    margin-bottom: 7px;
-    margin-top: 7px;}
+    width: 98%;
+    margin-bottom: 15px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: 3px 3px 3px #888;
+    -webkit-box-shadow: 3px 3px 3px #888;
+    box-shadow: 3px 3px 3px #888;
+
+}
+
+/*.deposit:hover{
+    background: #ffffee;
+
+}*/
 
 .deposit.invisible {
     border: 1px solid #ffe5e5;
