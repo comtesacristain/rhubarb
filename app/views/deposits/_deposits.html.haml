@@ -12,6 +12,7 @@
                         ==#{'%3.4f' % deposit.try(:longitude) rescue nil}, #{'%3.4f' % deposit.try(:latitude) rescue nil}
                 - else
                     No coordinates
+                ="(#{deposit.deposit_status.state})"
             %div.eno
                 =deposit.eno
             %div.name
