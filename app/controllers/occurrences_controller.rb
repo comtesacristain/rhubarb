@@ -112,6 +112,7 @@ class OccurrencesController < ApplicationController
 	  end
 
 	  scope = scope.state(params[:state]) if params[:state] and params[:state] != "All"
+    scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  scope = scope.bbox(eval("["+params[:bbox]+"]")) if params[:bbox]
 	  @scope = scope
 	end

@@ -14,6 +14,7 @@ class Occurrence < ActiveRecord::Base
 
 	scope :mineral, lambda { |min| { :include=>:occurrence_commodities, :conditions=> ["mgd.occurrence_commods.commodid in (?)", min] } }
 	scope :state, lambda { |s| { :conditions=> ["state = ?", s] } }
+  scope :by_name, lambda { |name| { :conditions=> ["UPPER(mgd.v_minloc.name) like UPPER(:name)",{:name=> "%#{name}%"}] } }
 
 	scope :bbox, lambda { |bbox| { :conditions => ["longitude > ? and latitude > ? and longitude < ? and latitude < ?", bbox[0],bbox[1],bbox[2],bbox[3] ]} }
 
