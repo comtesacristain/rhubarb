@@ -1,0 +1,32 @@
+%p
+    - for deposit in @deposits
+        - unless deposit.atlas_visible?
+            - deposit_class = [:invisible,:deposit]
+        - else
+            - deposit_class = :deposit
+        %div{:class=>deposit_class}
+            %div.coordinates
+                - unless deposit.geom.nil?
+                    =link_to deposit_path(deposit, :format=> :kml), :title=> "Click for KML" do
+                        = image_tag( 'globe-icon.png', :size=>'12x12')
+                        ==#{'%3.4f' % deposit.try(:longitude) rescue nil}, #{'%3.4f' % deposit.try(:latitude) rescue nil}
+                - else
+                    No coordinates
+                ="(#{deposit.deposit_status.state})"
+            %div.eno
+                =deposit.eno
+            %div.name
+                - status=deposit.deposit_status.operating_status
+                - case status
+                - when 'operating mine'
+                    - image = 'red-circle.png'
+                - when 'mineral deposit'
+                    - image = 'yellow-circle.png'
+                - when 'historic mine'
+                    - image = 'green-circle.png'
+                - else
+                    - image = 'blank-circle.png'
+                =image_tag(image, :alt=>status.titleize, :title=>status.titleize)
+                =link_to truncate(deposit.entityid), deposit, :title=>deposit.entityid
+            %div.commodities
+                = truncate(deposit.commodity_list.try(:commodnames), :length=>80)

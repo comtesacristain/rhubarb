@@ -48,6 +48,7 @@ Rhubarb::Application.routes.draw do
   end
   match 'help', :to => "home#help"
   match 'new_features', :to => "home#new_features"
+  match 'search', :to => "home#search"
 
 
   resources :zones
