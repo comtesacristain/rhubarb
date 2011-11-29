@@ -43,7 +43,7 @@ Rhubarb::Application.routes.draw do
 
   resource :home do
     member do
-      get 'new_features', 'help'
+      get 'new_features', 'help', 'search'
     end
   end
   match 'help', :to => "home#help"

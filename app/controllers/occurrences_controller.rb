@@ -102,7 +102,7 @@ class OccurrencesController < ApplicationController
   private
   def define_scope
     scope = Occurrence
-	  if params[:commodity] and params[:commodity] != "All"
+	  unless params[:commodity].blank?
       if CommodityType.aliases.keys.include?(params[:commodity])
         commodity = CommodityType.aliases[params[:commodity]]
       else
