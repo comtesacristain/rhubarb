@@ -24,9 +24,7 @@ gem 'prawn'
 gem 'nifty-generators'
 gem 'exception_notification', :require => 'exception_notifier'
 
-#gem 'rails-units'
-#gem 'parallel'
-
+gem 'thin'
 
 #gem 'peach'
 # Use unicorn as the web server
