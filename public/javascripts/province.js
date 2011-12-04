@@ -1,10 +1,6 @@
 var map;
 
-operating_mine_img = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
-historic_mine_img = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-mineral_deposit_img = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
-prospect_img = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png';
-unknown_img = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/purple-dot.png';
+
 
 function initialize() {
     var default_args = {
@@ -97,7 +93,9 @@ function drawLayer(request) {
     select = new OpenLayers.Control.SelectFeature(layers);
     map.addControl(select);
     select.activate();
-    map.zoomToExtent(layers[0].getDataExtent());
+    if (vectors[0].geometry != null || vectors.length > 1 ) {
+        map.zoomToExtent(layers[0].getDataExtent());
+    }
 //}
 
 }
