@@ -16,13 +16,13 @@ class Entity < ActiveRecord::Base
 
   def latitude
     if geom != nil
-      return geom.sdo_point.y
+      return geom.as_georuby.y
     end
   end
 
   def longitude
     if geom != nil
-      return geom.sdo_point.x
+      return geom.as_georuby.x
     end
   end
 

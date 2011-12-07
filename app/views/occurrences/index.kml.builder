@@ -4,7 +4,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
       xml.tag! "IconStyle" do
         xml.scale 0.25
         xml.tag! "Icon" do
-          xml.href "http://rhe-seismic.ga.gov.au:5001/images/blue-circle.png"
+          xml.href "http://pc-32808:3000/images/blue-circle.png"
         end
         xml.outline 0
       end

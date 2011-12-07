@@ -6,25 +6,33 @@ gem 'rails', "~> 3.1.0"
 # Bundle edge Rails instead:
 # gem 'rails', '3.1.0'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
+platforms :mingw do
+   gem 'ruby-oci8'
+   gem 'sqlite3-ruby', :require => 'sqlite3'
+end
+
+gem 'activerecord-oracle_enhanced-adapter', '~>1.4.0'
+
+
+
+#gem 'sqlite3'
 gem 'i18n'
 
-gem 'activerecord-oracle_enhanced-adapter'
 
 gem 'haml'
 gem 'sass'
 gem 'will_paginate'
 gem 'authlogic'
-gem 'ruby-net-ldap', :require => 'net/ldap'
+gem 'net-ldap', :require => 'net/ldap'
 gem 'formtastic'
 gem 'GeoRuby', :require => 'geo_ruby'
 gem 'fastercsv'
-gem 'prawn'
 
-gem 'nifty-generators'
+
+#gem 'nifty-generators'
 gem 'exception_notification', :require => 'exception_notifier'
 
-gem 'thin'
+#gem 'thin'
 
 #gem 'peach'
 # Use unicorn as the web server

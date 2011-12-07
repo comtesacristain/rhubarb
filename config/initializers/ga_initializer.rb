@@ -1,1 +1,1 @@
-require 'lib/init_ga'
+require File.expand_path('../../../lib/init_ga', __FILE__)
