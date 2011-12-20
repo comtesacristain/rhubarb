@@ -26,7 +26,7 @@ gem 'authlogic'
 gem 'net-ldap', :require => 'net/ldap'
 gem 'formtastic'
 gem 'GeoRuby', :require => 'geo_ruby'
-gem 'fastercsv'
+#gem 'csv'
 
 
 #gem 'nifty-generators'

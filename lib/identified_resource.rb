@@ -128,7 +128,6 @@ class IdentifiedResource
     g = r.resource_grades.first
 
     ore = r.send(code).to_f * @@unit_codes[r.unit_quantity]
-    puts r.eno
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
     resource = {:ore=>ore,:grade=>grade,:mineral=>mineral}

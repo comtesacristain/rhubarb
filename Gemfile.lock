@@ -39,7 +39,6 @@ GEM
     erubis (2.7.0)
     exception_notification (2.5.2)
       actionmailer (>= 3.0.4)
-    fastercsv (1.5.4)
     formtastic (2.0.2)
       rails (~> 3.0)
     haml (3.1.4)
@@ -107,7 +106,6 @@ DEPENDENCIES
   activerecord-oracle_enhanced-adapter (~> 1.4.0)
   authlogic
   exception_notification
-  fastercsv
   formtastic
   haml
   i18n
