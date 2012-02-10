@@ -26,28 +26,77 @@ module DepositsHelper
 
   def build_resource_csv(resource)
     if resource.empty?
-      return Array.new(20)
+      return Array.new(21)
+      
     else
-    identified_resources=IdentifiedResourceSet.new(resource)
-    resource_row = Array.new
-    units_row = Array.new
-    reserves_row = Array.new
-    economic_row = Array.new
-    paramarginal_row = Array.new
-    submarginal_row = Array.new
-    inferred_row = Array.new
-    
-    ## FIX NEXT LINE
-    units_row << identified_resources.economic[:units][:ore] << identified_resources.economic[:units][:mineral] << identified_resources.economic[:units][:grade] rescue String.new
-    ## FIX ABOVE LINE
-    resource_row << identified_resources.date[:end] << identified_resources.material.to_sentence
-    reserves_row << identified_resources.reserves[:ore] << identified_resources.reserves[:mineral] << identified_resources.reserves[:grade]
-    economic_row << identified_resources.economic[:ore] << identified_resources.economic[:mineral] << identified_resources.economic[:grade]
-    paramarginal_row << identified_resources.paramarginal[:ore] << identified_resources.paramarginal[:mineral] << identified_resources.paramarginal[:grade]
-    submarginal_row << identified_resources.submarginal[:ore] << identified_resources.submarginal[:mineral] << identified_resources.submarginal[:grade]
-    inferred_row << identified_resources.inferred[:ore] << identified_resources.inferred[:mineral] << identified_resources.inferred[:grade]
-    return units_row + resource_row + reserves_row + economic_row + paramarginal_row + submarginal_row + inferred_row
+      identified_resources=IdentifiedResourceSet.new(resource)
+      if @commodity.class == String
+        commodities=[@commodity]
+      else
+        commodities = @commodity
+      end
+      economic_row = Array.new
+      units_row = Array.new
+      resource_row = Array.new
+      reserves_row = Array.new
+      paramarginal_row = Array.new
+      submarginal_row = Array.new
+      inferred_row = Array.new
+
+      commodity_row = Array.new
+     
+      commodities.each do |c|
+        
+        if c.in?(identified_resources.commodities)
+          commodity_row << c
+          units_row = [identified_resources.economic[c][:units][:ore], identified_resources.economic[c][:units][:mineral], identified_resources.economic[c][:units][:grade] ]
+          ## FIX ABOVE LINE
+            
+            
+          resource_row = [identified_resources.date[:end], identified_resources.material.to_sentence]
+          reserves_row = [identified_resources.reserves[c][:ore], identified_resources.reserves[c][:mineral], identified_resources.reserves[c][:grade] ]
+          economic_row = [identified_resources.economic[c][:ore], identified_resources.economic[c][:mineral], identified_resources.economic[c][:grade] ]
+          paramarginal_row = [identified_resources.paramarginal[c][:ore]  , identified_resources.paramarginal[c][:mineral], identified_resources.paramarginal[c][:grade] ]
+          submarginal_row = [identified_resources.submarginal[c][:ore], identified_resources.submarginal[c][:mineral], identified_resources.submarginal[c][:grade] ]
+          inferred_row = [identified_resources.inferred[c][:ore], identified_resources.inferred[c][:mineral], identified_resources.inferred[c][:grade] ]
+          commodity_row +=  units_row + resource_row + reserves_row + economic_row + paramarginal_row + submarginal_row + inferred_row
+        else
+          commodity_row += Array.new(21)
+        end
+      end
+      return commodity_row
     end
+    
+    #    if resource.empty?
+    #      return Array.new(20)
+    #    else
+    #      identified_resources=IdentifiedResourceSet.new(resource)
+    #      resource_row = Array.new
+    #      units_row = Array.new
+    #      reserves_row = Array.new
+    #      economic_row = Array.new
+    #      paramarginal_row = Array.new
+    #      submarginal_row = Array.new
+    #      inferred_row = Array.new
+    #    
+    #      if @commodity.class == String
+    #        @commodity=[@commodity]
+    #      end
+    #      @commodity.each do |c|
+    #         ## FIX NEXT LINE
+    #        units_row << identified_resources.economic[c][:units][:ore] << identified_resources.economic[c][:units][:mineral] << identified_resources.economic[c][:units][:grade] rescue String.new
+    #        ## FIX ABOVE LINE
+    #        
+    #        
+    #        resource_row << identified_resources.date[:end] << identified_resources.material.to_sentence
+    #        reserves_row << identified_resources.reserves[c][:ore] rescue String.new << identified_resources.reserves[c][:mineral] rescue String.new << identified_resources.reserves[c][:grade] rescue String.new
+    #        economic_row << identified_resources.economic[c][:ore] rescue String.new << identified_resources.economic[c][:mineral] rescue String.new << identified_resources.economic[c][:grade] rescue String.new
+    #        paramarginal_row << identified_resources.paramarginal[c][:ore] rescue String.new << identified_resources.paramarginal[c][:mineral] rescue String.new << identified_resources.paramarginal[c][:grade] rescue String.new
+    #        submarginal_row << identified_resources.submarginal[c][:ore]  rescue String.new<< identified_resources.submarginal[c][:mineral] rescue String.new<< identified_resources.submarginal[c][:grade] rescue String.new
+    #        inferred_row << identified_resources.inferred[c][:ore] rescue String.new<< identified_resources.inferred[c][:mineral] rescue String.new << identified_resources.inferred[c][:grade] rescue String.new
+    #      end
+    #      return units_row + resource_row + reserves_row + economic_row + paramarginal_row + submarginal_row + inferred_row
+    #    end
   end
 
 end

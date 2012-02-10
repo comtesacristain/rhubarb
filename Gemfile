@@ -10,7 +10,10 @@ platforms :mingw do
    gem 'ruby-oci8'
    gem 'sqlite3-ruby', :require => 'sqlite3'
 end
-
+platforms :ruby do
+   gem 'ruby-oci8'
+   gem 'sqlite3-ruby', :require => 'sqlite3'
+end
 gem 'activerecord-oracle_enhanced-adapter', '~>1.4.0'
 
 

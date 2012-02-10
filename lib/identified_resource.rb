@@ -5,7 +5,7 @@ class IdentifiedResource
   @@commodity_types= Hash[CommodityType.all.map {|ct| [ct.commodid,Hash[:identified_commodity=>ct.convertedcommod,
         :conversion_factor=>ct.conversionfactor.to_f,:units=>{:ore=>ct.oreunit,:mineral=>ct.displayunit,:grade=>ct.gradeunit}]]}]
 
-  def initialize(resource)
+  def initialize(resource,grade)
     @reserves = Hash[:ore=>0.0,:grade=>0.0,:mineral=>0.0]
     @economic = Hash[:ore=>0.0,:grade=>0.0,:mineral=>0.0]
     @paramarginal = @economic.dup
@@ -14,8 +14,8 @@ class IdentifiedResource
     @inclusive = resource.inclusive
     @date = resource.recorddate
     @material = resource.material
-    set_jorc(resource)
-    commod = resource.resource_grades.first.commodid
+    set_jorc(resource,grade)
+    commod = grade.commodid
     set_commodity(commod)
     set_units
   end
@@ -99,6 +99,14 @@ class IdentifiedResource
     return @commodity
   end
   
+  def reported_commodity
+    return @commodity[:reported_commodity]
+  end
+  
+  def identified_commodity
+    return @commodity[:identified_commodity]
+  end
+  
   def units
     return @units
   end
@@ -113,20 +121,18 @@ class IdentifiedResource
   
   private
 
-  def set_jorc(resource)
+  def set_jorc(resource,grade)
     jorc_reserves.each do |code, acc|
-      set_reserves(resource,code,acc)
+      set_reserves(resource,grade,code,acc)
     end
-    set_resources(resource,:mrs,:measured)
-    set_resources(resource,:idr,:indicated)
-    set_resources(resource,:mid,:measured_indicated)
-    set_resources(resource,:ifr,:inferred)
-    set_resources(resource,:other,:other)
+    set_resources(resource,grade,:mrs,:measured)
+    set_resources(resource,grade,:idr,:indicated)
+    set_resources(resource,grade,:mid,:measured_indicated)
+    set_resources(resource,grade,:ifr,:inferred)
+    set_resources(resource,grade,:other,:other)
   end
 
-  def set_reserves(r, code, acc)
-    g = r.resource_grades.first
-
+  def set_reserves(r, g, code, acc)
     ore = r.send(code).to_f * @@unit_codes[r.unit_quantity]
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
@@ -142,9 +148,7 @@ class IdentifiedResource
   end
 
 
-  def set_resources(r, code, acc)
-    g = r.resource_grades.first
-
+  def set_resources(r, g, code, acc)
     ore = r.send(code).to_f * @@unit_codes[r.unit_quantity]
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)

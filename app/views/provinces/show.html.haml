@@ -83,7 +83,7 @@
                 - deposits.each do |deposit|
                     %tr
                         %td= link_to deposit.name, deposit
-                        %td= deposit.commodity_list.commodids
+                        %td= deposit.commodity_list.try(:commodids)
         - else
             %p
                 %i This province has no deposits associated with it.

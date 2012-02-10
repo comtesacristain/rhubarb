@@ -10,3 +10,4 @@ ldap.yml
 config/ldap.yml
 lib/init_ga.rb
 README.old
+/nbproject/private/

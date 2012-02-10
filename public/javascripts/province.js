@@ -14,7 +14,7 @@ function initialize() {
         state: null,
         bounds: null
     }
-    options=arguments[0];
+    var options=arguments[0];
     for(var index in default_args) {
         if(!options[index]) options[index] = default_args[index];
     }

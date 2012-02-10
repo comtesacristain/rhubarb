@@ -1,6 +1,6 @@
 <%- deposit_headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"] -%>
 <%- resource_headers = ["RECORDDATE","MATERIAL","RESERVES_ORE","RESERVES_MINERAL","RESERVES_GRADE","EDR_ORE","EDR_MINERAL","EDR_GRADE","PMR_ORE","PMR_MINERAL","PMR_GRADE","SBM_ORE","SBM_MINERAL","SBM_GRADE","IFR_ORE","IFR_MINERAL","IFR_GRADE"]-%>
-<%- units_headers = ["ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]-%>
+<%- units_headers = ["COMMODID","ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]-%>
 <%# TOTAL HEADERS - INCLUDE LATER ["TOTAL_ORE","TOTAL_MINERAL","TOTAL_GRADE"] %>
 <%- if @commodity.in?(['Cbl', 'Cbr'])-%>
   <%- r_units_headers = units_headers.map{|uh| "RECOVERABLE_#{uh}"}-%>
