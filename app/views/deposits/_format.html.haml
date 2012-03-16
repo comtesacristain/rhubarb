@@ -7,7 +7,7 @@
 %p
     = link_to image_tag( 'xls64.png', :title => "Download Excel Spreadsheet", :alt => "Download Excel Spreadsheet"), url_for(params.merge(:format=>:xls,:action=>:quality_check))
 - unless params[:commodity].blank?
-    %h3 Resources
+    %h3= "Resources for #{params[:year]}"
     %p
         =link_to image_tag( 'csv64.png', :title => "Download CSV of Identified Resources", :alt => "Download CSV of Identified Resources"), url_for(params.merge(:format=>:csv,:action=>:resources))
     %h3 Mineral System

@@ -99,4 +99,24 @@ module DepositsHelper
     #    end
   end
 
+  
+  def build_jorc_csv(resource,grade)
+    codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
+    jorc = Array.new
+    codes.each do |code|
+      @resource = resource.send(code)
+      @grade = grade.send(code) 
+      contained_mineral = calculate_contained_mineral
+      jorc << @resource << @grade << contained_mineral
+      
+      
+    end
+    
+    
+    return jorc
+  end
+  
+  def calculate_contained_mineral
+    return @resource * @grade rescue nil
+  end
 end

@@ -34,14 +34,14 @@
                 %td Commodity Names
                 %td= @zone.deposit.commodity_list.commodnames rescue nil
         -unless @zone.deposit.geom.nil?
-            %h3 Location
+            %h3 Zone Location
             %table{:width=>"100%"}
                 %tr
                     %td Longitude
-                    %td= "%3.6f" % @zone.deposit.longitude
+                    %td= "%3.6f" % @zone.longitude
                 %tr
                     %td Latitude
-                    %td= "%3.6f" % @zone.deposit.latitude
+                    %td= "%3.6f" % @zone.latitude
                 %tr
                     %td Datum
                     %td GDA94

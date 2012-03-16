@@ -1,15 +1,15 @@
 source 'http://rubygems.org'
 
-gem 'rails', "~> 3.1.0"
+gem 'rails'
 
 
 # Bundle edge Rails instead:
 # gem 'rails', '3.1.0'
 
-platforms :mingw do
-   gem 'ruby-oci8'
-   gem 'sqlite3-ruby', :require => 'sqlite3'
-end
+#platforms :mingw do
+#   gem 'ruby-oci8'
+#   gem 'sqlite3-ruby', :require => 'sqlite3'
+#end
 platforms :ruby do
    gem 'ruby-oci8'
    gem 'sqlite3-ruby', :require => 'sqlite3'

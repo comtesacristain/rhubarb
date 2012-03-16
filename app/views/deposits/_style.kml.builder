@@ -1,4 +1,4 @@
-domain='pc-32808:3000'
+domain='lws-60603:3000'
 xml.tag! "Style", :id => "operating mine" do
   xml.tag! "IconStyle" do
     xml.scale 0.4

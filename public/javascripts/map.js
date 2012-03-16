@@ -36,7 +36,7 @@ function initialize() {
      
 
     var googleHybrid = new OpenLayers.Layer.Google("Google Hybrid", {
-         type:google.maps.MapTypeId.HYBRID,
+        type:google.maps.MapTypeId.HYBRID,
         "sphericalMercator": true,
         numZoomLevels: 19
     });
@@ -45,14 +45,23 @@ function initialize() {
         numZoomLevels: 19
     });
     switcher = new OpenLayers.Control.LayerSwitcher();
+    //latlong = new OpenLayers.Control.MousePosition({'element': document.getElementById('latlong')});
     //switcher.onLayerClick
-    map.addControl(switcher);
+    map.addControls([switcher]);//,latlong]);
     map.addLayers([googleHybrid,googleStreets]);
     initCentre = new OpenLayers.LonLat(options.longitude, options.latitude);
     initCentre.transform(map.displayProjection, map.projection);
     map.setCenter(initCentre, options.zoom);
     buildLayers();
     map.setCenter(initCentre, options.zoom);
+    
+    map.events.register("click", map, function(e) {
+        var position = map.getLonLatFromPixel(e.xy);
+        position.transform(map.projection, map.displayProjection)
+        OpenLayers.Util.getElement("latlong").innerHTML = 
+        'Identified location: '+ position.lon.toFixed(6) + ', ' + position.lat.toFixed(6);
+
+    });
 
 }
 
@@ -65,7 +74,9 @@ function buildLayers() {
             for (var i in defaultLayers[key]) {
                 if (!defaultLayers[key][i]) title = key.titleize();
                 else title =  defaultLayers[key][i].titleize();
-                if (key=="deposits") params = {"status":defaultLayers[key][i]}
+                if (key=="deposits") params = {
+                    "status":defaultLayers[key][i]
+                    }
                 else params=null;
                 layer = new OpenLayers.Layer.Vector(title, {
                     projection: map.displayProjection,

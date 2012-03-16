@@ -1,0 +1,7 @@
+<%- @deposits.each do |deposit| -%>
+  <%- resource = deposit.resources.recent.mineral(@commodity).first -%>
+  <%- grade = resource.resource_grades.first-%>
+  <%- jorc = build_jorc_csv(resource,grade) -%>
+  <%- row = [deposit.entityid] + jorc -%>
+  <%= raw CSV.generate_line row, :row_sep => "\r" -%>
+<%- end -%>
