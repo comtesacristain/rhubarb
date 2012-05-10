@@ -12,11 +12,11 @@
                         ==#{'%3.4f' % deposit.try(:longitude) rescue nil}, #{'%3.4f' % deposit.try(:latitude) rescue nil}
                 - else
                     No coordinates
-                ="(#{deposit.deposit_status.state})"
+                ="(#{deposit.deposit_status.try(:state)})"
             %div.eno
                 =deposit.eno
             %div.name
-                - status=deposit.deposit_status.operating_status
+                - status=deposit.deposit_status.operating_status rescue ""
                 - case status
                 - when 'operating mine'
                     - image = 'red-circle.png'

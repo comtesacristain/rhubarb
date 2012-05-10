@@ -1,0 +1,37 @@
+- aimr_code = Lookup.aimr_code
+- aimr_classes = aimr_code.values
+- states = Lookup.states
+=javascript_tag :defer => 'defer' do
+    - ajax_string = String.new
+    - states.values.each do |state|
+        - ajax_string = "/resources/identified.json?year=#{params[:year].to_s}"
+        - ajax_string += "&commodity=" + params[:commodity]
+        - ajax_string += "&state=" + state.to_s
+        == $.getJSON('#{raw ajax_string}', null, function(data) {
+        - aimr_code.keys.each do |ack|
+            - if state.nil?
+                - state='TOT'        
+            ==$("##{(state.titleize+ack.titleize+'Ore'.titleize).underscore}").html(Math.round(data.#{ack.downcase}.ore*10)/10);
+            ==$("##{(state.titleize+ack.titleize+'Mineral'.titleize).underscore}").html(Math.round(data.#{ack.downcase}.commodity*10)/10);
+            ==$("##{(state.titleize+ack.titleize+'Grade'.titleize).underscore}").html(Math.round(data.#{ack.downcase}.grade*10)/10);
+        == });
+%table
+    %tr
+        %th.state{:rowspan=>2} State
+        - aimr_classes.each do |ac|
+            %th{:class=>ac,:colspan=>3}= ac.titleize
+    %tr
+        - aimr_classes.each do |ac|
+            %th{:class=>ac} Ore
+            %th{:class=>ac} Mineral
+            %th{:class=>ac} Grade
+    - states.keys.each do |state|
+        %tr
+            %td= state
+            - aimr_code.keys.each do |ack|
+                - state_id = states[state]
+                - if state_id.nil?
+                    - state_id = 'TOT'
+                %td{:id=>(state_id.titleize+ack.titleize+"Ore").underscore}
+                %td{:id=>(state_id.titleize+ack.titleize+"Mineral").underscore}
+                %td{:id=>(state_id.titleize+ack.titleize+"Grade").underscore}
