@@ -10,16 +10,15 @@
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
-.olLayerGoogleCopyright {
+/*.olLayerGoogleV3 {
     top:-1000px;
-} 
+} */
 
 body {
     background-color: #4b7399;
     font-family: Verdana, Helvetica;
-    font-size: 14px; }
-
-
+    font-size: 14px;
+}
 
 a:link, a:visited {
     color: darkslateblue;
@@ -41,7 +40,8 @@ a img {
 .clear {
     clear: both;
     height: 0;
-    overflow: hidden; }
+    overflow: hidden;
+}
 
 #container {
     width: 80%;
