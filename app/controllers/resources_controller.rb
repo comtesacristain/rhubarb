@@ -1,5 +1,6 @@
 class ResourcesController < ApplicationController
   before_filter :define_scope, :only => [:index]
+  before_filter :require_ozmin_user
   # GET /zones
   # GET /zones.xml
   def index

@@ -9,7 +9,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
     @deposits.each do |deposit|
       xml.tag! "Placemark" do
         xml.description do
-          xml.cdata! ( "<b>ENO</b>: #{deposit.eno}<br />
+          xml.cdata!( "<b>ENO</b>: #{deposit.eno}<br />
 			<b>Name</b>: #{deposit.name}<br />
 			<b>State</b>: #{deposit.synonym.state}<br />
 			<b>Operating status</b>: #{deposit.synonym.operating_status.titleize}<br />

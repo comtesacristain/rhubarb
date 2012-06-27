@@ -22,6 +22,8 @@ class Resource < ActiveRecord::Base
   
   scope :nonzero, where("(mgd.resources.pvr <> 0 or mgd.resources.pbr <> 0 or mgd.resources.ppr <> 0 or mgd.resources.mrs <> 0 or mgd.resources.idr <> 0 or mgd.resources.mid <> 0 or mgd.resources.ifr <> 0 or mgd.resources.other <> 0)")
 
+  scope :qaed, where(:qa_status_code=>'C')
+  scope :not_qaed, where(:qa_status_code=>'U')
   # For coal
   scope :recoverable, :conditions => {:rec_recoverable => 'Y'}
   scope :insitu, :conditions => {:rec_recoverable => 'N'}

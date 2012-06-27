@@ -3,11 +3,14 @@
 %p
     =link_to image_tag( 'csv64.png', :title => "Download CSV", :alt => "Download CSV"), url_for(params.merge(:format=>:csv))
     =link_to image_tag( 'kml64.png', :title => "Download KML", :alt => "Download KML"), url_for(params.merge(:format=>:kml))
+%h3 JORC Data for #{params[:year]}
+%p
+    =link_to image_tag( 'csv64.png', :title => "Download CSV of JORC Data", :alt => "Download CSV of JORC Data"), url_for(params.merge(:format=>:csv,:action=>:jorc))
 %h3 Quality Check
 %p
     = link_to image_tag( 'xls64.png', :title => "Download Excel Spreadsheet", :alt => "Download Excel Spreadsheet"), url_for(params.merge(:format=>:xls,:action=>:quality_check))
 - unless params[:commodity].blank?
-    %h3= "Resources for #{params[:year]}"
+    %h3= "Identified Resources for #{params[:year]}"
     %p
         =link_to image_tag( 'csv64.png', :title => "Download CSV of Identified Resources", :alt => "Download CSV of Identified Resources"), url_for(params.merge(:format=>:csv,:action=>:resources))
     %h3 Mineral System

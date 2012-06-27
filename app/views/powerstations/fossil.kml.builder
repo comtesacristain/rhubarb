@@ -8,7 +8,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
 	xml.tag! "Document" do
 		xml.name "Fossil Fuel Powerstations in Australia (#{Date.today.year})"
 		xml.tag! "description" do
-			xml.cdata! ("Data from the <a href='http://www.ga.gov.au/fossil_fuel/'>Department of Environment, Water, Heritage and the Arts</a><br />
+			xml.cdata!("Data from the <a href='http://www.ga.gov.au/fossil_fuel/'>Department of Environment, Water, Heritage and the Arts</a><br />
         <br />
         Generated on #{Date.today}")
 		end
@@ -39,7 +39,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
 						@powerstations.send(status).send(fuel_type).each do |powerstation|
 							xml.tag! "Placemark" do
 								xml.description do
-									xml.cdata! ("<table><tr><td><img src='http://www.ga.gov.au/fossil_fuel/#{powerstation.image_name}' /></td><td width='200px'>
+									xml.cdata!("<table><tr><td><img src='http://www.ga.gov.au/fossil_fuel/#{powerstation.image_name}' /></td><td width='200px'>
 										Information for <b><em>#{powerstation.name}</em></b><br />
                     <ul>
                     <li><em>Fuel type:</em> #{powerstation.fuel_type}</li>

@@ -76,7 +76,7 @@
 
 
     </style>
-    <script>
+    <script type="text/javascript" >
     <%- ajax_string = String.new -%>
     <%- i = 0 -%>
     <% states_array = states.keys.sort%>
@@ -114,7 +114,7 @@
       <%- end -%>
       </script></head>
     <body>
-      <p align='center'>
+      <p>
         <%- aimr_commodities = CommodityType.aimr -%>
         <%- ordered_aimr_commodities = aimr_commodities.keys.sort -%>
         <%- i = 0 -%>

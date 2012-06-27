@@ -5,7 +5,8 @@
 <%= raw CSV.generate_line headers, :row_sep => "\r" -%>
 <%- @deposits.each do |deposit| -%>
 <%- deposit_row = [deposit.eno, deposit.entityid]-%>
-<%- zones = deposit.zones.includes(:resources=>:resource_grades).merge(Resource.recent.mineral(@commodity)) -%>
+<%- date = Date.ordinal(params[:year].to_i,-1) -%>
+<%- zones = deposit.zones.includes(:resources=>:resource_grades).merge(Resource.year(date)) -%>
 <%- if zones.empty? -%>
 <%- row = deposit_row -%>
 <%= raw CSV.generate_line row, :row_sep => "\r" -%>

@@ -1,6 +1,7 @@
 class DepositsController < ApplicationController
   before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc]
   before_filter :require_ozmin_user, :only => [:resources, :quality_check]
+  before_filter :filename_generator
 
   def index
     if params[:year].blank?
@@ -18,23 +19,23 @@ class DepositsController < ApplicationController
 
       format.html # index.html.erb
       format.xml  { render :xml => @deposits }
-      format.kml 
-      #format.gsml #{ render :action => 'index_gsml', :layout => false }
-      format.csv
+      format.kml {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.kml\""}
+      format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
+	  #format.gsml #{ render :action => 'index_gsml', :layout => false }
     end
   end
 
   def quality_check
 	  @deposits = @scope.all
     respond_to do |format|
-      format.xls
+      format.xls {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.xls\""}
     end
   end
 
   def mineral_system
 	  @deposits = @scope.all
     respond_to do |format|
-      format.csv
+      format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
     end
   end
 
@@ -69,7 +70,7 @@ class DepositsController < ApplicationController
 
 
     respond_to do |format|
-  	  format.csv
+  	  format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
     end
   end
 
@@ -86,7 +87,7 @@ class DepositsController < ApplicationController
     @deposits=@scope
     
     respond_to do |format|
-  	  format.csv
+  	  format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
     end
   end
   
@@ -150,12 +151,45 @@ class DepositsController < ApplicationController
       end
 	  end
     #
-	  scope = scope.state(params[:state]) if params[:state] and params[:state] != "All"
-	  scope = scope.status(params[:status]) if params[:status] and params[:status] != "All"
-	  scope = scope.bounds(eval("["+params[:bbox]+"]")) if params[:bbox]
-    scope = scope.by_name(params[:name]) unless params[:name].nil?
+	  scope = scope.state(params[:state]) unless params[:state].blank?
+	  scope = scope.status(params[:status]) unless params[:status].blank?
+	  scope = scope.bounds(eval("["+params[:bbox]+"]")) unless params[:bbox].blank?
+	  scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  @scope = scope
 	end
 
+	def filename_generator
+		parameter_array = Array.new
+		unless params[:name].blank?
+			parameter_array << params[:name]
+		end
+		
+		unless params[:state].blank?
+			parameter_array << params[:state]
+		 end
+		
+		unless params[:commodity].blank?
+			parameter_array << params[:commodity]
+		end
+		
+		
+		 unless params[:status].blank?
+			 parameter_array << params[:status].pluralize.parameterize.underscore
+		 else
+			 parameter_array << params[:controller]
+		 end
+				 
+		 unless params[:action] == 'index'
+			parameter_array << params[:action]
+		 end
+		 
+		 if params[:action].in?(["jorc","resources"])
+			parameter_array << "for_#{params[:year]}" unless params[:year].blank?
+		 end
+				
+		parameter_array <<  Date.today.to_s.gsub(/-/,'')
+		
+		@filename = parameter_array.join('_')
+	end
 
 end
