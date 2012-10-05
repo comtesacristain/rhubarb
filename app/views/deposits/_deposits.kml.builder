@@ -6,7 +6,16 @@
 								Commodities: #{deposit.commodity_list.try(:commodids)}")
     end
     xml.name deposit.name
-    xml.styleUrl "#"+deposit.deposit_status.operating_status rescue nil
+    if deposit.deposit_status.operating_status == 'historic mine'
+      if deposit.resources.recent.nonzero.empty?
+        status = deposit.deposit_status.operating_status rescue nil
+      else
+        status = "historic mine with resources"
+      end
+    else
+      status = deposit.deposit_status.operating_status rescue nil
+    end
+    xml.styleUrl "#"+status rescue nil
     xml.tag! "Point" do
       xml.coordinates "#{deposit.longitude},#{deposit.latitude}"
     end

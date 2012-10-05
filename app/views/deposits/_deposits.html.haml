@@ -19,11 +19,14 @@
                 - status=deposit.deposit_status.operating_status rescue ""
                 - case status
                 - when 'operating mine'
-                    - image = 'red-circle.png'
-                - when 'mineral deposit'
                     - image = 'yellow-circle.png'
-                - when 'historic mine'
+                - when 'mineral deposit'
                     - image = 'green-circle.png'
+                - when 'historic mine'
+                    - if deposit.resources.recent.nonzero.empty?
+                        - image = 'red-circle.png'
+                    -else
+                        - image = 'orange-circle.png'
                 - else
                     - image = 'blank-circle.png'
                 =image_tag(image, :alt=>status.titleize, :title=>status.titleize)

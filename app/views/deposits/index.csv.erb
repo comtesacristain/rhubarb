@@ -1,8 +1,14 @@
-<%- headers = ["ENO", "Name", "Synonyms", "State", "Operating Status", "Longitude", "Latitude", "Commodities" ]-%>
+<%- headers = ["ENO", "Name", "Synonyms", "State", "Operating Status", "Longitude", "Latitude", "Commodities","Significance", "Description1", "URL1","Description2", "URL2","Description3", "URL3","Description4", "URL4","Description5", "URL5" ]-%>
 <%= raw CSV.generate_line headers, :row_sep => "\r" %>
 <%- @deposits.each do |deposit| -%>
 <%- row = [ deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms),
 		deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status),
-                deposit.longitude, deposit.latitude,deposit.commodity_list.try(:commodnames)] -%>
+                deposit.longitude, deposit.latitude,deposit.commodity_list.try(:commodnames),deposit.deposit_status.try(:significance_value)] -%>
+<%- websites = deposit.websites -%>
+<%- website_array = Array.new-%>
+<%- websites.each do |website| -%>
+<%- website_array << website.description << website.url -%>
+<%- end -%>
+<%- row = row + website_array -%>
 <%= raw CSV.generate_line row, :row_sep => "\r" %>
 <%- end -%>

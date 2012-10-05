@@ -104,7 +104,7 @@ module DepositsHelper
     codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
     jorc = Array.new
     @unit_grade=grade.unit_grade
-    jorc <<  resource.recorddate << resource.unit_quantity << @unit_grade << grade.commodid
+    jorc <<  resource.recorddate << resource.unit_quantity << @unit_grade << grade.commodid << resource.inclusive
     codes.each do |code|
       @resource = resource.send(code)
       @grade = grade.send(code) 
