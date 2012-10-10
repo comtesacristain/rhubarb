@@ -121,7 +121,6 @@ class IdentifiedResource
   
   private
 
-
   # Pass resource and grade records into JORC code structured objects
   def set_jorc(resource,grade)
     jorc_reserves.each do |code, accessor|
@@ -145,7 +144,6 @@ class IdentifiedResource
     self.instance_variable_set("@#{acc}", resource)
     @reserves[:ore]+=ore
     @reserves[:mineral]+=mineral
-    #@reserves[:grade]=(@reserves[:mineral]/@reserves[:ore]) rescue 0.0
   end
 
 
