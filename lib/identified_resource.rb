@@ -121,17 +121,18 @@ class IdentifiedResource
   
   private
 
+
+  # Pass resource and grade records into JORC code structured objects
   def set_jorc(resource,grade)
-    jorc_reserves.each do |code, acc|
-      set_reserves(resource,grade,code,acc)
+    jorc_reserves.each do |code, accessor|
+      set_reserves(resource,grade,code,accessor)
     end
-    set_resources(resource,grade,:mrs,:measured)
-    set_resources(resource,grade,:idr,:indicated)
-    set_resources(resource,grade,:mid,:measured_indicated)
-    set_resources(resource,grade,:ifr,:inferred)
-    set_resources(resource,grade,:other,:other)
+    jorc_resources.each do |code, accessor|
+      set_resources(resource,grade,code,accessor)
+    end
   end
 
+  # Set reserves with calculation
   def set_reserves(r, g, code, acc)
     ore = r.send(code).to_f * @@unit_codes[r.unit_quantity]
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
@@ -229,15 +230,19 @@ class IdentifiedResource
     #need converted commodity factor
     return (resource.send(code).to_f * @@unit_codes[resource.unit_quantity]) * ( grade.send(code).to_f*@@unit_codes[grade.unit_grade].to_f ) * @@commodity_types[grade.commodid][:conversion_factor]
   end
-
+  
+  
+  # Hash for JORC reserves.
   def jorc_reserves
     return {:pvr=>:proven,:pbr=>:probable,:ppr=>:proven_probable}
   end
 
+  # Hash for JORC resources. Non-JORC code other included for ease of use.
   def jorc_resources
     return {:mrs=>:measured,:idr=>:indicated,:mid=>:measured_indicated,:ifr=>:inferred,:other=>:other}
   end
  
+  # Combined Hash for all JORC codes.
   def jorc_codes
     return jorc_reserves.merge(jorc_resources)
   end
