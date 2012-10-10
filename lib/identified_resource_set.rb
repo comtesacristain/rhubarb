@@ -1,4 +1,6 @@
 class IdentifiedResourceSet < Hash
+  # 
+  
   attr_reader :date, :material, :units
   @@unit_codes= Hash[UnitCode.all.map {|u| [u.unitcode,u.unitvalue.to_f]}]
   
@@ -92,7 +94,7 @@ class IdentifiedResourceSet < Hash
       c[:ore] += ir.send(code)[:ore]
       c[:mineral] += ir.send(code)[:mineral]
     end
-    c[:grade] = (c[:mineral]/c[:ore]) / @@unit_codes[c[:units][:grade]] unless c[:ore].zero?
+    c[:grade] = (c[:mineral]*@@unit_codes[c[:units][:mineral]]/c[:ore]*@@unit_codes[c[:units][:ore]]) / @@unit_codes[c[:units][:grade]] unless c[:ore].zero?
     return c
   end
 
