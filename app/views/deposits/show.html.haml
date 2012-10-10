@@ -17,6 +17,46 @@
 %p
     #map.smallmap
     #latlong Click map for coordinates 
+    - if (current_user && current_user.ozmin?)
+        %h3 Identified Resources
+        - resource=@deposit.resources.merge(Resource.recent).all
+        - identified_resource = IdentifiedResourceSet.new(resource)
+        %table{:class=>:resource}
+            %tr
+                %th Commodity
+                %th Type
+                %th Units
+                %th JORC Reserves
+                %th EDR
+                %th Paramarginal
+                %th Submarginal
+                %th Inferred
+            - identified_resource.each_key do |commodity|
+                %tr
+                    %td{:rowspan=>3}= commodity
+                    %td Ore
+                    %td= identified_resource[commodity].first.units[:ore]
+                    %td= "%.2f" % identified_resource[commodity].first.reserves[:ore]
+                    %td= "%.2f" % identified_resource[commodity].first.economic[:ore]
+                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:ore]
+                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:ore]
+                    %td= "%.2f" % identified_resource[commodity].first.inferred[:ore]
+                %tr
+                    %td Mineral
+                    %td= identified_resource[commodity].first.units[:mineral]
+                    %td= "%.2f" % identified_resource[commodity].first.reserves[:mineral]
+                    %td= "%.2f" % identified_resource[commodity].first.economic[:mineral]
+                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:mineral]
+                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:mineral]
+                    %td= "%.2f" % identified_resource[commodity].first.inferred[:mineral]
+                %tr
+                    %td Grade
+                    %td= identified_resource[commodity].first.units[:grade]
+                    %td= "%.2f" % identified_resource[commodity].first.reserves[:grade]
+                    %td= "%.2f" % identified_resource[commodity].first.economic[:grade]
+                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:grade]
+                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:grade]
+                    %td= "%.2f" % identified_resource[commodity].first.inferred[:grade]
 - content_for(:sidebar) do
     %p
         %h2= @deposit.name
