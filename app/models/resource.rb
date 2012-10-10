@@ -11,7 +11,7 @@ class Resource < ActiveRecord::Base
 
   has_one :deposit_status, :through => :deposit
 
-  default_scope :order => "recorddate desc"
+  #default_scope :order => "recorddate desc"
 
   scope :recent, where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
 	# Change to name of scope to date
