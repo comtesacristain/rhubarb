@@ -36,27 +36,27 @@
                     %td{:rowspan=>3}= commodity
                     %td Ore
                     %td= identified_resource[commodity].first.units[:ore]
-                    %td= "%.2f" % identified_resource[commodity].first.reserves[:ore]
-                    %td= "%.2f" % identified_resource[commodity].first.economic[:ore]
-                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:ore]
-                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:ore]
-                    %td= "%.2f" % identified_resource[commodity].first.inferred[:ore]
+                    %td= "%.2f" % identified_resource.reserves[commodity][:ore]
+                    %td= "%.2f" % identified_resource.economic[commodity][:ore]
+                    %td= "%.2f" % identified_resource.paramarginal[commodity][:ore]
+                    %td= "%.2f" % identified_resource.submarginal[commodity][:ore]
+                    %td= "%.2f" % identified_resource.inferred[commodity][:ore]
                 %tr
                     %td Mineral
                     %td= identified_resource[commodity].first.units[:mineral]
-                    %td= "%.2f" % identified_resource[commodity].first.reserves[:mineral]
-                    %td= "%.2f" % identified_resource[commodity].first.economic[:mineral]
-                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:mineral]
-                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:mineral]
-                    %td= "%.2f" % identified_resource[commodity].first.inferred[:mineral]
+                    %td= "%.2f" % identified_resource.reserves[commodity][:mineral]
+                    %td= "%.2f" % identified_resource.economic[commodity][:mineral]
+                    %td= "%.2f" % identified_resource.paramarginal[commodity][:mineral]
+                    %td= "%.2f" % identified_resource.submarginal[commodity][:mineral]
+                    %td= "%.2f" % identified_resource.inferred[commodity][:mineral]
                 %tr
                     %td Grade
                     %td= identified_resource[commodity].first.units[:grade]
-                    %td= "%.2f" % identified_resource[commodity].first.reserves[:grade]
-                    %td= "%.2f" % identified_resource[commodity].first.economic[:grade]
-                    %td= "%.2f" % identified_resource[commodity].first.paramarginal[:grade]
-                    %td= "%.2f" % identified_resource[commodity].first.submarginal[:grade]
-                    %td= "%.2f" % identified_resource[commodity].first.inferred[:grade]
+                    %td= "%.2f" % identified_resource.reserves[commodity][:grade]
+                    %td= "%.2f" % identified_resource.economic[commodity][:grade]
+                    %td= "%.2f" % identified_resource.paramarginal[commodity][:grade]
+                    %td= "%.2f" % identified_resource.submarginal[commodity][:grade]
+                    %td= "%.2f" % identified_resource.inferred[commodity][:grade]
 - content_for(:sidebar) do
     %p
         %h2= @deposit.name
