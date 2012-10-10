@@ -151,7 +151,7 @@ OCI8::Object::Base.class_eval do
         multipolygon = Array.new
         coords = Array.new
         elements = Array.new
-        attributes[:sdo_elem_info].instance_variable_get("@attributes").each{|i| elements << i.to_i}
+        attributes[:sdo_elem_info].instance_variable_get("@attributes").each{|item| elements << item.to_i}
         if elements.size % 3 == 0
           elements = elements.in_groups_of(3)
         else
