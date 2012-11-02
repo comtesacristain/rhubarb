@@ -4,9 +4,10 @@ class Website < ActiveRecord::Base
 
 	set_primary_key :websiteno
 
-	has_many :deposits, :class_name => "Deposit", :foreign_key => :eno
+	
 	has_many :weblinks, :class_name => "Weblink", :foreign_key => :websiteno
 
+  has_many :deposits, :through => :weblinks
 
 	set_date_columns :entrydate, :qadate, :lastupdate
 end

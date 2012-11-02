@@ -2,8 +2,11 @@ Rhubarb::Application.routes.draw do
   resources :blobs
 
   resources :references
+  resources :websites
 
   resources :major_projects
+  
+  
 
   resources :powerstations do
     collection do
