@@ -1,10 +1,11 @@
+domain='lws-60603:3000'
 xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
   xml.tag! "Document" do
     xml.tag! "Style", :id => "major_project" do
       xml.tag! "IconStyle" do
         xml.scale 0.4
         xml.tag! "Icon" do
-          xml.href "http://pc-32808:3000/images/pink-star.png"
+          xml.href "http://#{domain}/images/pink-star.png"
         end
         xml.outline 0
       end
