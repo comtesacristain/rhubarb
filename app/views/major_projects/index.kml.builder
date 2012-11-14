@@ -1,3 +1,4 @@
+# TODO Domain variable should be based on a Rails property or set as a config parameter.
 domain='lws-60603:3000'
 xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
   xml.tag! "Document" do
