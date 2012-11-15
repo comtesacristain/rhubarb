@@ -18,6 +18,8 @@ class Resource < ActiveRecord::Base
   scope :year , lambda  { |y| {:conditions => ["mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno and r.recorddate <= ?)", y] } }
 	scope :mineral, lambda { |min| { :include=>:resource_grades, :conditions=> ["mgd.resource_grades.commodid in (:mineral)", {:mineral => min}] } }
 
+  #scope :mineral, joins(:resource_grades) & ResourceGrade.mineral
+
   scope :zeroed, where({:pvr=>0,:pbr=>0,:ppr=>0,:mrs=>0,:idr=>0,:mid=>0,:ifr=>0,:other=>0})
   
   scope :nonzero, where("(mgd.resources.pvr <> 0 or mgd.resources.pbr <> 0 or mgd.resources.ppr <> 0 or mgd.resources.mrs <> 0 or mgd.resources.idr <> 0 or mgd.resources.mid <> 0 or mgd.resources.ifr <> 0 or mgd.resources.other <> 0)")
@@ -37,5 +39,12 @@ class Resource < ActiveRecord::Base
   def zero?
     return pvr==0 && pbr==0 && ppr==0 && mrs==0 && idr==0 && mid==0 && ifr==0 && other==0
   end
+  
+  # def self.mineral(mineral)
+    # self.joins(:resource_grades).where(:resource_grades=>{:commodid => mineral}).uniq
+  # end
+	
+	#this
+	# deposit.resources & Resource.recent.nonzero.includes(:resource_grades)
 	
 end
