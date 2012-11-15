@@ -1,7 +1,7 @@
 class ResourceGrade < ActiveRecord::Base
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	set_table_name "mgd.resource_grades"
-	set_primary_key :resourceno
+	set_primary_key :rescommno
   set_date_columns :entrydate, :qadate, :confid_until, :lastupdate
 
   belongs_to :resource, :class_name => "Resource", :foreign_key => :resourceno
@@ -10,7 +10,7 @@ class ResourceGrade < ActiveRecord::Base
 
   scope :public, :conditions=> "mgd.resource_grades.access_code = 'O'"
 
-  default_scope :order =>'access_code desc, commodid asc'
+  default_scope :order =>'mgd.resource_grades.access_code desc, commodid asc'
 
 	scope :mineral, lambda { |min| { :conditions=> ["mgd.resource_grades.commodid in (?)", min] } }
 end
