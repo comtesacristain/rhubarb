@@ -74,9 +74,8 @@ class ResourcesController < ApplicationController
     else
       year=Date.today.year.to_i
     end
-    date=Date.new(year+1)-1
 
-    scope = Resource.mineral(commodity).year(date).nonzero
+    scope = Resource.mineral(commodity).year(year).nonzero
 
     if params[:recoverability] == 'recoverable'
       scope=scope.recoverable
