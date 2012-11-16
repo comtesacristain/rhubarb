@@ -84,8 +84,8 @@ class DepositsController < ApplicationController
   	  format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
     end
   end
-  
-  
+ 
+  #TODO Fix to show deposits by commodity. 
   def map
 	  @scope = @scope.all
 	  @deposits = @scope
@@ -109,6 +109,7 @@ class DepositsController < ApplicationController
       deposit = deposit.public
     end
     @deposit = deposit.find(params[:id].to_i)
+    @resources = @deposit.resources.recent.all
 
     respond_to do |format|
       format.html # show.html.erb
