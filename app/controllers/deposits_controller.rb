@@ -110,6 +110,7 @@ class DepositsController < ApplicationController
     end
     @deposit = deposit.find(params[:id].to_i)
     @resources = @deposit.resources.recent.all
+    @weblinks = @deposit.weblinks
 
     respond_to do |format|
       format.html # show.html.erb
