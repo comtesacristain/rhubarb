@@ -16,13 +16,13 @@
 <%#TODO Year should be integer year - not date. Date should be date. Change Resource model to reflect that -%>
 <%- @deposits.each do |deposit| -%>   
   <%- if @commodity.in?(['Cbl', 'Cbr'])-%>
-    <%- recoverable = deposit.resources.merge(Resource.mineral(@commodity).recoverable.nonzero.year(@date)).all -%>
-    <%- insitu = deposit.resources.merge(Resource.mineral(@commodity).insitu.nonzero.year(@date)).all -%>
+    <%- recoverable = deposit.resources.merge(Resource.mineral(@commodity).recoverable.nonzero.year(@year)).all -%>
+    <%- insitu = deposit.resources.merge(Resource.mineral(@commodity).insitu.nonzero.year(@year)).all -%>
     <%- recoverable_row = build_resource_csv(recoverable)-%>
     <%- insitu_row = build_resource_csv(insitu)-%>
     <%- resources_row = recoverable_row + insitu_row -%>
   <%- else -%>
-    <%- resources = deposit.resources.merge(Resource.nonzero.year(@date).includes(:resource_grades)).all -%>
+    <%- resources = deposit.resources.merge(Resource.nonzero.year(@year).includes(:resource_grades)).all -%>
     <%- resources_row = build_resource_csv(resources) -%>
   <%- end -%>
   <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms), deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude, deposit.commodity_list.try(:commodids)] -%>
