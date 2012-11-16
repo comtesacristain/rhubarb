@@ -1,5 +1,6 @@
 class DepositsController < ApplicationController
   before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc]
+  before_filter :define_year, :only => [:resources, :jorc]
   before_filter :require_ozmin_user, :only => [:resources, :quality_check]
   before_filter :filename_generator
 
@@ -40,33 +41,27 @@ class DepositsController < ApplicationController
   end
 
   def resources
-    if params[:year].blank?
-      params[:year] = 2010
-    end
-    if !params[:type]
-      params[:type] = ['ore','commodity','grade']
-    end
-    if !params[:resource]
-      params[:resource] = ['total']
-    end
-    @date = '31-DEC-'+params[:year].to_s
-    #@scope = @scope.includes(:resources => :resource_grades)
+    
+    # if !params[:type]
+      # params[:type] = ['ore','commodity','grade']
+    # end
+    # if !params[:resource]
+      # params[:resource] = ['total']
+    # end
     if params[:commodity] and params[:commodity] != "All"
       if CommodityType.aliases.keys.include?(params[:commodity])
         @commodity = CommodityType.aliases[params[:commodity]]
       else
         @commodity = params[:commodity]
       end
-      #@scope = @scope.merge(Resource.mineral(@commodity).year(@date))
-	  end
+ 	  end
 
-    #@scope = @scope.merge(ResourceGrade.mineral(params[:commodity])) if params[:commodity] and params[:commodity] != "All"
     unless params[:format]
       @scope = @scope.page(params[:page]).order('entityid ASC')
     else
       @scope = @scope.all
     end
-	  @deposits = @scope #Deposit.mineral('Au').includes(:zones => {:resources => :resource_grades}).merge(Resource.year('31-DEC-2010')).merge(ResourceGrade.mineral('Au'))
+	  @deposits = @scope
 
 
     respond_to do |format|
@@ -81,9 +76,8 @@ class DepositsController < ApplicationController
       else
         @commodity = params[:commodity]
       end
-      #@scope = @scope.merge(Resource.mineral(@commodity).year(@date))
+
 	  end
-    @scope = @scope#.includes(:resources => :resource_grades).merge(Resource.mineral(@commodity))
     @deposits=@scope
     
     respond_to do |format|
@@ -125,9 +119,7 @@ class DepositsController < ApplicationController
 
   private
   def define_scope
-    
-    
-    
+      
 	  scope =  if params[:province_id]
       Province.find(params[:province_id]).deposits
     else
@@ -191,5 +183,14 @@ class DepositsController < ApplicationController
 		
 		@filename = parameter_array.join('_')
 	end
+
+  def define_year
+    if params[:year].blank?
+      @year = 2010
+    else
+      @year = params[:year].to_i
+    end
+  end
+  
 
 end
