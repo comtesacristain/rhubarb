@@ -14,8 +14,7 @@ class Resource < ActiveRecord::Base
   default_scope :order => "recorddate desc"
 
   scope :recent, where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
-	# Change to name of scope to date
-  scope :year , lambda  { |y| {:conditions => ["mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno and r.recorddate <= ?)", y] } }
+	
 	scope :mineral, lambda { |min| { :include=>:resource_grades, :conditions=> ["mgd.resource_grades.commodid in (:mineral)", {:mineral => min}] } }
 
   #scope :mineral, joins(:resource_grades) & ResourceGrade.mineral
@@ -43,6 +42,16 @@ class Resource < ActiveRecord::Base
   # def self.mineral(mineral)
     # self.joins(:resource_grades).where(:resource_grades=>{:commodid => mineral}).uniq
   # end
+	
+	def self.year(year)
+	  date = Date.new(year).end_of_year
+	  self.date(date)
+	end
+	
+	
+	def self.date(date)
+	  self.where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno and r.recorddate <= ?)", date)
+	end
 	
 	#this
 	# deposit.resources & Resource.recent.nonzero.includes(:resource_grades)
