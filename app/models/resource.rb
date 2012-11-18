@@ -39,6 +39,10 @@ class Resource < ActiveRecord::Base
     return pvr==0 && pbr==0 && ppr==0 && mrs==0 && idr==0 && mid==0 && ifr==0 && other==0
   end
   
+  def nonzero?
+    return pvr!=0 || pbr!=0 || ppr!=0 || mrs!=0 || idr!=0 || mid!=0 || ifr!=0 || other!=0
+  end
+  
   # def self.mineral(mineral)
     # self.joins(:resource_grades).where(:resource_grades=>{:commodid => mineral}).uniq
   # end
