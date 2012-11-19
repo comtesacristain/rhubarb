@@ -109,7 +109,16 @@ class DepositsController < ApplicationController
       deposit = deposit.public
     end
     @deposit = deposit.find(params[:id].to_i)
-    @resources = @deposit.resources.recent.all
+    
+    
+    # TODO When fetching resource records check if public
+    @zones=@deposit.zones
+    current_zones = @zones.includes(:resources).merge(Resource.recent.nonzero).all
+    zeroed_zones = @zones.includes(:resources).merge(Resource.recent.zeroed).all
+    empty_zones = @zones.includes(:resources).where(:resources => {:eno => nil}).all
+    @zone_array = [current_zones,zeroed_zones,empty_zones]
+    @current_resources = @deposit.resources.recent.nonzero.all
+    
     @weblinks = @deposit.weblinks
 
     respond_to do |format|

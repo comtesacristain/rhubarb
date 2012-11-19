@@ -17,10 +17,9 @@
 %p
     #map.smallmap
     #latlong Click map for coordinates 
-    - if (current_user && current_user.ozmin?)
+    - if (current_user && current_user.ozmin?) && !@current_resources.empty?
         %h3 Identified Resources
-        - resource=@deposit.resources.merge(Resource.recent).all
-        - identified_resource = IdentifiedResourceSet.new(resource)
+        - identified_resource = IdentifiedResourceSet.new(@current_resources)
         %table{:class=>:resource}
             %tr
                 %th Commodity
@@ -109,50 +108,29 @@
         %p
             %i
                 %a{:href=>"http://www.australianminesatlas.gov.au/?site=atlas&x=#{@deposit.longitude}&y=#{@deposit.latitude}&z=2.565"} View in Mines Atlas
-    - weblinks = @deposit.weblinks
-    - unless weblinks.length == 0
+    - unless @weblinks.length == 0
         %h3 Links of interest
         %ul
-            - weblinks.each do |w|
+            - @weblinks.each do |w|
                 %li
                     %a{:href=>w.website.url}= w.website.description
-    - zones = @deposit.zones.order(:entityid)
-    - unless (current_user && current_user.ozmin?)
-        - zones = zones.public
-    - unless zones.length == 0
-        %h3 Reserves and resources
-        - dead_zones = Array.new
-        - zones.each do |zone|
-            - @resource = zone.resources.recent.nonzero.first
-            - if @resource.nil?
-                - dead_zones << zone
-            - else
-                %p
-                    %h4= link_to zone.name, zone
-                    =render('resources/resource')
-        - if dead_zones.length > 0 
-            - if dead_zones.length == zones.length
-                %i There are no active reserves or resources associated with this deposit.
-            %h3 Other zones
-            - null_zones = Array.new
-            - dead_zones.each do |dead_zone|
-                - resources = dead_zone.resources
-                - if resources.empty?
-                    - null_zones << dead_zone
-                - else
-                    %h4.zeroed= link_to "#{dead_zone.name} (Zeroed)", dead_zone
-            - if null_zones.length > 0
-                - null_zones.each do |null_zone|
-                    %h4.null= link_to "#{null_zone.name} (Empty)", null_zone
-        //%h3 Files
+    - unless @zone_array.empty?
+        - @zone_array.each do |zones|
+            - zones.each do |zone|
+                - @zone=zone
+                - @resource=@zone.resources.first
+                = print_zone_for_show
+                - unless @resource.nil? || @resource.zero?
+                    = render('resources/resource')
+    - else
+        %p
+            %i There are no mineralized zones associated with this deposit
+    -#%h3 Files
         -# bloblinks = @deposit.bloblinks
         -# bloblinks.each do |bloblink|
             -# blob = Blob.safe(bloblink.blobno).first
             //%p= blob.name
             =# link_to 'Show', blob
-    - else
-        %p
-            %i There are no mineralized zones associated with this deposit
 - content_for(:controller_nav) do
     %p= render :partial => "deposits/links"
 - content_for(:title_bar) do

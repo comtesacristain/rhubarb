@@ -98,7 +98,6 @@ module DepositsHelper
     #      return units_row + resource_row + reserves_row + economic_row + paramarginal_row + submarginal_row + inferred_row
     #    end
   end
-
   
   def build_jorc_csv(resource,grade)
     codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
@@ -118,4 +117,19 @@ module DepositsHelper
     @@unit_codes= Hash[UnitCode.all.map {|u| [u.unitcode,u.unitvalue.to_f]}]
     return @resource * @grade * @@unit_codes[@unit_grade] rescue nil
   end
+
+  def print_zone_for_show
+    capture_haml do
+      options = case 
+      when @resource.nil? then {:style=>'null',:text=>'(Empty)'}
+      when @resource.zero? then {:style=>'zeroed',:text=>'(Zeroed)'}
+      else {:style=>'',:text=>''}
+      end
+      haml_tag "h4.#{options[:style]}" do
+        haml_concat link_to("#{@zone.name} #{options[:text]}",@zone)
+      end
+    end
+  end
+
+
 end
