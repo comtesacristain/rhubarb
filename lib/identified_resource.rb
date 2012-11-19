@@ -133,6 +133,7 @@ class IdentifiedResource
 
   # Set reserves with calculation
   def set_reserves(r, g, code, acc)
+    
     ore = r.send(code).to_f * @@unit_codes[r.unit_quantity]
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
@@ -142,8 +143,12 @@ class IdentifiedResource
     identify_resources(g, resource, classes)
 
     self.instance_variable_set("@#{acc}", resource)
-    @reserves[:ore]+=ore
-    @reserves[:mineral]+=mineral
+    
+    # Only count current resources
+    if r.current?
+      @reserves[:ore]+=ore
+      @reserves[:mineral]+=mineral
+    end
   end
 
 

@@ -62,4 +62,8 @@ class Resource < ActiveRecord::Base
 	#this
 	# deposit.resources & Resource.recent.nonzero.includes(:resource_grades)
 	
+	def current?
+	  return current_r == "N" ? false : true 
+	end
+	
 end
