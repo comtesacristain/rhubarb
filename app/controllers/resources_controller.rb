@@ -66,7 +66,7 @@ class ResourcesController < ApplicationController
     if CommodityType.aliases.keys.include?(params[:commodity])
       commodity = CommodityType.aliases[params[:commodity]]
     else
-      commodity = params[:commodity]
+      commodity = CommodityType.where(:convertedcommod=>params[:commodity]).pluck(:commodid)
     end
 
     if params[:year]
