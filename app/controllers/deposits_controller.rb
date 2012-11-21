@@ -118,6 +118,8 @@ class DepositsController < ApplicationController
     empty_zones = @zones.includes(:resources).where(:resources => {:eno => nil}).all
     @zone_array = [current_zones,zeroed_zones,empty_zones]
     @current_resources = @deposit.resources.recent.nonzero.all
+    @provinces = @deposit.provinces
+    
     
     @weblinks = @deposit.weblinks
 

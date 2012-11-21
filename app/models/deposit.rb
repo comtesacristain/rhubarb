@@ -24,7 +24,7 @@ class Deposit < Entity
 
   # Provinces
   has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :deposno
-  belongs_to :provinces
+  has_many :provinces, :through => :province_deposits
 
   scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }
 	scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }

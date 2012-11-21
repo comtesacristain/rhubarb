@@ -25,7 +25,7 @@
                 %th Commodity
                 %th Type
                 %th Units
-                %th JORC Reserves
+                %th Reserves
                 %th EDR
                 %th Para-marginal
                 %th Sub-marginal
@@ -108,6 +108,14 @@
         %p
             %i
                 %a{:href=>"http://www.australianminesatlas.gov.au/?site=atlas&x=#{@deposit.longitude}&y=#{@deposit.latitude}&z=2.565"} View in Mines Atlas
+    %h3 Provinces
+    - unless @provinces.empty?
+        %ul
+            - @provinces.each do |province|
+                %li= link_to province.entityid, province
+    - else
+        %p
+            %i There are no provinces associated with this deposit.
     - unless @weblinks.length == 0
         %h3 Links of interest
         %ul
