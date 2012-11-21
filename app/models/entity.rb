@@ -37,4 +37,9 @@ class Entity < ActiveRecord::Base
     return conditions
   end
   
+  def self.intersect(id)
+     where("SDO_ANYINTERACT(#{table_name}.geom, (select geom from a.entities where eno = #{id})) = 'TRUE'")
+
+  end
+  
 end
