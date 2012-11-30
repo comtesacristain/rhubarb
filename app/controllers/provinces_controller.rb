@@ -2,10 +2,13 @@ class ProvincesController < ApplicationController
   before_filter :define_scope, :only => [:index]
 
   def index
+    
+
+    
     unless params[:format]
       @scope = @scope.paginate :page => params[:page] , :order => 'entityid ASC' unless params[:format]
 	  else
-      @scope = @scope.all
+      @scope = @scope
 	  end
 
     @provinces=@scope
@@ -15,6 +18,18 @@ class ProvincesController < ApplicationController
       format.xml  { render :xml => @provinces}
       format.kml
     end
+  end
+  
+  def deposits
+    unless params[:q].blank?
+      @provinces=Province.by_name(params[:q]).find_with_deposit_as_keys
+    else
+      @provinces=Province.find_with_deposit_as_keys
+    end
+    
+     respond_to do |format|
+       format.json { render :json =>@provinces}
+     end
   end
 
   def show
@@ -27,6 +42,7 @@ class ProvincesController < ApplicationController
       format.kml
     end
   end
+
 
   private
   def define_scope
