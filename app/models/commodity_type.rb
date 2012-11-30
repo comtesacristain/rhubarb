@@ -37,4 +37,28 @@ class CommodityType < ActiveRecord::Base
     a["All"]=nil
     return self.aimr.merge(a)
   end
+  
+  # Queries
+  
+   def self.by_name(name)
+     self.where("upper(commodname) like ?","%#{name.upcase}%")
+   end
+#   
+  # # Lookups
+#   
+  # def self.names(name=nil)
+    # unless name.nil?
+      # return self.by_name(name).uniq.pluck(:commodname)
+    # else
+     # return self.uniq.pluck(:commodname)
+    # end
+  # end
+  def self.find_as_keys(id=nil)
+    unless id.nil?
+      commodity_types=self.find(id)
+    else
+      commodity_types=self.all
+    end
+    return commodity_types.collect{|ct| {:id=>ct.commodid,:name=>ct.commodname}}
+  end
 end
