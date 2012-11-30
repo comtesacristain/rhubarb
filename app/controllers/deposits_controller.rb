@@ -129,14 +129,31 @@ class DepositsController < ApplicationController
       format.kml
     end
   end
+  
+  # JSON look ups
+  
+  def names
+    names=Deposit.names(params[:q])
+    @names = names.collect  {|name| Hash[:id,name,:name,name]}
+    respond_to do |format|
+      format.json {render :json => @names}
+    end
+  end
+  
+  # Private
 
   private
   def define_scope
       
-	  scope =  if params[:province_id]
-      Province.find(params[:province_id]).deposits
+    #TODO Possibly change to be like Websites below  
+	  scope =  unless params[:province_id].blank?
+	    Province.find(params[:province_id]).deposits
     else
       Deposit
+    end
+    
+    unless params[:company_id].blank?
+      scope = scope.joins(:websites).where(:websites=>{:websiteno=>params[:company_id]})
     end
     
     unless (current_user ) #&& current_user.ozmin?
@@ -145,23 +162,35 @@ class DepositsController < ApplicationController
     
     unless params[:commodity].blank?
       if CommodityType.aliases.keys.include?(params[:commodity])
-        commodity = CommodityType.aliases[params[:commodity]]
+        @commodity = CommodityType.aliases[params[:commodity]]
       else
-        commodity = params[:commodity]
+        @commodity = params[:commodity].split(",")
       end
       unless (current_user && current_user.ozmin?)
-        scope = scope.mineral(commodity).merge(Commodity.public)
+        scope = scope.mineral(@commodity).merge(Commodity.public)
       else
-        scope = scope.mineral(commodity)
+        scope = scope.mineral(@commodity)
       end
 	  end
     #
-	  scope = scope.state(params[:state]) unless params[:state].blank?
-	  scope = scope.status(params[:status]) unless params[:status].blank?
+    unless params[:state].blank?
+      @state=params[:state].split(",")
+      scope = scope.state(@state)
+    end
+    
+    unless params[:status].blank?
+      @status=params[:status].split(",")
+      scope = scope.status(@status)
+    end
+ 	  
+	  # TODO ugh no!
 	  scope = scope.bounds(eval("["+params[:bbox]+"]")) unless params[:bbox].blank?
+	  
 	  scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  @scope = scope
 	end
+
+  #TODO Should this be in a helper?
 
 	def filename_generator
 		parameter_array = Array.new
