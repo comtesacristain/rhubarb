@@ -6,6 +6,8 @@
 								Commodities: #{deposit.commodity_list.try(:commodids)}")
     end
     xml.name deposit.name
+    #TODO Refactor so deposit status attributes are grabbed from the deposit model
+    unless deposit.deposit_status.nil?
     if deposit.deposit_status.operating_status == 'historic mine'
       if deposit.resources.recent.nonzero.empty?
         status = deposit.deposit_status.operating_status rescue nil
@@ -14,6 +16,7 @@
       end
     else
       status = deposit.deposit_status.operating_status rescue nil
+    end
     end
     xml.styleUrl "#"+status rescue nil
     xml.tag! "Point" do
