@@ -73,9 +73,11 @@
                 %tr
                     %td Interfingers
                     %td= raw @province.interfingering_provinces.map{|province| link_to province.entityid, province}.to_sentence
-        %h3= link_to 'Deposits', province_deposits_path(@province)
+        -#%h3= link_to 'Deposits', province_deposits_path(@province)
+        %h3 Deposits
         - deposits = @province.deposits
         - unless deposits.empty?
+            %h4= link_to 'Associations', deposits_path(:province_id=>@province.id)
             %table{:width=>"100%"}
                 %tr
                     %th Name
@@ -87,6 +89,21 @@
         - else
             %p
                 %i This province has no deposits associated with it.
+        - intersecting_deposits = Deposit.intersect(@province.id)
+        - unless intersecting_deposits.empty?
+            %h4 Intersections
+            %table{:width=>"100%"}
+                %tr
+                    %th Name
+                    %th Commodities
+                - intersecting_deposits.each do |deposit|
+                    - unless deposit.id.in?(deposits.pluck('a.entities.eno')) 
+                        %tr
+                            %td= link_to deposit.name, deposit
+                            %td= deposit.commodity_list.try(:commodids)
+        - else
+            %p
+                %i This province has no deposits intersecting with it.
 - content_for(:controller_nav) do
     %p= render :partial => "provinces/links"
 - content_for(:sidebar) do
