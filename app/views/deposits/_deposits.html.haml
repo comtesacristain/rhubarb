@@ -30,6 +30,6 @@
                 - else
                     - image = 'blank-circle.png'
                 =image_tag(image, :alt=>status.titleize, :title=>status.titleize)
-                =link_to truncate(deposit.entityid), deposit, :title=>deposit.entityid
+                =link_to deposit.entityid.truncate(25), deposit, :title=>deposit.entityid
             %div.commodities
                 = truncate(deposit.commodity_list.try(:commodnames), :length=>80)
