@@ -15,6 +15,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
       if province.geom
         xml.tag! "Placemark" do
           xml.description do
+            #TODO Change province deposits.
             deposits = province.province_deposits
             d=String.new
             deposits.each do |deposit|
