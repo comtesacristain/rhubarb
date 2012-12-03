@@ -1,0 +1,21 @@
+%p
+    %table
+        %tr
+            %th &nbsp;
+            %th Name
+            %th Geometry
+        - @surveys.each do |survey|
+            %tr
+                %td= h survey.eno
+                %td= link_to survey.surveyname, survey
+                %td= 'Yes' unless survey.navigation.geom.nil?
+%p= will_paginate @surveys
+- content_for(:head) do
+    = javascript_include_tag 'surveys', "jquery.tokeninput"
+    = stylesheet_link_tag "application", "token-input"
+- content_for(:title_bar) do
+    ==Surveys: Index
+- content_for(:sidebar) do
+    %p= render :partial => "surveys/query"
+- content_for(:sidebar) do
+    %p= render :partial => "surveys/format"

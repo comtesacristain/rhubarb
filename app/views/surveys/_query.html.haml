@@ -1,0 +1,17 @@
+%h2 Query
+%p
+    = form_tag url_for(params), :method => :get do
+        %table
+            %tr
+                %td= label_tag :name, "Name:"
+                %td= text_field_tag "name", params[:name]
+            %tr
+                %td= label_tag :type, "Type:"
+                %td= select_tag "type", options_for_select(@types, params[:type])
+            %tr
+                %td= label_tag :operator, "Operator:"
+                %td= text_field_tag "operator", params[:operator]
+            %tr
+                %td= label_tag :vessel, "Vessel:"
+                %td= text_field_tag :vessel, '', 'data-pre' =>[{:id=>params[:vessel],:name=>params[:vessel]}].to_json
+        =submit_tag "Search", :name=>nil
