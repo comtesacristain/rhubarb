@@ -14,7 +14,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
       xml.styleUrl "#province"
       xml << @province.geom.as_georuby.as_kml unless @province.geom.nil?
     end
-    @deposits = @province.deposits
-    xml << render(:partial => 'deposits/deposits')
+    #@deposits = @province.deposits
+    #xml << render(:partial => 'deposits/deposits')
   end
 end
