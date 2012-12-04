@@ -1,0 +1,105 @@
+table.resource {
+width: 95%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    color: #777777;
+
+}
+
+table.resource th {
+    text-align: center;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid #777777;
+}
+
+table.resource th.reserves {
+    text-align: center;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid #777777;
+    /*    border-left: hidden;
+        border-right: 1px solid #777777;
+        border-top: hidden;
+        border-bottom: 1px solid #777777;*/
+}
+
+table.resource th.resources {
+    text-align: center;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid #777777;
+    /*    border-left: 1px solid #777777;
+        border-right: hidden;
+        border-top: hidden;
+        border-bottom: 1px solid #777777;*/
+}
+
+
+table.resource th.blank {
+    background-color: #ffffff;
+    padding: 2px;
+    border: none;}
+
+table.resource td {
+    /*    background-color: #eeeeee;*/
+    border: 1px solid #777777;
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+}
+
+table.resource tr {
+    
+    background-color: #eeeeee;
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+}
+
+table.resource tr.confidential {
+    background-color: #ffdddd;
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+}
+
+table.resource tr.zeroed {
+    background-color: #ffdddd;
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+    font-style: italic;
+}
+
+/* Resource navigation buttons */
+
+table.resource_nav {
+    width: 95%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    color: #777777;
+
+}
+
+table.resource_nav td.previous{
+    background-color: #eeeeee;
+    width: 6em;
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+}
+
+table.resource_nav td.blank{
+    text-align: center;
+    padding: 2px;
+    color: #777777;
+}
+
+table.resource_nav td.next{
+    background-color: #eeeeee;
+    text-align: center;
+    padding: 2px;
+    width: 6em;
+    color: #777777;
+}

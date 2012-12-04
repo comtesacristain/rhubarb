@@ -1,0 +1,55 @@
+.deposit {
+    background: #eeeeee;
+    border: 1px solid #e5e5e5;
+    height: 100px;
+    width: 98%;
+    margin-bottom: 15px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: 3px 3px 3px #888;
+    -webkit-box-shadow: 3px 3px 3px #888;
+    box-shadow: 3px 3px 3px #888;
+
+}
+
+/*.deposit:hover{
+    background: #ffffee;
+
+}*/
+
+.deposit.invisible {
+    border: 1px solid #ffe5e5;
+    background: #ffeeee;
+}
+
+.eno {
+    color: #777777;
+    padding:3px;
+    font-size: 0.85em;}
+
+.name {
+    margin-bottom: 4px;
+    margin-top: 10px;
+    margin-left: 40px;
+    font-size: 24pt;
+}
+
+.coordinates {
+    display:block;
+    float:right;
+    /*set the div in the top right corner*/
+    position:inherit;
+    font-size: 0.85em;
+    font-style: italic;
+    padding:3px;
+    color: #777777;
+}
+
+.commodities {
+    position:inherit;
+    font-size: 0.85em;
+    padding:3px;
+    color: #777777;
+    margin-left: 65px;
+    font-style: italic;
+}
