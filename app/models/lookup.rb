@@ -16,4 +16,22 @@ class Lookup < ActiveRecord::Base
     return {"Australian Capital Territory"=>"ACT","New South Wales"=>"NSW","Northern Territory"=>"NT","Queensland"=>"QLD","South Australia"=>"SA","Tasmania"=>"TAS","Victoria"=>"VIC","Western Australia"=>"WA","Australia" => nil}
   end
   
+  def self.operating_statuses
+    return where(:type=>'OPERATING STATUS')
+  end
+  
+  def self.by_value(value)
+    return where("upper(value) like ?","%#{value.upcase}%")
+  end
+  
+  
+  def self.find_as_keys(keys=nil)
+    #TODO This works for operating only. Change for other lookups
+    unless keys.nil?
+        self.where(:value=>keys).collect{|l| {:id=>l.value,:name=>l.value.titleize}}
+      else
+        self.all.collect{|l| {:id=>l.value,:name=>l.value.titleize}}
+    end
+      
+  end
 end
