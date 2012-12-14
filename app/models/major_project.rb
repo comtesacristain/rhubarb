@@ -1,7 +1,9 @@
 class MajorProject < Entity
 
 
-  default_scope :conditions => {:entity_type => 'RESOURCE PROJECT'}, :order => :entityid
+  def self.default_scope
+    where(:entity_type => 'RESOURCE PROJECT')
+  end
 
   
 
