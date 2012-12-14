@@ -6,7 +6,7 @@
 
 #content {
   float: left;
-  background: white url(../images/threecolbg.gif) repeat-y 76% 0;
+  background: white url(/assets/threecolbg.gif) repeat-y 76% 0;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px; }
