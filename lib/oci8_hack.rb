@@ -146,6 +146,53 @@ OCI8::Object::Base.class_eval do
           raise "unsupported dimenstion for linestring: #{d}"
         end
         return georb
+      elsif t==6 # MULTILINESTRING
+        
+        multilinestring = Array.new
+        coords=Array.new
+        elements = Array.new
+        attributes[:sdo_elem_info].instance_variable_get("@attributes").each{|item| elements << item.to_i}
+        if elements.size % 3 == 0
+          elements = elements.each_slice(3).to_a
+        else
+          raise "unidentified SDO_ELEM_INFO type"
+        end
+        attributes[:sdo_ordinates].instance_variable_get("@attributes").each{|c| coords << c.to_f}
+        
+        
+        i=0
+        while i < elements.size
+          linestring = Array.new
+          s = elements[i].first - 1
+
+          unless i == elements.size-1
+            e = elements[i+1].first - 1
+          else
+            e = coords.size
+          end
+
+          n=s+d-1
+          while s < e
+            point = coords[s..n]
+            linestring << point
+            s=n+1
+            n=s+d-1
+          end
+          i+=1
+          multilinestring << linestring
+        end
+        if d == 3 # 3D line
+          georb = GeoRuby::SimpleFeatures::MultiLineString.from_coordinates(multilinestring,
+            4326, true)
+        elsif d == 2 # 2D line
+          georb = GeoRuby::SimpleFeatures::MultiLineString.from_coordinates(multilinestring,
+            4326)
+        else
+          raise "unsupported dimenstion for linestring: #{d}"
+        end
+        return georb
+        
+        
       elsif t==7 # MultiPolygon
         polygon = Array.new
         multipolygon = Array.new
@@ -153,13 +200,12 @@ OCI8::Object::Base.class_eval do
         elements = Array.new
         attributes[:sdo_elem_info].instance_variable_get("@attributes").each{|item| elements << item.to_i}
         if elements.size % 3 == 0
-          elements = elements.in_groups_of(3)
+          elements = elements.each_slice(3).to_a
         else
           raise "unidentified SDO_ELEM_INFO type"
         end
 
-        attributes[:sdo_ordinates].instance_variable_get("@attributes").each{|c|
-          coords << c.to_f}
+        attributes[:sdo_ordinates].instance_variable_get("@attributes").each{|c| coords << c.to_f}
         i=0
         while i < elements.size
           linear_ring = Array.new
