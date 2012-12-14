@@ -6,7 +6,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
       xml.tag! "IconStyle" do
         xml.scale 0.4
         xml.tag! "Icon" do
-          xml.href "http://#{domain}/images/pink-star.png"
+          xml.href "http://#{domain}/assets/pink-star.png"
         end
         xml.outline 0
       end
