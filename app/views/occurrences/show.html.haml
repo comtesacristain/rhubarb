@@ -1,18 +1,16 @@
 =content_for(:head) do
     = render "shared/map"
-    = javascript_include_tag "map"
+    = javascript_include_tag :rhubarb
     %script{:type => "text/javascript"}
-        init_opts = {
-        - unless @occurrence.longitude == nil || @occurrence.latitude == nil
-            longitude: #{@occurrence.longitude},
-            latitude: #{@occurrence.latitude},
-            zoom: 14
-        - else
-            longitude: 149.158362,
-            latitude: -35.344028,
-            zoom: 17
+     
+        var options = {
+        layerOptions : #{raw params.to_json},
+        centreLongitude: #{@occurrence.longitude},
+        centreLatitude: #{@occurrence.latitude},
+        zoomLevel: 15
         }
-        $(document).ready(function(){initialize(init_opts);});
+
+        $(document).ready(function(){ new Rhubarb('map',options);});
 %p
     #map.smallmap
 - content_for(:sidebar) do
