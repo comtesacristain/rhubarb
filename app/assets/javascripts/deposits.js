@@ -32,12 +32,12 @@ $(function () {
   	prePopulate: $('#status').data('pre')
   	});
   	
-  	$('#deposit_province_deposits_eno').tokenInput('/provinces/deposits.json', { 
+  	$('#deposit_province_tokens').tokenInput('/provinces/deposits.json', { 
   	crossDomain: false,
   	preventDuplicates: true,
   	resultsLimit: 20,
-  	tokenLimit: $('#deposit_province_deposits_eno').data('tokenlimit'),
-  	prePopulate: $('#deposit_province_deposits_eno').data('pre')
+  	deleteText: "",
+  	prePopulate: $('#deposit_province_tokens').data('pre')
   	});
   	
   	$('#province_id').tokenInput('/provinces/deposits.json', { 
