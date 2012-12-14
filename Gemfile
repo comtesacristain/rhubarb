@@ -3,24 +3,16 @@ source 'http://rubygems.org'
 gem 'rails'
 
 
-# Bundle edge Rails instead:
-# gem 'rails', '3.1.0'
 
-#platforms :mingw do
-#   gem 'ruby-oci8'
-#   gem 'sqlite3-ruby', :require => 'sqlite3'
-#end
-platforms :ruby do
-   gem 'ruby-oci8'
-   gem 'sqlite3-ruby', :require => 'sqlite3'
-end
-gem 'activerecord-oracle_enhanced-adapter', '~>1.4.0'
+gem 'ruby-oci8'
+gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'activerecord-oracle_enhanced-adapter'
 
 
 
 #gem 'sqlite3'
 gem 'i18n'
-
+gem 'jquery-rails'
 
 gem 'haml'
 gem 'sass'
@@ -30,9 +22,20 @@ gem 'net-ldap', :require => 'net/ldap'
 gem 'formtastic'
 gem 'GeoRuby', :require => 'geo_ruby'
 #gem 'csv'
+gem 'sprockets'
+gem 'sprockets-commonjs'
 
+#TODO ugh fix
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
 
-#gem 'nifty-generators'
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
 gem 'exception_notification', :require => 'exception_notifier'
 
 #gem 'thin'
