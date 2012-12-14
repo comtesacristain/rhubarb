@@ -68,6 +68,8 @@ class DepositsController < ApplicationController
   	  format.csv {response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}.csv\""}
     end
   end
+  
+  
 
   def jorc
     if params[:commodity] and params[:commodity] != "All"
@@ -130,10 +132,30 @@ class DepositsController < ApplicationController
     end
   end
   
+  def edit
+    id=params[:id].to_i
+    @deposit=Deposit.find(id)
+    @deposit.province_deposits.build
+    @provinces = @deposit.provinces
+    
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+  
+  def update
+    id=params[:id].to_i
+    @deposit = Deposit.find(params[:id])
+    attributes=params[:deposit]
+    #attributes[:province_deposits][:province]=attributes[:province_deposits][:province].split(",")
+    @deposit.update_attributes(attributes) ?
+      redirect_to(deposit_path(@deposit )) : render(:action => :edit)
+  end
+  
   # JSON look ups
   
   def names
-    names=Deposit.names(params[:q])
+    names=Deposit.order(:entityid).names(params[:q])
     @names = names.collect  {|name| Hash[:id,name,:name,name]}
     respond_to do |format|
       format.json {render :json => @names}
