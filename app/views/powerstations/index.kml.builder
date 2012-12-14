@@ -29,13 +29,14 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
 				end
 			end
 		end
+		#TODO Fix folder problem.
 		statuses.each do |status|
 			xml.tag! "Folder" do
 				xml.name status.titleize
-				fuel_types.keys.sort.each do |fuel_type|
-					xml.tag! "Folder" do
-						xml.name fuel_type.titleize
-						@powerstations.send(status).send(fuel_type).each do |powerstation|
+				#fuel_types.keys.sort.each do |fuel_type|
+					#xml.tag! "Folder" do
+						#xml.name fuel_type.titleize
+						@powerstations.send(status).each do |powerstation|
 							xml.tag! "Placemark" do
 								xml.description do
 									xml.cdata!("<table><tr><td><img src='http://www.ga.gov.au/renewable/#{powerstation.image_name}' /></td><td width='200px'>
@@ -55,11 +56,11 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
 									xml.heading 0
 								end
 								xml.name powerstation.name
-								xml.styleUrl fuel_type
+								#xml.styleUrl fuel_type
 								xml.tag! "Point" do
 									xml.coordinates "#{powerstation.longitude},#{powerstation.latitude}"
-								end
-							end
+								#end
+							#end
 						end
 					end
 				end
