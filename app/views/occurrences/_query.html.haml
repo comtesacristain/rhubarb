@@ -9,8 +9,8 @@
                 %td= text_field_tag "name", params[:name]
             %tr
                 %td State:
-                %td= select_tag "state", options_for_select(states, params[:state])
+                %td= text_field_tag :state, '', 'data-pre' => (State.find_as_keys(@state).to_json unless @state.nil?)
             %tr
                 %td Commodity:
-                %td= select_tag "commodity", options_for_select(CommodityType.all_commodities.sort, params[:commodity])
+                %td= text_field_tag :commodity, '', 'data-pre' =>  (CommodityType.find_as_keys(@commodity).to_json unless @commodity.nil?)
         =submit_tag "Search", :name=>nil
