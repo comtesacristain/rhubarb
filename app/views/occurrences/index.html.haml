@@ -15,6 +15,9 @@
                 %td.number= "%3.4f" % occurrence.longitude
                 %td.number= "%3.4f" % occurrence.latitude
                 %td= h occurrence.commdnames
+- content_for(:head) do
+    = javascript_include_tag "occurrences", "jquery.tokeninput"
+    = stylesheet_link_tag "application", "token-input"
 - content_for(:sidebar) do
     %p= render :partial => "occurrences/query"
 - content_for(:controller_nav) do
