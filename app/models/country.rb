@@ -1,3 +1,5 @@
 class Country < Entity
-  default_scope where(:entity_type => 'COUNTRY')#, :order => "entityid"
+  def self.default_scope
+    where(:entity_type => 'COUNTRY').merge(super)
+  end
 end
