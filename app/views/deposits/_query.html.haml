@@ -1,7 +1,7 @@
--#TODO Remove these hardcoded lookups
-- states = [["Australia" , nil],["Australian Capital Territory","ACT"],["New South Wales","NSW"],["Northern Territory","NT"],["Queensland","QLD"],["South Australia","SA"],["Tasmania","TAS"],["Victoria","VIC"],["Western Australia","WA"]]
-- status = [["All",nil],["Operating Mines","operating mine"],["Historic Mines","historic mine"],["Mineral Deposits","mineral deposit"]]
--  years=(2000..Date.today.year).to_a
+- years=(2000..Date.today.year).to_a
+- content_for(:head) do
+    = javascript_include_tag "deposits", "jquery.tokeninput"
+    = stylesheet_link_tag "application", "token-input"
 %h2 Query
 %p
     = form_tag url_for(params), :method => :get do
