@@ -1,0 +1,63 @@
+=content_for(:head) do
+    = render "shared/map"
+    = javascript_include_tag "map"
+    = stylesheet_link_tag "jorc"
+    %script{:type => "text/javascript"}
+        init_opts = {
+        - unless @deposit.geom == nil
+            longitude: #{@deposit.longitude},
+            latitude: #{@deposit.latitude},
+            zoom: 14
+        - else
+            longitude: 149.158362,
+            latitude: -35.344028,
+            zoom: 17
+        }
+        $(document).ready(function(){initialize(init_opts);});
+%p
+    #map.smallmap
+    #latlong Click map for coordinates 
+- content_for(:sidebar) do
+    %p
+        %h2= @deposit.name
+        %table{:width=>"100%"}
+            - if @deposit.deposit_status.synonyms
+                %tr
+                    %td Synonyms
+                    %td= @deposit.deposit_status.synonyms
+            %tr
+                %td State
+                %td= @deposit.deposit_status.state
+            %tr
+                %td Commodities
+                %td= @deposit.commodity_list.commodids rescue nil
+            %tr
+                %td Commodity Names
+                %td= @deposit.commodity_list.commodnames rescue nil
+            %tr
+                %td Operating Status
+                %td= @deposit.deposit_status.operating_status.titleize
+    - unless @deposit.geom.nil?
+        %h3 Location
+        %table{:width=>"100%"}
+            %tr
+                %td Longitude
+                %td= "%3.6f" % @deposit.longitude
+            %tr
+                %td Latitude
+                %td= "%3.6f" % @deposit.latitude
+            %tr
+                %td Datum
+                %td GDA94
+    %h3 Provinces
+    = form_for @deposit do |f|
+        %td= f.label :province_tokens, "Province name"
+        %td= f.text_field :province_tokens, 'data-pre' => (@provinces.collect{|p|{:id=>p.eno,:name=>p.entityid}}.to_json)
+        = submit_tag
+- content_for(:head) do
+    = javascript_include_tag "deposits", "jquery.tokeninput"
+    = stylesheet_link_tag "application", "token-input"
+- content_for(:controller_nav) do
+    %p= render :partial => "deposits/links"
+- content_for(:title_bar) do
+    ==Deposits: #{@deposit.name} (#{@deposit.eno})
