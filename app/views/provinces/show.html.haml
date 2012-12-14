@@ -19,9 +19,9 @@
     - unless @province.province_status.overview == nil
         #overview
             %h2 Overview
-            - paragraphs = @province.province_status.overview.split(/\.\s+(?=[A-Z])/)
+            - paragraphs = @province.province_status.overview.split(/((?<=[a-z0-9)][.?!])|(?<=[a-z0-9][.?!]"))\s+(?="?[A-Z])/)
             - paragraphs.each do |para|
-                %p= para+"."
+                %p= para
 - content_for(:sidebar) do
     %p
         %h2= @province.entityid
