@@ -1,0 +1,18 @@
+=content_for(:head) do
+    = render "shared/map"
+    = javascript_include_tag :rhubarb
+    %script{:type => "text/javascript",:defer=>:defer}
+        var options = {layerOptions : #{raw params.to_json}}
+        $(document).ready(function(){
+        var map=new Rhubarb('map',options)
+        });    
+%p
+    #map.smallmap
+- content_for(:sidebar) do
+    %p= render :partial => "occurrences/query"
+- content_for(:controller_nav) do
+    %p= render :partial => "occurrences/links"
+- content_for(:title_bar) do
+    ==Occurrences: Map
+    - unless params[:commodity].blank?
+        == - #{params[:commodity].titleize}         
