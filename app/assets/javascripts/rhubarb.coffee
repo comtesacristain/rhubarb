@@ -45,7 +45,7 @@ class @Rhubarb
     options.layerOptions ? -> 
       @layerOptions = options.layerOptions
     
-    @map = new OpenLayers.Map map, @mapOptions 
+    @map = new OpenLayers.Map map, @mapProperties 
 
     @map.addLayers(@baseLayers)
     @setCentre() if @centrePoint()? and @zoomLevel?
