@@ -2,9 +2,6 @@
     #deposits
         =render('deposits')
         %p= will_paginate @deposits, :inner_window => 3
-- content_for(:head) do
-    = javascript_include_tag "deposits", "jquery.tokeninput"
-    = stylesheet_link_tag "application", "token-input"
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
@@ -13,6 +10,6 @@
     %p= render :partial => "deposits/format"
 - content_for(:title_bar) do
     ==Deposits: Index
-    - unless params[:commodity].nil? || params[:commodity] == "All"
+    - unless params[:commodity].blank?
         == - #{params[:commodity].titleize}
                 
