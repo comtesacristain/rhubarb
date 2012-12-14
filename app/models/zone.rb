@@ -9,7 +9,9 @@ class Zone < Entity
   has_one :status, :class_name => "DepositStatus", :primary_key=>:eno, :foreign_key => :eno
   scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 
-	default_scope :conditions => {:entity_type => 'MINERALISED ZONE'}
+	def self.default_scope
+	  where(:entity_type => 'MINERALISED ZONE').merge(super)
+	end
 
   scope :public, :conditions=> "a.entities.access_code = 'O'"
 
