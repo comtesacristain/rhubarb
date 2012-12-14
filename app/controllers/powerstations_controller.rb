@@ -8,31 +8,22 @@ class PowerstationsController < ApplicationController
     unless params[:format]
       @scope = @scope.paginate :page => params[:page] , :order => 'name ASC' unless params[:format]
 	  else
-      @scope = @scope.all
+      
 	  end
     @powerstations=@scope
 
     respond_to do |format|
 
       format.html # index.html.erb
-      format.xml  { render :xml => @powerstations }
       format.kml
       format.csv
     end
   end
 
   def map
-    @powerstations=Powerstation.fossil_fuel.proposed
-    @map = GMap.new("map_div")
-    @map.control_init(:large_map => true,:map_type => true)
-    @map.center_zoom_init([-27.9,133.2],4)
-    @powerstations.each do |powerstation|
-      @map.overlay_init(GMarker.new([powerstation.latitude,powerstation.longitude],:title => "#{powerstation.name}", :info_window =>  "Name: #{powerstation.name}<br />State: #{powerstation.state}"))
-    end
-    respond_to do |format|
 
+    respond_to do |format|
       format.html # map.html.erb
-      format.xml  { render :xml => @powerstations }
     end
   end
 
