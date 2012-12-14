@@ -1,12 +1,32 @@
 Rhubarb::Application.routes.draw do
-  resources :blobs
-
-  resources :references
-  resources :websites
-
-  resources :major_projects
+  #TODO Clean this up!
+ 
   
+  resources :countries, :major_projects, :references, :blobs, :zones, :commodity_types
   
+  resources :websites do
+    collection do
+      get :companies
+    end
+  end
+  
+  resources :lookups do
+    collection do
+      get :operating_statuses
+    end
+  end
+  
+  resources :surveys do
+    collection do
+      get :vessels, :names, :operators
+    end
+  end
+  
+  resources :deposit_statuses do
+    collection do
+      get :states, :operating_statuses
+    end
+  end
 
   resources :powerstations do
     collection do
@@ -15,11 +35,13 @@ Rhubarb::Application.routes.draw do
   end
 
   resources :provinces do
-    resources :deposits do
-      collection do
-        'resources'
-      end
+    collection do
+      get :deposits
     end
+#    resources :deposits do
+#      collection do
+#        'resources'
+#      end
   end
 
   resources :resources do
@@ -27,8 +49,6 @@ Rhubarb::Application.routes.draw do
       get 'aimr', 'year', 'state', 'identified'
     end
   end
-
-  
 
   resources :users
 
@@ -53,12 +73,9 @@ Rhubarb::Application.routes.draw do
   match 'new_features', :to => "home#new_features"
   match 'search', :to => "home#search"
 
-
-  resources :zones
-
   resources :deposits do
     collection do
-      get 'map', 'resources', 'mineral_system', 'quality_check', 'atlas', 'jorc'
+      get 'map', 'resources', 'mineral_system', 'quality_check', 'atlas', 'jorc','names'
     end
   end
 
