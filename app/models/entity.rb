@@ -2,26 +2,33 @@ class Entity < ActiveRecord::Base
   self.abstract_class = true
 
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "a.entities"
+	self.table_name = "a.entities"
   set_primary_key :eno
-	set_date_columns :entrydate, :qadate, :confid_until, :lastupdate
+	set_date_columns :entrydate, :qadate, :lastupdate, :effective_date, :acquisition_date, :expiry_date
+  ignore_table_columns :confid_until
 
   has_many :entity_attributes, :class_name => "EntityAttribute",  :foreign_key => :eno
 
   scope :bounds, lambda { |bbox| { :conditions => bounds_conditions(bbox) } }
+  
+  
+  # XXX Required due to bad data in the confid_until field
+  def self.default_scope
+    self.where(:confid_until=>nil)
+  end 
 
   def name
     entityid
   end
 
   def latitude
-    if geom != nil
+    if geom?
       return geom.as_georuby.y
     end
   end
 
   def longitude
-    if geom != nil
+    if geom?
       return geom.as_georuby.x
     end
   end
@@ -37,9 +44,17 @@ class Entity < ActiveRecord::Base
     return conditions
   end
   
+  
+  # TODO Probably should pass object, check whether object is of type Entity, then use that Entity's id.
   def self.intersect(id)
      where("SDO_ANYINTERACT(#{table_name}.geom, (select geom from a.entities where eno = #{id})) = 'TRUE'")
-
   end
+
+  def self.not_a_polygon
+    where('entities.get_gtype() <> 3007')
+  end
+  
+  # Change to match other methods
+  scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
   
 end
