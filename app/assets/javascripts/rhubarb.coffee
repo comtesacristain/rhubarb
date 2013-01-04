@@ -5,6 +5,8 @@ class @Rhubarb
   
   map: null
   
+  select: null
+  
   mapProperties:
     projection: new OpenLayers.Projection "EPSG:900913"
     displayProjection: new OpenLayers.Projection "EPSG:4326"
@@ -60,15 +62,51 @@ class @Rhubarb
        url =  url + option + "=" + type + "&"
     layer = new OpenLayers.Layer.Vector @layerOptions.controller
     @map.addLayer layer
+    select = new OpenLayers.Control.SelectFeature layer;
+    @map.addControl select;
+    do select.activate;
     request = OpenLayers.Request.GET
       url: url
-      callback : =>
-        kml = new OpenLayers.Format.KML
-          extractStyles: true
-          extractAttributes: true
-        vectors=kml.read request.responseText
-        for vector in vectors
-          vector.geometry.transform(@displayProjection(), @projection());
-        layer = @map.getLayersByName(@layerOptions.controller)[0]
-        layer.addFeatures(vectors)
-        @map.zoomToExtent layer.getDataExtent()
+      callback : @getDataForLayer 
+        # kml = new OpenLayers.Format.KML
+          # extractStyles: true
+          # extractAttributes: true
+        # vectors=kml.read request.responseText
+        # for vector in vectors
+          # vector.geometry.transform(@displayProjection(), @projection());
+        # layer = @map.getLayersByName(@layerOptions.controller)[0]
+        # layer.addFeatures(vectors)
+        # @map.zoomToExtent layer.getDataExtent()
+
+  getDataForLayer: (request) => 
+    kml = new OpenLayers.Format.KML
+      extractStyles: true
+      extractAttributes: true
+    vectors=kml.read request.responseText
+    for vector in vectors
+      vector.geometry.transform(@displayProjection(), @projection());
+    layer = @map.getLayersByName(@layerOptions.controller)[0]
+    layer.addFeatures vectors 
+    layer.events.on 
+      featureselected: @onFeatureSelect 
+      featureunselected: @onFeatureUnselect
+      #featuresadded: destroyPopups
+    @map.zoomToExtent layer.getDataExtent()
+  onFeatureSelect: (event) ->
+    feature = event.feature
+    content = feature.attributes.description
+    popup = new OpenLayers.Popup.FramedCloud null, feature.geometry.getBounds().getCenterLonLat(),  new OpenLayers.Size(100,100), content, null, true, @onPopupClose
+    feature.popup = popup
+    @map.addPopup popup 
+    
+  onFeatureUnselect: (event) =>
+    @destroyPopups();
+  
+  destroyPopups: ->
+    while @map.popups.length > 0
+      popup=@map.popups[0]
+      @map.removePopup(popup)
+      popup.destroy()
+  
+  onPopupClose: ->
+    do @select.unselectAll
