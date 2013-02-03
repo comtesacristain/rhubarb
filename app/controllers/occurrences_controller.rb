@@ -45,11 +45,11 @@ class OccurrencesController < ApplicationController
       else
         @commodity = params[:commodity].split(",")
       end
-      unless (current_user && current_user.ozmin?)
-        scope = scope.mineral(@commodity).merge(Commodity.public)
-      else
+      #unless (current_user && current_user.ozmin?)
+      #  scope = scope.mineral(@commodity).merge(Commodity.public)
+      #else
         scope = scope.mineral(@commodity)
-      end
+      #end
     end
     
     unless params[:state].blank?

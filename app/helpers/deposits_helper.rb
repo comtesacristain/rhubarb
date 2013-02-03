@@ -99,24 +99,29 @@ module DepositsHelper
     #    end
   end
   
-  def build_jorc_csv(resource,grade)
+  
+  def build_jorc(resources)
     codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
-    jorc = Array.new
-    @unit_grade=grade.unit_grade
-    jorc <<  resource.recorddate << resource.unit_quantity << @unit_grade << grade.commodid << resource.inclusive
-    codes.each do |code|
-      @resource = resource.send(code)
-      @grade = grade.send(code) 
-      contained_mineral = calculate_contained_mineral
-      jorc << @resource << @grade << contained_mineral
+    mineral=Hash.new
+    resources.each do |resource|
+      resource.resource_grades.each do |grade|
+          mineral[grade.commodid]=Hash.new
+        codes.each do |code|
+          mineral[grade.commodid][code]=Hash.new
+          mineral[grade.commodid][code][:ore]=resource.send(code)
+          mineral[grade.commodid][code][:grade]=grade.send(code)
+          mineral[grade.commodid][code][:mineral]=calculate_contained_mineral(resource.send(code), grade.send(code), grade.unit_grade)
+        end
+      end
     end
-    return jorc
+    return mineral
   end
   
-  def calculate_contained_mineral
-    @@unit_codes= Hash[UnitCode.all.map {|u| [u.unitcode,u.unitvalue.to_f]}]
-    return @resource * @grade * @@unit_codes[@unit_grade] rescue nil
+  def calculate_contained_mineral(r,g,u)
+    @@unit_codes= Hash[UnitCode.all.map {|un| [un.unitcode,un.unitvalue.to_f]}]
+    return r * g * @@unit_codes[u] rescue nil
   end
+  
 
   def print_zone_for_show
     capture_haml do

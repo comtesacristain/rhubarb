@@ -23,9 +23,9 @@
     <%- resources_row = recoverable_row + insitu_row -%>
   <%- else -%>
     <%- resources = deposit.resources.merge(Resource.nonzero.year(@year).includes(:resource_grades)).all -%>
-    <%- resources_row = build_resource_csv(resources) -%>
+    <%- resources_row = build_resource_csv(resources) rescue [ "err"]-%>
   <%- end -%>
-  <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms), deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude, deposit.commodity_list.try(:commodids)] -%>
+  <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.try(:synonyms), deposit.deposit_status.try(:state), deposit.deposit_status.try(:operating_status), deposit.longitude, deposit.latitude, deposit.commodity_list.try(:commodids)]-%>
   <%- row =  deposit_row + resources_row -%>
   <%= raw CSV.generate_line row, :row_sep => "\r" -%>
 <%- end -%>

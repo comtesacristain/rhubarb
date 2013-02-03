@@ -80,20 +80,104 @@ class IdentifiedResourceSet < Hash
     return i
   end
   
+  
+  def proven
+    pvr=Hash.new
+    self.keys.each do |k|
+      pvr[k]=get_jorc_code(k,:proven)
+    end
+    return pvr
+  end
+  
+  def probable
+    pbr=Hash.new
+    self.keys.each do |k|
+      pbr[k]=get_jorc_code(k,:probable)
+    end
+    return pbr
+  end
+  
+  def proven_probable
+    ppr=Hash.new
+    self.keys.each do |k|
+      ppr[k]=get_jorc_code(k,:proven_probable)
+    end
+    return ppr
+  end
+  
+  def measured
+    mrs=Hash.new
+    self.keys.each do |k|
+      mrs[k]=get_jorc_code(k,:measured)
+    end
+    return mrs
+  end
+  
+  def indicated
+    idr=Hash.new
+    self.keys.each do |k|
+      idr[k]=get_jorc_code(k,:indicated)
+    end
+    return idr
+  end
+  
+  def measured_indicated
+    mid=Hash.new
+    self.keys.each do |k|
+      mid[k]=get_jorc_code(k,:measured_indicated)
+    end
+    return mid
+  end
+ 
+  def inferred_resource
+    ifr=Hash.new
+    self.keys.each do |k|
+      ifr[k]=get_jorc_code(k,:inferred_resource)
+    end
+    return ifr
+  end
+  
+  def other
+    other=Hash.new
+    self.keys.each do |k|
+      other[k]=get_jorc_code(k,:other)
+    end
+    return other
+  end
+  
   def commodities
     return self.keys
   end
 
   private
   
+  
+  def get_jorc_code(key, code)
+    c=Hash[:ore=>0.0,:grade=>0.0,:mineral=>0.0]
+    ore=0.0
+    mineral=0.0
+    self[key].each do |ir|
+      if c[:units].nil? then c[:units]=ir.units end
+      ore += ir.send(code)[:ore]
+      mineral += ir.send(code)[:mineral]
+      
+    end
+    c[:ore] += ore / @@unit_codes[c[:units][:ore]]
+    c[:mineral] += mineral / @@unit_codes[c[:units][:mineral]]
+    #m=c[:mineral]*@@unit_codes[c[:units][:mineral]]
+    c[:grade] = mineral/ore / @@unit_codes[c[:units][:grade]] unless c[:ore].zero?
+    return c
+  end
+  
 
   def get_code(key, code)
     c=Hash[:ore=>0.0,:grade=>0.0,:mineral=>0.0]
     self[key].each do |ir|
-      if c[:units].nil? then c[:units]=ir.send(code)[:units] end
+      if c[:units].nil? then c[:units]=ir.units end
       c[:ore] += ir.send(code)[:ore]
       c[:mineral] += ir.send(code)[:mineral]
     end
+    #m=c[:mineral]*@@unit_codes[c[:units][:mineral]]
     c[:grade] = ((c[:mineral]*@@unit_codes[c[:units][:mineral]])/(c[:ore]*@@unit_codes[c[:units][:ore]])) / @@unit_codes[c[:units][:grade]] unless c[:ore].zero?
     return c
   end

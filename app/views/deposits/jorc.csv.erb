@@ -1,31 +1,17 @@
-<%- headers = ["DEPOSIT_ENO", "DEPOSIT_NAME", "STATE","ZONE_ENO", "ZONE_NAME", "RECORDDATE", "TONNAGE", "GRADE", "COMMODITY",
+<%- headers = ["DEPOSIT_ENO", "DEPOSIT_NAME", "STATE","RECORDDATE", "TONNAGE", "GRADE", "COMMODITY",
   "INCLUSIVE","PVR_ORE","PVR_GRADE","PVR_MINERAL","PBR_ORE","PBR_GRADE","PBR_MINERAL","PPR_ORE","PPR_GRADE","PPR_MINERAL",
   "MRS_ORE","MRS_GRADE","MRS_MINERAL","IDR_ORE","IDR_GRADE","IDR_MINERAL","MID_ORE","MID_GRADE","MID_MINERAL",
   "IFR_ORE","IFR_GRADE","IFR_MINERAL","OTHER_ORE","OTHER_GRADE","OTHER_MINERAL"]-%>
 <%= raw CSV.generate_line headers, :row_sep => "\r" -%>
 <%- @deposits.each do |deposit| -%>
 <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.state]-%>
-<%- zones = deposit.zones.includes(:resources).merge(Resource.year(@year)) -%>
-<%- if zones.empty? -%>
-<%- row = deposit_row -%>
-<%= raw CSV.generate_line row, :row_sep => "\r" -%>
-<%- else -%>
-<%- zones.each do |zone| -%>
-<%- zone_row = [zone.eno, zone.entityid]-%>
-<%- resources=zone.resources-%>
+<%- resources = deposit.resources.merge(Resource.year(@year)) -%>
 <%- if resources.empty? -%>
-<%- row = deposit_row + zone_row -%>
+<%- row = deposit_row-%>
 <%= raw CSV.generate_line row, :row_sep => "\r" -%>
 <%- else -%>
-<%- resources.each do |resource| -%>
-<%- grades = resource.resource_grades -%>
-<%- grades.each do |grade|-%>
-<%- resource_row = build_jorc_csv(resource,grade) -%>
-<%- row = deposit_row + zone_row + resource_row-%>
+<%- row = deposit_row-%>
+
 <%= raw CSV.generate_line row, :row_sep => "\r" -%>
-<%- end-%>
 <%- end -%>
-<%- end -%>
-<%- end -%>  
-<%- end -%>
-<%- end -%>
+<%- end -%> 

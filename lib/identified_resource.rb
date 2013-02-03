@@ -107,6 +107,38 @@ class IdentifiedResource
     return @commodity[:identified_commodity]
   end
   
+  def proven
+    return @proven
+  end
+  
+  def probable
+    return @probable
+  end
+  
+  def proven_probable
+    return @proven_probable
+  end
+  
+  def measured
+    return @measured
+  end
+  
+  def indicated
+    return @indicated
+  end
+ 
+  def measured_indicated
+    return @measured_indicated
+  end
+  
+  def inferred_resource
+    return @inferred_resource
+  end
+ 
+  def other
+    return @other
+  end
+  
   def units
     return @units
   end

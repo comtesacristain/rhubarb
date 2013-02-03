@@ -16,6 +16,12 @@ class @Rhubarb
       new OpenLayers.Control.PanZoom(),
       new OpenLayers.Control.ArgParser(),
       new OpenLayers.Control.Attribution()
+      #new OpenLayers.Control.Measure OpenLayers.Handler.Path,
+      #  persist: true
+      #  handlerOptions:
+      #    layerOptions:
+      #      renderers: renderer
+      #      styleMap: styleMap
     ]
   
   layerOptions: null  

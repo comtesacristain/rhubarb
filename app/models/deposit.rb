@@ -1,7 +1,7 @@
 class Deposit < Entity
   attr_reader :province_tokens  
   def self.default_scope
-    where(:entity_type => 'MINERAL DEPOSIT').merge(super)
+    where(:entity_type => 'MINERAL DEPOSIT')
   end
 
   has_one :deposit_status, :class_name => "DepositStatus", :foreign_key => :eno
