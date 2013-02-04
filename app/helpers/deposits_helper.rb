@@ -104,9 +104,13 @@ module DepositsHelper
     if resources.empty?
       return Array.new
     else
+      if @commodity.class == String
+        commodities=[@commodity]
+      else
+        commodities = @commodity
+      end
       identified_resources=IdentifiedResourceSet.new(resources)
       proven=Array.new
-      commodities = @commodity
       commodities.each do |c|
         if c.in?(identified_resources.commodities)
           proven << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
