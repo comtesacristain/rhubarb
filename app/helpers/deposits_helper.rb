@@ -123,8 +123,16 @@ module DepositsHelper
           probable << identified_resources.probable[c][:ore] << identified_resources.probable[c][:mineral] << identified_resources.probable[c][:grade]
           proven_probable << identified_resources.proven_probable[c][:ore] << identified_resources.proven_probable[c][:mineral] << identified_resources.proven_probable[c][:grade]
           
+          measured << identified_resources.measured[c][:ore] << identified_resources.measured[c][:mineral] << identified_resources.measured[c][:grade]
+          
+          indicated << identified_resources.indicated[c][:ore] << identified_resources.indicated[c][:mineral] << identified_resources.indicated[c][:grade]
+          measured_indicated << identified_resources.measured_indicated[c][:ore] << identified_resources.measured_indicated[c][:mineral] << identified_resources.measured_indicated[c][:grade]
+          inferred << identified_resources.inferred[c][:ore] << identified_resources.inferred[c][:mineral] << identified_resources.inferred[c][:grade]
+          
+          other << identified_resources.other[c][:ore] << identified_resources.other[c][:mineral] << identified_resources.other[c][:grade]
+          
         end
-        return units + proven + probable + proven_probable
+        return units + proven + probable + proven_probable + measured + indicated + measured_indicated + inferred + other
       end
       
     end
