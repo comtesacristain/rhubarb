@@ -4,6 +4,7 @@
   "IFR_ORE","IFR_GRADE","IFR_MINERAL","OTHER_ORE","OTHER_GRADE","OTHER_MINERAL"]-%>
 <%= raw CSV.generate_line headers, :row_sep => "\r" -%>
 <%- @deposits.each do |deposit| -%>
+<%- puts deposit.eno -%>
 <%- deposit_row = [deposit.eno, deposit.entityid, deposit.deposit_status.state]-%>
 <%- resources = deposit.resources.merge(Resource.year(@year)).all -%>
 <%- if resources.empty? -%>
