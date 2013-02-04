@@ -112,6 +112,7 @@ module DepositsHelper
       identified_resources=IdentifiedResourceSet.new(resources)
       proven=Array.new
       commodities.each do |c|
+        puts c
         if c.in?(identified_resources.commodities)
           proven << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
         end
