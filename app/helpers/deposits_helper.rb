@@ -112,6 +112,8 @@ module DepositsHelper
       identified_resources=IdentifiedResourceSet.new(resources)
       units=Array.new
       proven=Array.new
+      probable = Array.new
+      proven_probable = Array.new 
       commodities.each do |c|
         if c.in?(identified_resources.commodities)
           #TODO Fix this so there is a global units accessor
