@@ -168,7 +168,7 @@ class IdentifiedResource
     begin
     ore = r.send(code).to_f  * @@unit_codes[r.unit_quantity]
     rescue
-    puts code
+    puts "Code: #{code}"
     
     end
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
