@@ -114,7 +114,14 @@ module DepositsHelper
       units=Array.new
       proven=Array.new
       probable = Array.new
-      proven_probable = Array.new 
+      proven_probable = Array.new
+      
+      measured = Array.new 
+      indicated = Array.new 
+      measured_indicated = Array.new 
+      inferred = Array.new
+      other = Array.new
+       
       commodities.each do |c|
         if c.in?(identified_resources.commodities)
           #TODO Fix this so there is a global units accessor
