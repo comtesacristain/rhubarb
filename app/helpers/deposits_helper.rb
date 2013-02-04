@@ -110,6 +110,7 @@ module DepositsHelper
         commodities = @commodity
       end
       identified_resources=IdentifiedResourceSet.new(resources)
+      #TODO Should this be a Hash or Arrays?
       units=Array.new
       proven=Array.new
       probable = Array.new
