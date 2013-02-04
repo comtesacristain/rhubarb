@@ -165,8 +165,12 @@ class IdentifiedResource
 
   # Set reserves with calculation
   def set_reserves(r, g, code, acc)
+    begin
+    ore = r.send(code).to_f  * @@unit_codes[r.unit_quantity]
+    rescue
+    puts code
     
-    ore = r.send(code).to_f  rescue 0 * @@unit_codes[r.unit_quantity] 
+    end
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
     resource = {:ore=>ore,:grade=>grade,:mineral=>mineral}
