@@ -10,8 +10,9 @@
 <%- row = deposit_row-%>
 <%= raw CSV.generate_line row, :row_sep => "\r" -%>
 <%- else -%>
-<%- row = deposit_row-%>
-
+<%- resources_row = build_jorc(resources) -%>
+<%- row = deposit_row + resources_row-%>
+<%- -%>
 <%= raw CSV.generate_line row, :row_sep => "\r" -%>
 <%- end -%>
 <%- end -%> 

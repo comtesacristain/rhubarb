@@ -101,20 +101,34 @@ module DepositsHelper
   
   
   def build_jorc(resources)
-    codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
-    mineral=Hash.new
-    resources.each do |resource|
-      resource.resource_grades.each do |grade|
-          mineral[grade.commodid]=Hash.new
-        codes.each do |code|
-          mineral[grade.commodid][code]=Hash.new
-          mineral[grade.commodid][code][:ore]=resource.send(code)
-          mineral[grade.commodid][code][:grade]=grade.send(code)
-          mineral[grade.commodid][code][:mineral]=calculate_contained_mineral(resource.send(code), grade.send(code), grade.unit_grade)
+    if resources.empty?
+      return Array.new
+    else
+      identified_resources=IdentifiedResourceSet.new(resources)
+      proven=Array.new
+      commodities = @commodity
+      commodities.each do |c|
+        if c.in?(identified_resources.commodities)
+          proven << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
         end
       end
+      
     end
-    return mineral
+    
+    # codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
+    # mineral=Hash.new
+    # resources.each do |resource|
+      # resource.resource_grades.each do |grade|
+          # mineral[grade.commodid]=Hash.new
+        # codes.each do |code|
+          # mineral[grade.commodid][code]=Hash.new
+          # mineral[grade.commodid][code][:ore]=resource.send(code)
+          # mineral[grade.commodid][code][:grade]=grade.send(code)
+          # mineral[grade.commodid][code][:mineral]=calculate_contained_mineral(resource.send(code), grade.send(code), grade.unit_grade)
+        # end
+      # end
+    # end
+    # return mineral
   end
   
   def calculate_contained_mineral(r,g,u)
