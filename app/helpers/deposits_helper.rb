@@ -110,12 +110,18 @@ module DepositsHelper
         commodities = @commodity
       end
       identified_resources=IdentifiedResourceSet.new(resources)
+      units=Array.new
       proven=Array.new
       commodities.each do |c|
         if c.in?(identified_resources.commodities)
+          #TODO Fix this so there is a global units accessor
+          units << identified_resources.proven[c][:units][:ore] << identified_resources.proven[c][:units][:mineral] << identified_resources.proven[c][:units][:grade] rescue String.new
           proven << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
+          probable << identified_resources.probable[c][:ore] << identified_resources.probable[c][:mineral] << identified_resources.probable[c][:grade]
+          proven_probable << identified_resources.proven_probable[c][:ore] << identified_resources.proven_probable[c][:mineral] << identified_resources.proven_probable[c][:grade]
+          
         end
-        return proven
+        return units + proven + probable + proven_probable
       end
       
     end
