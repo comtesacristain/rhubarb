@@ -144,21 +144,31 @@ module DepositsHelper
       
     end
     
-    # codes = ["pvr","pbr","ppr","mrs","idr","mid","ifr","other"]
-    # mineral=Hash.new
-    # resources.each do |resource|
-      # resource.resource_grades.each do |grade|
-          # mineral[grade.commodid]=Hash.new
-        # codes.each do |code|
-          # mineral[grade.commodid][code]=Hash.new
-          # mineral[grade.commodid][code][:ore]=resource.send(code)
-          # mineral[grade.commodid][code][:grade]=grade.send(code)
-          # mineral[grade.commodid][code][:mineral]=calculate_contained_mineral(resource.send(code), grade.send(code), grade.unit_grade)
-        # end
-      # end
-    # end
-    # return mineral
+    
   end
+  
+  
+ def create_jorc_headers
+  commodity_headers = Array.new
+  deposit_headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"]
+  units_headers = ["COMMODID","ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]
+  resource_headers = ["RECORDDATE","MATERIAL","RESERVES_ORE","RESERVES_MINERAL","RESERVES_GRADE","EDR_ORE","EDR_MINERAL","EDR_GRADE","PMR_ORE","PMR_MINERAL","PMR_GRADE","SBM_ORE","SBM_MINERAL","SBM_GRADE","IFR_ORE","IFR_MINERAL","IFR_GRADE"]
+
+  if @commodity.size > 1
+    @commodity.each do |c|
+      #TODO Use aliases rather than hardcoded coal commodity codes
+      if c.in?(['Cbl','Cbr'])
+        commodity_headers += units_headers.map{|uh| "#{c.upcase}_RECOVERABLE_#{uh}"} + resource_headers.map{|rh| "#{c.upcase}_RECOVERABLE_#{rh}"} + units_headers.map{|uh| "#{c.upcase}_INSITU_#{uh}"} + resource_headers.map{|rh| "#{c.upcase}_INSITU_#{rh}"}
+      else
+        commodity_headers += units_headers.map{|uh| "#{c.upcase}_#{uh}"} + resource_headers.map{|rh| "#{c.upcase}_#{rh}"}
+      end
+
+    end
+  else
+  commodity_headers = units_headers + resource_headers
+  end
+  return commodity_headers
+end
   
   def calculate_contained_mineral(r,g,u)
     @@unit_codes= Hash[UnitCode.all.map {|un| [un.unitcode,un.unitvalue.to_f]}]
