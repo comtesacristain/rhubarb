@@ -168,7 +168,7 @@ module DepositsHelper
   else
   commodity_headers = units_headers + resource_headers
   end
-  return commodity_headers
+  return deposit_headers + commodity_headers
 end
   
   def calculate_contained_mineral(r,g,u)
