@@ -58,7 +58,7 @@ class DepositsController < ApplicationController
       end
  	  end
  	  
- 	  if @commodity.class = String
+ 	  if @commodity.class == String
  	    @commodity=[@commodity]
  	  end
 
