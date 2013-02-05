@@ -48,12 +48,18 @@ class DepositsController < ApplicationController
     # if !params[:resource]
       # params[:resource] = ['total']
     # end
+    
+    #TODO Fix the below so aliases are included
     if params[:commodity] and params[:commodity] != "All"
       if CommodityType.aliases.keys.include?(params[:commodity])
         @commodity = CommodityType.aliases[params[:commodity]]
       else
         @commodity = params[:commodity]
       end
+ 	  end
+ 	  
+ 	  if @commodity.class = String
+ 	    @commodity=[@commodity]
  	  end
 
     unless params[:format]
