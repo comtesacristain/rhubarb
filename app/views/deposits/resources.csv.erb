@@ -1,27 +1,4 @@
-<%- commodity_headers = Array.new -%>
-<%- deposit_headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"] -%>
-<%- units_headers = ["COMMODID","ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]-%>
-<%- resource_headers = ["RECORDDATE","MATERIAL","RESERVES_ORE","RESERVES_MINERAL","RESERVES_GRADE","EDR_ORE","EDR_MINERAL","EDR_GRADE","PMR_ORE","PMR_MINERAL","PMR_GRADE","SBM_ORE","SBM_MINERAL","SBM_GRADE","IFR_ORE","IFR_MINERAL","IFR_GRADE"]-%>
-<%#TODO: Put this in a helper%>
-<%- if @commodity.size > 1-%>
-<%- @commodity.each do |c|-%>
-<%-  commodity_headers = units_headers.map{|uh| "#{c}_#{uh}"} + resource_headers.map{|rh| "#{c}_#{rh}"}-%>
-<%- end -%>
-<%- else -%>
-<%- commodity_headers = units_headers + resource_headers -%>
-<%- end -%>
-<%# TOTAL HEADERS - INCLUDE LATER ["TOTAL_ORE","TOTAL_MINERAL","TOTAL_GRADE"] %>
-<%- if @commodity.in?(['Cbl', 'Cbr'])-%>
-  <%- r_units_headers = units_headers.map{|uh| "RECOVERABLE_#{uh}"}-%>
-  <%- recoverable_headers = resource_headers.map{|rh| "RECOVERABLE_#{rh}"}-%>
-  <%- i_units_headers = units_headers.map{|uh| "INSITU_#{uh}"}-%>
-  <%- insitu_headers = resource_headers.map{|rh| "INSITU_#{rh}"}-%>
-  <%- commodity_headers = r_units_headers + recoverable_headers + i_units_headers+ insitu_headers -%>
-<%- else -%>
-  <%#- commodity_headers =  units_headers + resource_headers-%>
-<%- end -%>
-<%- headers = deposit_headers + commodity_headers-%>
-<%= raw CSV.generate_line commodity_headers, :row_sep => "\r" -%>
+<%= raw CSV.generate_line create_jorc_headers, :row_sep => "\r" -%>
 <%#TODO Year should be integer year - not date. Date should be date. Change Resource model to reflect that -%>
 <%- @deposits.each do |deposit| -%>   
   <%- if @commodity.in?(['Cbl', 'Cbr'])-%>

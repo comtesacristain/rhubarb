@@ -154,7 +154,8 @@ module DepositsHelper
   units_headers = ["COMMODID","ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]
   resource_headers = ["RECORDDATE","MATERIAL","RESERVES_ORE","RESERVES_MINERAL","RESERVES_GRADE","EDR_ORE","EDR_MINERAL","EDR_GRADE","PMR_ORE","PMR_MINERAL","PMR_GRADE","SBM_ORE","SBM_MINERAL","SBM_GRADE","IFR_ORE","IFR_MINERAL","IFR_GRADE"]
 
-  if @commodity.size > 1
+  #TODO Fix for coal
+  if @commodity.size > 1 
     @commodity.each do |c|
       #TODO Use aliases rather than hardcoded coal commodity codes
       if c.in?(['Cbl','Cbr'])
