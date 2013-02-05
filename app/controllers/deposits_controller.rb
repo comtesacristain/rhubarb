@@ -50,17 +50,17 @@ class DepositsController < ApplicationController
     # end
     
     #TODO Fix the below so aliases are included
-    if params[:commodity] and params[:commodity] != "All"
-      if CommodityType.aliases.keys.include?(params[:commodity])
-        @commodity = CommodityType.aliases[params[:commodity]]
-      else
-        @commodity = params[:commodity]
-      end
- 	  end
- 	  
- 	  if @commodity.class == String
- 	    @commodity=[@commodity]
- 	  end
+    #if params[:commodity] and params[:commodity] != "All"
+    #  if CommodityType.aliases.keys.include?(params[:commodity])
+    #    @commodity = CommodityType.aliases[params[:commodity]]
+    #  else
+    #    @commodity = params[:commodity]
+    #  end
+ 	  #end
+ 	  #Check for all commodities. Better if split
+ 	  #if @commodity.class == String
+ 	  #  @commodity=@commodity.split(",")
+ 	  #end
 
     unless params[:format]
       @scope = @scope.page(params[:page]).order('entityid ASC')
