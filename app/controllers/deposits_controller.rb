@@ -1,7 +1,7 @@
 class DepositsController < ApplicationController
   before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc]
   before_filter :define_year, :only => [:resources, :jorc]
-  before_filter :require_ozmin_user, :only => [:resources, :quality_check]
+  #before_filter :require_ozmin_user, :only => [:resources, :quality_check]
   before_filter :filename_generator
 
   def index
