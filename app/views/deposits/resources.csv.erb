@@ -1,4 +1,4 @@
-<%= raw CSV.generate_line create_jorc_headers, :row_sep => "\r" -%>
+<%= raw CSV.generate_line create_resource_headers, :row_sep => "\r" -%>
 <%#TODO Year should be integer year - not date. Date should be date. Change Resource model to reflect that -%>
 <%- @deposits.each do |deposit| -%>   
   <%- if @commodity.in?(['Cbl', 'Cbr'])-%>
