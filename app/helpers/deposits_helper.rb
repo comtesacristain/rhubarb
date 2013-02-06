@@ -148,7 +148,7 @@ module DepositsHelper
   end
   
   
- def create_resourceheaders
+ def create_resource_headers
   commodity_headers = Array.new
   deposit_headers = ["ENO", "NAME", "SYNONYMS", "STATE", "OPSTATUS", "LONGITUDE", "LATITUDE", "COMMODIDS"]
   units_headers = ["COMMODID","ORE_UNITS","MINERAL_UNITS","GRADE_UNITS"]
