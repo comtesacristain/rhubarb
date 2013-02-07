@@ -13,11 +13,14 @@ class DepositStatus < ActiveRecord::Base
   belongs_to :deposit, :class_name => "Deposit", :foreign_key => :eno
   
   # Queries 
-  #TODO Change lambda scopes to functions
-  scope :state, lambda { |s| where(:state=>s) }
-  scope :status, lambda { |s| where(:operating_status=>s) }
+    
+  def status(status)
+    where(:operating_status=>status)
+  end
   
-  
+  def state(state)
+    where(:state=>state)
+  end
   
   def self.statuses
     return ActiveSupport::OrderedHash["All",nil,"Operating Mines","operating mine","Historic Mines","historic mine","Mineral Deposits","mineral deposit"]
