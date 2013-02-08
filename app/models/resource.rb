@@ -21,7 +21,7 @@ class Resource < ActiveRecord::Base
 
   scope :zeroed, where({:pvr=>0,:pbr=>0,:ppr=>0,:mrs=>0,:idr=>0,:mid=>0,:ifr=>0,:other=>0})
   
-  # TODO Arel may provide a way to implement this as the complement of 'zeroed'
+  # XXX Arel may provide a way to implement this as the complement of 'zeroed'
   scope :nonzero, where("(mgd.resources.pvr <> 0 or mgd.resources.pbr <> 0 or mgd.resources.ppr <> 0 or mgd.resources.mrs <> 0 or mgd.resources.idr <> 0 or mgd.resources.mid <> 0 or mgd.resources.ifr <> 0 or mgd.resources.other <> 0)")
 
   scope :qaed, where(:qa_status_code=>'C')
@@ -42,7 +42,8 @@ class Resource < ActiveRecord::Base
   
   # TODO Implement below as !zero?
   def nonzero?
-    return pvr!=0 || pbr!=0 || ppr!=0 || mrs!=0 || idr!=0 || mid!=0 || ifr!=0 || other!=0
+    return !zero?
+    #return pvr!=0 || pbr!=0 || ppr!=0 || mrs!=0 || idr!=0 || mid!=0 || ifr!=0 || other!=0
   end
   
   # def self.mineral(mineral)
