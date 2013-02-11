@@ -1,7 +1,7 @@
 class Resource < ActiveRecord::Base
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "mgd.resources"
-	set_primary_key :resourceno
+	self.table_name = "mgd.resources"
+	self.primary_key = :resourceno
   set_date_columns :recorddate, :entrydate, :qadate, :lastupdate
 
 	has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => :resourceno

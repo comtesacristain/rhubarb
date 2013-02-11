@@ -1,8 +1,8 @@
 class Blob < ActiveRecord::Base
 	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "npm.all_blobs"
+	self.table_name  = "npm.all_blobs"
     
-	set_primary_key :blobno
+	self.primary_key = :blobno
 
   default_scope :limit => 50
 

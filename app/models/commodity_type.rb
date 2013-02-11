@@ -1,7 +1,7 @@
 class CommodityType < ActiveRecord::Base
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "mgd.commodtypes"
-	set_primary_key :commodid
+	self.table_name = "mgd.commodtypes"
+	self.primary_key = :commodid
 
 	#belongs_to :commodity, :class_name => "Commodity", :foreign_key => :commodid
   has_many :commodities, :class_name => "Commodity", :foreign_key => :commodid
