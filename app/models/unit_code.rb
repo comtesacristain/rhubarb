@@ -1,7 +1,7 @@
 class UnitCode < ActiveRecord::Base
 	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "mgd.unit_codes"
-	set_primary_key :unitcode
+	self.table_name = "mgd.unit_codes"
+	self.primary_key = :unitcode
 
   def conversionfactor
     self.conversionfactor_before_type_cast
