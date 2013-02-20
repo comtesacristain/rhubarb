@@ -14,8 +14,6 @@ module ResourcesHelper
     concat(raw("<td class='#{style}' id='#{commodity.values.first.try(:downcase)}_ifr'></td>"))
     concat(raw("<td class='#{style}'></td>"))
     concat(raw("<td class='#{style}'></td>"))
-    concat(raw("<td class='#{style}'></td>"))
-    concat(raw("<td class='#{style}'></td>"))
     concat(raw("</tr>"))
   end
 

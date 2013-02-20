@@ -1,15 +1,15 @@
-/* 
-    Document   : aimr
-    Created on : 2/07/2010, 17:26:51
-    Author     : u10301
-    Description:
-        Purpose of the stylesheet follows.
-*/
+/*
+ Document   : aimr
+ Created on : 2/07/2010, 17:26:51
+ Author     : u10301
+ Description:
+ Purpose of the stylesheet follows.
+ */
 
-/* 
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
-*/
+/*
+ TODO customize this sample style
+ Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+ */
 
 body {
     font-family: Verdana;
@@ -18,9 +18,9 @@ body {
 #aimr_link {
     text-align: center;
 }
-table.aimr{
-    margin-left:auto;
-    margin-right:auto;
+table.aimr {
+    margin-left: auto;
+    margin-right: auto;
     width: 95%;
     border-spacing: 0px;
     border-collapse: collapse;
@@ -29,34 +29,41 @@ table.aimr th {
     text-align: center;
     font-weight: bold;
     padding: 2px;
-    border: 1px solid #000000;}
-
-
-th.aimrAustralia {background: #a23122;
-                  color: #FFFFFF;
-}
-th.aimrWorld {background: #a9442d;
-              color: #FFFFFF;
+    border: 1px solid #000000;
 }
 
-th.aimrEDR {background: #dbb2a0;
-            color: #000000;
+th.aimrAustralia {
+    background: #a23122;
+    color: #FFFFFF;
+}
+th.aimrWorld {
+    background: #a9442d;
+    color: #FFFFFF;
 }
 
-th.aimrInferred {background: #e9d4c8;
-                 color: #000000;
+th.aimrEDR {
+    background: #dbb2a0;
+    color: #000000;
 }
 
-th.aimrAEDR {background: #e4c8ba;
-             color: #000000;
+th.aimrInferred {
+    background: #e9d4c8;
+    color: #000000;
 }
 
-th.aimrMine {background: #c88a71;
-             color: #000000;
+th.aimrAEDR {
+    background: #e4c8ba;
+    color: #000000;
 }
 
-th.aimrLight {background: #f1e5de;
-              color: #000000;
+th.aimrMine {
+    background: #c88a71;
+    color: #000000;
+}
+
+th.aimrLight {
+    background: #f1e5de;
+    color: #000000;
 }
 
 table.aimr td {
@@ -64,7 +71,6 @@ table.aimr td {
     padding: 2px;
     color: #000000;
 }
-
 
 td.aimrLight {
     background: #f1e5de;
@@ -74,7 +80,7 @@ td.aimrLight {
     border-bottom: 1px solid #000000;
 }
 
-td.aimrPaleTop  {
+td.aimrPaleTop {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
@@ -82,7 +88,7 @@ td.aimrPaleTop  {
     border-bottom: hidden;
 }
 
-td.aimrPaleBottom  {
+td.aimrPaleBottom {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
@@ -90,14 +96,13 @@ td.aimrPaleBottom  {
     border-bottom: 1px solid #000000;
 }
 
-td.aimrPale  {
+td.aimrPale {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
     border-top: hidden;
     border-bottom: hidden;
 }
-
 
 td.aimrLightError {
     background: #f1e5de;
@@ -108,7 +113,7 @@ td.aimrLightError {
     font-style: italic;
 }
 
-td.aimrPaleTopError  {
+td.aimrPaleTopError {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
@@ -117,7 +122,7 @@ td.aimrPaleTopError  {
     font-style: italic;
 }
 
-td.aimrPaleBottomError  {
+td.aimrPaleBottomError {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
@@ -126,7 +131,7 @@ td.aimrPaleBottomError  {
     font-style: italic;
 }
 
-td.aimrPaleError  {
+td.aimrPaleError {
     background: #FAF4f1;
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
@@ -135,3 +140,81 @@ td.aimrPaleError  {
     font-style: italic;
 }
 
+
+/*Here beginds indentified*/
+
+body {
+    font-family: Verdana;
+}
+
+table.identified {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    border: 2px solid #000000;
+}
+table.identified  th {
+    text-align: center;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+table.identified  th.state {
+    background: #eaeff4;
+    color: #000000;
+}
+
+table.identified  th.economic {
+    background: #3c516c;
+    color: #FFFFFF;
+}
+table.identified  th.paramarginal {
+    background: #5A79A5;
+    color: #FFFFFF;
+}
+
+table.identified  th.submarginal {
+    background: #9CAAC6;
+    color: #000000;
+}
+
+table.identified  th.inferred {
+    background: #DEE7EF;
+    color: #000000;
+}
+
+table.identified  td {
+    background: #eaeff4;
+    text-align: center;
+    padding: 2px;
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+table.identified  td.state {
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+table.identified  td.total {
+    font-weight: bold;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}
+
+table.identified  td.totalLeft {
+    font-weight: bold;
+    border-left: 2px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}
+
+table.identified td.totalRight {
+    font-weight: bold;
+    border-right: 2px solid #000000;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}

@@ -28,7 +28,7 @@ class ResourcesController < ApplicationController
   end
 
   def aimr
-    if !params[:year]
+    if params[:year].blank?
       params[:year] = Date.today.year - 1
     end
     respond_to do |format|
@@ -37,10 +37,10 @@ class ResourcesController < ApplicationController
   end
   
   def state 
-    if !params[:year]
+    if params[:year].blank?
       params[:year] = Date.today.year - 1
     end
-    if !params[:commodity]
+    if params[:commodity].blank?
       params[:commodity] = 'Au'
     end
     respond_to do |format|
@@ -49,10 +49,10 @@ class ResourcesController < ApplicationController
   end
   
   def year
-    if !params[:state]
+    if params[:state].blank?
       params[:state] = 'Australia'
     end
-    if !params[:commodity]
+    if params[:commodity].blank?
       params[:commodity] = 'Au'
     end
     respond_to do |format|

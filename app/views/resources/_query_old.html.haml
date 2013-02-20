@@ -1,0 +1,18 @@
+- states = [["Australia" , nil],["Australian Capital Territory","ACT"],["New South Wales","NSW"],["Northern Territory","NT"],["Queensland","QLD"],["South Australia","SA"],["Tasmania","TAS"],["Victoria","VIC"],["Western Australia","WA"]]
+- years=(2000..Date.today.year).to_a
+%h2 Query
+%p
+    = form_tag url_for(params), :method => :get do
+        %table
+            %tr
+                %td State:
+                %td= select_tag "state", options_for_select(states, params[:state])
+            %tr
+                %td Status:
+                %td= select_tag "status", options_for_select(DepositStatus.statuses, params[:status])
+            %tr
+                %td Year:
+                %td= select_tag "year", options_for_select(years, params[:year])
+        - if params[:action] =="resources"
+            =render :partial => "resources"
+        =submit_tag "Search", :name=>nil

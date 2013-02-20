@@ -5,6 +5,7 @@
             = (yield(:title_bar))
         %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}
         = stylesheet_link_tag 'application', 'pagination', 'deposits' #'formtastic', 'formtastic_changes', 'thickbox', :cache => "base"
+        -#TODO merge both stylesheets
         - if params[:controller]=="resources"
             = stylesheet_link_tag 'resources'
         - else

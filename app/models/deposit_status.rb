@@ -14,11 +14,11 @@ class DepositStatus < ActiveRecord::Base
   
   # Queries 
     
-  def status(status)
+  def self.status(status)
     where(:operating_status=>status)
   end
   
-  def state(state)
+  def self.state(state)
     where(:state=>state)
   end
   

@@ -79,7 +79,7 @@ td {
 <%- ajax_string = String.new -%>
 <%- year = 2000 -%> 
 <%- while year <= Date.today.year do -%>
-<%- ajax_string = "/resources/commodity.json?year="+year.to_s+"&commodity="+params[:commodity] -%>		
+<%- ajax_string = "/resources/identified.json?year="+year.to_s+"&commodity="+params[:commodity] -%>		
 <% if params[:state] != "Australia" %>
 <% ajax_string += "&state=" + params[:state] %>
 <% end %>

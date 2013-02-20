@@ -1,18 +1,33 @@
-- states = [["Australia" , nil],["Australian Capital Territory","ACT"],["New South Wales","NSW"],["Northern Territory","NT"],["Queensland","QLD"],["South Australia","SA"],["Tasmania","TAS"],["Victoria","VIC"],["Western Australia","WA"]]
 - years=(2000..Date.today.year).to_a
+- content_for(:head) do
+    = javascript_include_tag "deposits", "jquery.tokeninput"
+    = stylesheet_link_tag "application", "token-input"
 %h2 Query
 %p
     = form_tag url_for(params), :method => :get do
         %table
             %tr
-                %td State:
-                %td= select_tag "state", options_for_select(states, params[:state])
+                %td= label_tag :name, "Name:"
+                %td= text_field_tag :name, params[:name], 'data-pre' => ([{:id=>params[:name],:name=>params[:name]}].to_json unless params[:name].blank?)
             %tr
-                %td Status:
-                %td= select_tag "status", options_for_select(DepositStatus.statuses, params[:status])
+                %td= label_tag :state, "State:"
+                %td= text_field_tag "state", '', 'data-pre' =>  (State.find_as_keys(@state).to_json unless @state.nil?)
             %tr
-                %td Year:
-                %td= select_tag "year", options_for_select(years, params[:year])
+                %td= label_tag :commodity, "Commodity:"
+                %td= text_field_tag :commodity, '', 'data-pre' =>  (CommodityType.find_as_keys(@commodity).to_json unless @commodity.nil?)
+            %tr
+                %td= label_tag :status, "Status:"
+                %td= text_field_tag "status", '' , 'data-pre' => ( Lookup.find_as_keys(@status).to_json unless @status.nil? )
+            %tr
+                %td= label_tag :province_id, "Province:"
+                %td= text_field_tag "province_id", '' , 'data-tokenLimit' => 1, 'data-pre' => ( Province.find_with_deposit_as_keys(params[:province_id]).to_json unless params[:province_id].blank? )
+            %tr
+                %td= label_tag :company_id, "Company:"
+                %td= text_field_tag "company_id", '' , 'data-pre' => ( Website.find_with_deposit_as_keys(params[:company_id]).to_json unless params[:company_id].blank? )
+            - unless params[:action]=='year'
+                %tr
+                    %td Year:
+                    %td= select_tag "year", options_for_select(years, params[:year])
         - if params[:action] =="resources"
             =render :partial => "resources"
         =submit_tag "Search", :name=>nil

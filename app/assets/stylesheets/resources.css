@@ -6,7 +6,7 @@
 
 #content {
   float: left;
-  background: white url(/assets/threecolbg.gif) repeat-y 76% 0;
+  background: white url(/assets/threecolbg.gif) repeat-y 66% 0;
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px; }
@@ -14,11 +14,11 @@
 #main {
   font-size: 90%;
   float: left;
-  width: 75%;
+  width: 65%;
   padding-right: 2px; }
 
 #sidebar {
-  width: 23%;
+  width: 33%;
   float: right;
   font-size: 0.8em;
   color: #777777; }
