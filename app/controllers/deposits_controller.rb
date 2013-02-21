@@ -1,4 +1,6 @@
 class DepositsController < ApplicationController
+  #TODO put a pull_params filter here like that found in the Resources Controller
+
   before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc]
   before_filter :define_year, :only => [:resources, :jorc]
   #before_filter :require_ozmin_user, :only => [:resources, :quality_check]
