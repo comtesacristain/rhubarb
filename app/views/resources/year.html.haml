@@ -5,7 +5,7 @@
 =javascript_tag :defer => 'defer' do
     - ajax_string = String.new
     - years.each do |year|
-        - ajax_string = "/resources/identified.json?year=#{params[:year].to_s}"
+        - ajax_string = "/resources/identified.json?state=#{params[:state].to_s}"
         - ajax_string += "&commodity=" + params[:commodity]
         - ajax_string += "&year=#{year}"
         == $.getJSON('#{raw ajax_string}', null, function(data) {
@@ -16,7 +16,7 @@
         == });
 %table.identified
     %tr
-        %th.state{:rowspan=>2} State
+        %th.state{:rowspan=>2} Year
         - aimr_classes.each do |ac|
             %th{:class=>ac,:colspan=>3}= ac.titleize
     %tr
