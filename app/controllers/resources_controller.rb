@@ -1,5 +1,9 @@
 class ResourcesController < ApplicationController
+  before_filter :pull_params
+  
   before_filter :define_scope, :only => [:index]
+  
+  
   #before_filter :require_ozmin_user
   # GET /zones
   # GET /zones.xml
@@ -85,8 +89,8 @@ class ResourcesController < ApplicationController
 
     if !params[:state].blank? || !params[:status].blank?
       scope = scope.includes(:deposit_status)
-      scope=scope.merge(DepositStatus.state(params[:state])) if !params[:state].blank?
-      scope=scope.merge(DepositStatus.status(params[:status])) if !params[:status].blank?
+      scope=scope.merge(DepositStatus.state(@state)) unless @state.blank?
+      scope=scope.merge(DepositStatus.status(@status)) unless @status.blank?
     end
    
     resources = scope.all
@@ -100,10 +104,26 @@ class ResourcesController < ApplicationController
 
   private
   def define_scope
+  
+    
+  
     scope = Resource
     unless (current_user && current_user.ozmin?)
       scope = scope.public
     end
     @scope = scope
+  end
+  
+  
+  def pull_params
+    #TODO LIMIT TO ONE FOR RESOURCES
+    @name =  params[:name]
+    @state = params[:state]
+    @commodity = params[:commodity].split(",")
+    @status = params[:status]
+    @province = params[:province]
+    @company = params[:company]
+    @year = params[:year].to_i
+  
   end
 end
