@@ -111,6 +111,18 @@ class DepositsController < ApplicationController
     end
   end
 
+  def qa
+    scope = Deposit
+    @total_deposits = scope.count
+    @qaed = scope.where(:qa_status_code=>'C').count
+    @not_qaed = scope.where(:qa_status_code=>'U').count
+    @no_geometry = scope.where(:geom=>nil).count
+    @no_provinces = scope.includes(:province_deposits).where(ProvinceDeposit.table_name=> {:eno => nil}).count
+
+    
+    @bad_deposits =  scope.includes(:province_deposits).where(ProvinceDeposit.table_name=> {:eno => nil}).where(:qa_status_code=>'U').where(:geom=>nil)
+  end
+
   # GET /deposits/1
   # GET /deposits/1.xml
   def show

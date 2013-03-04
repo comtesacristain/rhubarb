@@ -75,7 +75,7 @@ Rhubarb::Application.routes.draw do
 
   resources :deposits do
     collection do
-      get 'map', 'resources', 'mineral_system', 'quality_check', 'atlas', 'jorc','names'
+      get 'map', 'resources', 'mineral_system', 'quality_check', 'atlas', 'jorc','names','qa'
     end
   end
 

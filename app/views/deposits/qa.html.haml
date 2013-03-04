@@ -1,0 +1,12 @@
+%p
+    =@total_deposits
+- content_for(:sidebar) do
+    %p= render :partial => "deposits/query"
+- content_for(:controller_nav) do
+    %p= render :partial => "deposits/links"
+- content_for(:sidebar_download) do
+    %p= render :partial => "deposits/format"
+- content_for(:title_bar) do
+    ==Deposits: QA
+    - unless params[:commodity].blank?
+        == - #{params[:commodity].titleize}
