@@ -1,8 +1,8 @@
-#deposit
+%div{:class=>:deposit}
     == Total Deposits #{@total_deposits}
-#deposit
+%div{:class=>:deposit}
     == Deposits with QA #{@qaed}
-#deposit
+%div{:class=>:deposit}
     == Deposits without QA #{@not_qaed}
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
