@@ -4,6 +4,10 @@
     == Deposits with QA #{@qaed}
 %div{:class=>:deposit}
     == Deposits without QA #{@not_qaed}
+%div{:class=>:deposit}
+    == Deposits without geometry #{@no_geometry}
+%div{:class=>:deposit}
+    == Deposits without provinces #{@no_provinces}
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
