@@ -1,6 +1,8 @@
-%p
+#deposit
     == Total Deposits #{@total_deposits}
+#deposit
     == Deposits with QA #{@qaed}
+#deposit
     == Deposits without QA #{@not_qaed}
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
