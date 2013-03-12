@@ -1,7 +1,7 @@
 class DepositsController < ApplicationController
   #TODO put a pull_params filter here like that found in the Resources Controller
 
-  before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc]
+  before_filter :define_scope, :only => [:index, :mineral_system, :map, :resources, :quality_check, :atlas, :jorc, :qa]
   before_filter :define_year, :only => [:resources, :jorc]
   #before_filter :require_ozmin_user, :only => [:resources, :quality_check]
   before_filter :filename_generator
@@ -112,7 +112,10 @@ class DepositsController < ApplicationController
   end
 
   def qa
-    scope = Deposit
+    scope = @scope
+    unless params[:qa_status_code].blank?
+      scope= scope.where(:qa_status_code=> params[:qa_status_code])
+    end
     @total_deposits = scope.count
     @qaed = scope.where(:qa_status_code=>'C').count
     @not_qaed = scope.where(:qa_status_code=>'U').count
