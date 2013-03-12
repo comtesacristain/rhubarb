@@ -119,7 +119,7 @@ class ResourcesController < ApplicationController
     #TODO LIMIT TO ONE FOR RESOURCES
     @name =  params[:name]
     @state = params[:state]
-    @commodity = params[:commodity].split(",")
+    @commodity = params[:commodity].split(",") unless params[:commodity].blank?
     @status = params[:status]
     @province = params[:province]
     @company = params[:company]
