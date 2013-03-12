@@ -112,7 +112,10 @@ class DepositsController < ApplicationController
   end
 
   def qa
-    scope = @scope 
+    scope = @scope
+    unless params[:qa_status_code].blank?
+      scope= scope.where(:qa_status_code=> params[:qa_status_code])
+    end
     @total_deposits = scope.count
     @qaed = scope.where(:qa_status_code=>'C').count
     @not_qaed = scope.where(:qa_status_code=>'U').count
