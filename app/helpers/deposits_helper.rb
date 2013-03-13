@@ -191,14 +191,14 @@ end
   end
 
 
-  def data_quality_check_header
+  def header_generator
      string_parameters = Hash.new
      string_parameters[:number] = @total_deposits
      
-     unless @status.blank? 
+     if @status.blank? 
        string_parameters[:status] = "Deposit"
      else
-       string_parameters[:status] = params[:status].titlize
+       string_parameters[:status] = params[:status].titleize
      end
 
      if string_parameters[:number] > 1
@@ -206,7 +206,7 @@ end
      end
      
      
-     string_parameters[:state] = "Australia"
-     return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:location]}"
+     string_parameters[:locality] = "Australia"
+     return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:locality]}"
   end
 end

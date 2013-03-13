@@ -189,7 +189,7 @@ class DepositsController < ApplicationController
 
   private
   def define_scope
-      
+@params=params      
     #TODO Possibly change to be like Websites below  
 	  scope =  unless params[:province_id].blank?
 	    Province.find(params[:province_id]).deposits
@@ -233,6 +233,7 @@ class DepositsController < ApplicationController
 	  
 	  scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  @scope = scope
+	 @total_deposits = scope.count
 	end
 
   #TODO Should this be in a helper?
