@@ -198,7 +198,7 @@ end
      unless @status.blank? 
        string_parameters[:status] = "Deposit"
      else
-       string_parameters[:status] = @status.upcase
+       string_parameters[:status] = params[:status].titlize
      end
 
      if string_parameters[:number] > 1
