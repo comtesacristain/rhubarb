@@ -191,4 +191,22 @@ end
   end
 
 
+  def data_quality_check_header
+     string_parameters = Hash.new
+     string_parameters[:number] = @total_deposits
+     
+     unless @status.blank? 
+       string_parameters[:status] = "Deposit"
+     else
+       string_parameters[:status] = @status.upcase
+     end
+
+     if string_parameters[:number] > 1
+       string_parameters[:status]=string_parameters[:status].pluralize
+     end
+     
+     
+     string_parameters[:state] = "Australia"
+     return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:location]}"
+  end
 end
