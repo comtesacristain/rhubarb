@@ -195,7 +195,7 @@ end
      string_parameters = Hash.new
      string_parameters[:number] = @total_deposits
      
-     if @status.blank? 
+     if params[:status].blank? 
        string_parameters[:status] = "Deposit"
      else
        string_parameters[:status] = params[:status].titleize
@@ -205,8 +205,14 @@ end
        string_parameters[:status]=string_parameters[:status].pluralize
      end
      
+     unless params[:commodity].blank?
+       commodities= params[:commodity].split(",")
+       
+       string_parameters[:commodity]="containing #{commodities.map { |c| CommodityType.find(c).commodname}.to_sentence}"
+     end
+     
      
      string_parameters[:locality] = "Australia"
-     return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:locality]}"
+     return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:locality]} #{string_parameters[:commodity]}"
   end
 end
