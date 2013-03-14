@@ -13,12 +13,12 @@
   #no_provinces
     =link_to "Deposits without provinces #{@no_provinces}", url_for(params.merge(:provinces=>'N',:action=>:index))
 - content_for(:sidebar) do
-    %p= render :partial => "deposits/query"
+  %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
-    %p= render :partial => "deposits/links"
+  %p= render :partial => "deposits/links"
 - content_for(:sidebar_download) do
-    %p= render :partial => "deposits/format"
+  %p= render :partial => "deposits/format"
 - content_for(:title_bar) do
-    ==Deposits: QA
-    - unless params[:commodity].blank?
-        == - #{params[:commodity].titleize}
+  ==Deposits: QA
+  - unless params[:commodity].blank?
+    == - #{params[:commodity].titleize}
