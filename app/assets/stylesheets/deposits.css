@@ -63,14 +63,14 @@
     margin-bottom: 15px;
 }
 
-#quality-good {
+.quality-good {
     background: #eeffee;
     width: 47%;
     margin-right:5px
 }
 
 
-#quality-bad {
+.quality-bad {
     background: #ffeeee;
     float:right;
     width: 47%;
