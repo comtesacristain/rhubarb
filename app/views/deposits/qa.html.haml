@@ -1,16 +1,19 @@
 %h2=header_generator
-#qa_status
-  #qaed
+#qa.quality-block
+  #qa-icon
+  #qaed.quality-good
     =link_to "Deposits with QA #{@qaed}", url_for(params.merge(:qa_status_code=>'C',:action=>:index)) 
-  #notqaed
+  #notqaed.quality-bad
     =link_to "Deposits without QA #{@not_qaed}", url_for(params.merge(:qa_status_code=>'U',:action=>:index)) 
-#coordinates
+#coordinates.quality-block
+  #coords_icon
   #coords
-  #no_coods
+  #no_coods.quality-bad
     =link_to "Deposits without geometry #{@no_geometry}", url_for(params.merge(:coordinates=>'N',:action=>:index)) 
-#provinces
-  #has_provinces
-  #no_provinces
+#provinces.quality-block
+  #provs_icon
+  #has_provinces.quality-good
+  #no_provinces.quality-bad
     =link_to "Deposits without provinces #{@no_provinces}", url_for(params.merge(:provinces=>'N',:action=>:index))
 - content_for(:sidebar) do
   %p= render :partial => "deposits/query"
