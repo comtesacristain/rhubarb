@@ -225,7 +225,7 @@ class DepositsController < ApplicationController
     # Is this set of deposits limited to a particular province
     
     unless params[:province_id].blank?
-      scope = scope.joins(:provinces).where(:provinces=>{:eno=>params[:province_id]})
+      scope = scope.joins(:provinces).where(Province.table_name=>{:eno=>params[:province_id]})
     end
     
     
