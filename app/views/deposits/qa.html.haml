@@ -1,12 +1,10 @@
 =header_generator
 %div{:class=>:deposit}
-    == Total Deposits #{@total_deposits}
+    =link_to "Deposits with QA #{@qaed}", url_for(params.merge(:qa_status_code=>'C',:action=>:index)) 
 %div{:class=>:deposit}
-    =link_to "Deposits with QA #{@qaed}", url_for(params.merge(:qa_status_code=>'C')) 
+    =link_to "Deposits without QA #{@not_qaed}", url_for(params.merge(:qa_status_code=>'U',:action=>:index)) 
 %div{:class=>:deposit}
-    == Deposits without QA #{@not_qaed}
-%div{:class=>:deposit}
-    == Deposits without geometry #{@no_geometry}
+    =link_to "Deposits without geometry #{@no_geometry}", url_for(params.merge(:coordinates=>'N',:action=>:index)) 
 %div{:class=>:deposit}
     == Deposits without provinces #{@no_provinces}
 - content_for(:sidebar) do
