@@ -116,9 +116,7 @@ class DepositsController < ApplicationController
 
   def qa
     scope = @scope
-    unless params[:qa_status_code].blank?
-      scope= scope.where(:qa_status_code=> params[:qa_status_code])
-    end
+    
     @total_deposits = scope.count
     @qaed = scope.where(:qa_status_code=>'C').count
     @not_qaed = scope.where(:qa_status_code=>'U').count
@@ -192,13 +190,44 @@ class DepositsController < ApplicationController
 
   private
   def define_scope
-@params=params      
+    
+    # Define scope depending on whether Province or Deposits 
+    
+    scope = Deposit
+    
     #TODO Possibly change to be like Websites below  
-	  scope =  unless params[:province_id].blank?
-	    Province.find(params[:province_id]).deposits
-    else
-      Deposit
+    #scope =  unless params[:province_id].blank?
+    #  Province.find(params[:province_id]).deposits
+    #else
+    #  Deposit
+    #end
+ 
+    # Check for Data Quality Parameters
+    
+    # QA Status Code first 
+  
+    unless params[:qa_status_code].blank?
+      scope= scope.where(:qa_status_code=> params[:qa_status_code])
     end
+    
+    # Does the deposit have coordinates?
+    
+    unless params[:coordinates].blank?
+      if params[:coordinates] == 'Y'
+         #TODO will change in Rails 4
+         scope = scope.where(Deposit.arel_table[:geom].not_eq(nil))
+      else
+        scope = scope.where(:geom=>nil)
+      end
+    end
+    
+    
+    # Is this set of deposits limited to a particular province
+    
+    unless params[:province_id].blank?
+      scope = scope.joins(:provinces).where(:provinces=>{:eno=>params[:province_id]})
+    end
+    
     
     unless params[:company_id].blank?
       scope = scope.joins(:websites).where(:websites=>{:websiteno=>params[:company_id]})
