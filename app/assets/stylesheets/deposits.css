@@ -56,6 +56,16 @@
 
 
 /*TODO Give better name */
-.qualityType {
- 
+#qa_status {
+    background: #eeeeee;
+    border: 1px solid #e5e5e5;
+    height: 100px;
+    width: 98%;
+    margin-bottom: 15px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: 3px 3px 3px #888;
+    -webkit-box-shadow: 3px 3px 3px #888;
+    box-shadow: 3px 3px 3px #888;
+
 }
