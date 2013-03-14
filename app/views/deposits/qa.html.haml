@@ -2,9 +2,20 @@
 #qa.quality-block
   #qa-icon
   #qaed.quality-good
-    =link_to "Deposits with QA #{@qaed}", url_for(params.merge(:qa_status_code=>'C',:action=>:index)) 
+    -# TODO Call this spit_quality_block(number,params_hash) in the deposits helper
+    .qual-num
+      =link_to @qaed, url_for(params.merge(:qa_status_code=>'C'))
+    .qual-caption
+      have been QAed
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'C',:action=>:index))
   #notqaed.quality-bad
-    =link_to "Deposits without QA #{@not_qaed}", url_for(params.merge(:qa_status_code=>'U',:action=>:index)) 
+    .qual-num
+      =link_to @not_qaed, url_for(params.merge(:qa_status_code=>'U'))
+    .qual-caption
+      have been QAed
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'U',:action=>:index))
 #coordinates.quality-block
   #coords_icon
   #coords
