@@ -25,12 +25,12 @@ class Deposit < Entity
   has_many :bloblinks, :class_name => "Bloblink", :foreign_key => :source_no
 
   # Provinces
-  has_many :province_deposits, :foreign_key => :deposno
+  has_many :province_deposits, :class_name => "ProvinceDeposit", :foreign_key => :deposno
   
   
   #accepts_nested_attributes_for :regrocks
   
-  has_many :provinces, :through => :province_deposits
+  has_many :provinces, :through => :province_deposits, :class_name => "Province", :foreign_key => :eno
   
   
   def province_tokens=(ids)

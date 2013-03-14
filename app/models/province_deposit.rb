@@ -5,8 +5,8 @@ class ProvinceDeposit < ActiveRecord::Base
 
 	set_primary_key :deposno
 
-	belongs_to :deposit, :foreign_key => :deposno
-	belongs_to :province, :foreign_key => :eno
+	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :deposno
+	belongs_to :province, :class_name => "Province", :foreign_key => :eno
 
 	set_date_columns :entrydate, :qadate, :lastupdate
 	
