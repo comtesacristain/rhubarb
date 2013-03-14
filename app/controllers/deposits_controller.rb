@@ -10,7 +10,10 @@ class DepositsController < ApplicationController
     if params[:year].blank?
       params[:year] = Date.today.year - 1 
     end
-    
+    #TODO set paginate according to flag
+    #if params[:page] == 'all'
+    # Deposit.per_page=@total_deposits
+    #end 
     unless params[:format]
       @scope = @scope.page(params[:page]).order('entityid ASC')
 	  else

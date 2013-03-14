@@ -211,8 +211,11 @@ end
        string_parameters[:commodity]="containing #{commodities.map { |c| CommodityType.find(c).commodname}.to_sentence}"
      end
      
-     
-     string_parameters[:locality] = "Australia"
+     unless params[:state].blank?
+       string_parameters[:locality]=params[:state] 
+     else
+       string_parameters[:locality] = "Australia"
+     end
      return "#{string_parameters[:number]} #{string_parameters[:status]} in #{string_parameters[:locality]} #{string_parameters[:commodity]}"
   end
 end
