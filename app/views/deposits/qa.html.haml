@@ -1,12 +1,17 @@
 %h2=header_generator
-%div{:class=>:deposit}
+#qa_status
+  #qaed
     =link_to "Deposits with QA #{@qaed}", url_for(params.merge(:qa_status_code=>'C',:action=>:index)) 
-%div{:class=>:deposit}
+  #notqaed
     =link_to "Deposits without QA #{@not_qaed}", url_for(params.merge(:qa_status_code=>'U',:action=>:index)) 
-%div{:class=>:deposit}
+#coordinates
+  #coords
+  #no_coods
     =link_to "Deposits without geometry #{@no_geometry}", url_for(params.merge(:coordinates=>'N',:action=>:index)) 
-%div{:class=>:deposit}
-    == Deposits without provinces #{@no_provinces}
+#provinces
+  #has_provinces
+  #no_provinces
+    =link_to "Deposits without provinces #{@no_provinces}", url_for(params.merge(:provinces=>'N',:action=>:index))
 - content_for(:sidebar) do
     %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
