@@ -1,7 +1,7 @@
 %h2=header_generator
-#qa.quality-block
+#qa.quality-conatiner
   #qa-icon
-  #qaed.quality-good
+  #qaed.quality-block.good-quality
     -# TODO Call this spit_quality_block(number,params_hash) in the deposits helper
     .qual-num
       =link_to @qaed, url_for(params.merge(:qa_status_code=>'C'))
@@ -9,22 +9,22 @@
       have been QAed
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'C',:action=>:index))
-  #notqaed.quality-bad
+  #notqaed.quality-block.bad-quality
     .qual-num
       =link_to @not_qaed, url_for(params.merge(:qa_status_code=>'U'))
     .qual-caption
       have been QAed
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'U',:action=>:index))
-#coordinates.quality-block
+#coordinates.quality-conatiner
   #coords_icon
   #coords
-  #no_coods.quality-bad
+  #no_coods.quality-block.bad-quality
     =link_to "Deposits without geometry #{@no_geometry}", url_for(params.merge(:coordinates=>'N',:action=>:index)) 
-#provinces.quality-block
+#provinces.quality-conatiner
   #provs_icon
-  #has_provinces.quality-good
-  #no_provinces.quality-bad
+  #has_provinces.quality-block.good-quality
+  #no_provinces.quality-block.bad-quality
     =link_to "Deposits without provinces #{@no_provinces}", url_for(params.merge(:provinces=>'N',:action=>:index))
 - content_for(:sidebar) do
   %p= render :partial => "deposits/query"
