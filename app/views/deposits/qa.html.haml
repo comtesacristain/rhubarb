@@ -1,8 +1,8 @@
 %h2=header_generator
-#qa.quality-conatiner
+#qa.quality-container
   #qa-icon
   #qaed.quality-block.good-quality
-    -# TODO Call this spit_quality_block(number,params_hash) in the deposits helper
+    -# TODO Call this spit_quality_block(number,text,params_hash) in the deposits helper
     .qual-num
       =link_to @qaed, url_for(params.merge(:qa_status_code=>'C'))
     .qual-caption
@@ -13,19 +13,57 @@
     .qual-num
       =link_to @not_qaed, url_for(params.merge(:qa_status_code=>'U'))
     .qual-caption
-      have been QAed
+      have not been QAed
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'U',:action=>:index))
-#coordinates.quality-conatiner
+#coordinates.quality-container
   #coords_icon
-  #coords
+  #coords.quality-block.good-quality
+    .qual-num
+      =link_to @geometry, url_for(params.merge(:coordinates=>'Y'))
+    .qual-caption
+      have spatial coordinates 
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:coordinates=>'Y',:action=>:index))
   #no_coods.quality-block.bad-quality
-    =link_to "Deposits without geometry #{@no_geometry}", url_for(params.merge(:coordinates=>'N',:action=>:index)) 
-#provinces.quality-conatiner
+    .qual-num
+      =link_to @no_geometry, url_for(params.merge(:coordinates=>'N'))
+    .qual-caption
+      have no spatial coordinates
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:coordinates=>'N',:action=>:index))
+#provinces.quality-container
   #provs_icon
   #has_provinces.quality-block.good-quality
+    .qual-num
+      =link_to @has_provinces, url_for(params.merge(:provinces=>'Y'))
+    .qual-caption
+      have associated provinces
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:provinces=>'Y',:action=>:index))
   #no_provinces.quality-block.bad-quality
-    =link_to "Deposits without provinces #{@no_provinces}", url_for(params.merge(:provinces=>'N',:action=>:index))
+    .qual-num
+      =link_to @no_provinces, url_for(params.merge(:provinces=>'N'))
+    .qual-caption
+      have no associated provinces
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:provinces=>'N',:action=>:index))
+#websites.quality-container
+  #websites_icon
+  #has_websites.quality-block.good-quality
+    .qual-num
+      =link_to @has_websites, url_for(params.merge(:websites=>'Y'))
+    .qual-caption
+      have company websites 
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:websites=>'Y',:action=>:index))
+  #no_websites.quality-block.bad-quality
+    .qual-num
+      =link_to @no_websites, url_for(params.merge(:websites=>'N'))
+    .qual-caption
+      have no company websites 
+    .qual-deposits-link
+      =link_to "Click here to show list of these deposits", url_for(params.merge(:websites=>'N',:action=>:index))
 - content_for(:sidebar) do
   %p= render :partial => "deposits/query"
 - content_for(:controller_nav) do
