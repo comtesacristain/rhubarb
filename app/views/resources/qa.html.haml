@@ -1,6 +1,6 @@
 %p
   %table
-    %th
+    %tr
       %td RESOURCENO
       %td ENO
       %td ZONE NAME
@@ -17,4 +17,4 @@
         %td
           -deposit =zone.deposit
           =deposit.entityid
-  
+=will_paginate(@resources)  
