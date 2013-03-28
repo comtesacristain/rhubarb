@@ -1,0 +1,20 @@
+%p
+  %table
+    %th
+      %td RESOURCENO
+      %td ENO
+      %td ZONE NAME
+      %td DEPOSIT NAME
+    -@resources.each do |resource|
+      %tr
+        %td
+          =resource.resourceno
+        %td
+          =resource.eno
+        %td
+          -zone = resource.zone
+          =zone.entityid
+        %td
+          -deposit =zone.deposit
+          =deposit.entityid
+  

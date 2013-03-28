@@ -48,7 +48,7 @@ class ResourcesController < ApplicationController
       params[:commodity] = 'Au'
     end
     respond_to do |format|
-      format.html # mineral.html.erb
+      format.html # state.html.haml
     end
   end
   
@@ -60,7 +60,16 @@ class ResourcesController < ApplicationController
       params[:commodity] = 'Au'
     end
     respond_to do |format|
-      format.html # mineral.html.erb
+      format.html # year.html.haml
+    end
+  end
+  
+  def qa
+
+    @resources = @scope.paginate :page => params[:page] , :order => 'recorddate DESC'
+
+    respond_to do |format|
+      format.html # qa.html.haml
     end
   end
   
