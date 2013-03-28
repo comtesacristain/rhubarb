@@ -37,7 +37,11 @@ class Deposit < Entity
     self.province_ids=ids.split(",")
   end
 
-  scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }
+  #scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }
+	
+	def self.mineral(mineral)
+	  self.includes(:commodities).merge(Commodity.mineral(mineral))
+	end
 	
 	#scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 	
