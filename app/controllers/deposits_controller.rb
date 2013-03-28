@@ -243,18 +243,49 @@ class DepositsController < ApplicationController
       scope = scope.public
     end
     
+    
+    # TODO Scope for commodities. Should check in the following ways
+    # 1. Split the commodity parameters.
+    # 2. Loop through the split commodities
+    # 3. Check if commodity is an alias.
+    # 4. If so, push the alias out of the array and add the array back in.
+    # 5. Check that the array is then used in the prepopulated fields
+    # 6. Make sure that aliases are part of the prepopulated look ups (and possibly override or give different names)
+    
+    # TEST CODE
     unless params[:commodity].blank?
-      if CommodityType.aliases.keys.include?(params[:commodity])
-        @commodity = CommodityType.aliases[params[:commodity]]
-      else
-        @commodity = params[:commodity].split(",")
+      
+      @commodity = params[:commodity].split(",")
+      @commodity.each do |c|
+        if CommodityType.aliases.keys.include?(c)
+        @commodity += CommodityType.aliases[c]
+        @commodity.uniq!
+        @commodity.delete(c)
+        end
       end
+      
       unless (current_user && current_user.ozmin?)
         scope = scope.mineral(@commodity).merge(Commodity.public)
       else
         scope = scope.mineral(@commodity)
       end
-	  end
+    end
+    
+    
+    #
+    
+    #unless params[:commodity].blank?
+    #  if CommodityType.aliases.keys.include?(params[:commodity])
+    #    @commodity = CommodityType.aliases[params[:commodity]]
+    #  else
+    #    @commodity = params[:commodity].split(",")
+    #  end
+    #  unless (current_user && current_user.ozmin?)
+    #    scope = scope.mineral(@commodity).merge(Commodity.public)
+    #  else
+    #    scope = scope.mineral(@commodity)
+    #  end
+	  #end
     #
     unless params[:state].blank?
       @state=params[:state].split(",")
