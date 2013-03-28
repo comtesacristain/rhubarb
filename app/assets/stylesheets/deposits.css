@@ -1,3 +1,9 @@
+.deposits-header {
+    
+    text-align:center;
+}
+
+
 .deposit {
     background: #eeeeee;
     border: 1px solid #e5e5e5;
@@ -63,20 +69,29 @@
     margin-bottom: 15px;
 }
 
+.qual-icon {
+    width:32px;
+    display:inline-block;
+}
+
 .quality-block {
 
-    width: 47%;
+    /*width: 46%;*/
+    padding:3px;
     height: 100%;
     margin-right:5px;
     display: inline-block;
 }
 .good-quality {
+
     background: #eeffee; 
+    border:  2px solid #00aa00;
 }
 
 
 .bad-quality {
     background: #ffeeee;
+    border:  2px solid #aa0000;
 }
 
 .qual-num {
