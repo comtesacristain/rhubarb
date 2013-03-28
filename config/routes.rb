@@ -46,7 +46,7 @@ Rhubarb::Application.routes.draw do
 
   resources :resources do
     collection do
-      get 'aimr', 'year', 'state', 'identified'
+      get 'aimr', 'year', 'state', 'identified', 'qa'
     end
   end
 
