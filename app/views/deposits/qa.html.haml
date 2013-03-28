@@ -1,8 +1,9 @@
-%h2=header_generator
+%h2.deposits-header=header_generator
+-#TODO: Chuck this in a helper
 #qa.quality-container
-  #qa-icon
+  #qa-icon.qual-icon
   #qaed.quality-block.good-quality
-    -# TODO Call this spit_quality_block(number,text,params_hash) in the deposits helper
+    -# TODO Call this spit_quality_block(number,text,params_hash) in the deposits helper11
     .qual-num
       =link_to @qaed, url_for(params.merge(:qa_status_code=>'C'))
     .qual-caption
@@ -17,7 +18,8 @@
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:qa_status_code=>'U',:action=>:index))
 #coordinates.quality-container
-  #coords_icon
+  #coords-icon.qual-icon
+    =image_tag('coords.png', :height=>32, :width=>32)
   #coords.quality-block.good-quality
     .qual-num
       =link_to @geometry, url_for(params.merge(:coordinates=>'Y'))
@@ -33,7 +35,7 @@
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:coordinates=>'N',:action=>:index))
 #provinces.quality-container
-  #provs_icon
+  #provs-icon.qual-icon
   #has_provinces.quality-block.good-quality
     .qual-num
       =link_to @has_provinces, url_for(params.merge(:provinces=>'Y'))
@@ -49,7 +51,7 @@
     .qual-deposits-link
       =link_to "Click here to show list of these deposits", url_for(params.merge(:provinces=>'N',:action=>:index))
 #websites.quality-container
-  #websites_icon
+  #websites-icon.qual-icon
   #has_websites.quality-block.good-quality
     .qual-num
       =link_to @has_websites, url_for(params.merge(:websites=>'Y'))
