@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
   before_filter :pull_params
   
-  before_filter :define_scope, :only => [:index]
+  before_filter :define_scope, :only => [:index,:qa]
   
   
   #before_filter :require_ozmin_user
