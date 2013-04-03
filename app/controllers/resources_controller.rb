@@ -120,6 +120,17 @@ class ResourcesController < ApplicationController
     unless (current_user && current_user.ozmin?)
       scope = scope.public
     end
+    
+    unless @qa_status.blank?
+      scope = scope.where(:qa_status_code => @qa_status)
+    end 
+    unless @entered_by.blank?
+      scope = scope.entered_by(@entered_by)
+    end
+    unless @entry_date.blank?
+      entry_range = (@entry_date-7)..(@entry_date+7)
+      scope = scope.entry_date_range(entry_range)
+    end
     @scope = scope
   end
   
@@ -133,6 +144,8 @@ class ResourcesController < ApplicationController
     @province = params[:province]
     @company = params[:company]
     @year = params[:year].to_i
-  
+    @qa_status = params[:qa_status]
+    @entered_by = params[:entered_by]
+    @entry_date = params[:entry_date].to_date
   end
 end

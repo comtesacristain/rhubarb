@@ -49,6 +49,20 @@ class Resource < ActiveRecord::Base
   # def self.mineral(mineral)
     # self.joins(:resource_grades).where(:resource_grades=>{:commodid => mineral}).uniq
   # end
+
+  # TODO Change to have user lookup in different model
+  def self.entered_by(name)
+    if Resource.users.keys.include?(name)
+      usernames=Resource.users[name]
+    else
+      usernames=name
+    end
+    where(:enteredby=>usernames)
+  end
+
+  def self.entry_date_range(range)
+    self.where(:entrydate=>range)
+  end
 	
 	def self.year(year)
 	  date = Date.new(year).end_of_year
@@ -66,5 +80,9 @@ class Resource < ActiveRecord::Base
 	def current?
 	  return current_r == "N" ? false : true 
 	end
-	
+  #TODO This should not be in the Resource model. Try lookups or similar.
+  def self.users
+    return {"Daisy"=>["DSUMMERFIELD","U01086"],"Michael"=>"MSEXTON1","Keith"=>"KPORRITT"}
+  end
+
 end
