@@ -1,22 +1,25 @@
 %p
-  %table
-    %tr
-      %td RESOURCENO
-      %td ENO
-      %td ZONE NAME
-      %td DEPOSIT NAME
-    -@resources.each do |resource|
+  = form_for @resources do
+    %table
       %tr
-        %td
-          =resource.resourceno
-        %td
-          =resource.eno
-        %td
-          -zone = resource.zone
-          =zone.entityid
-        %td
-          -deposit =zone.deposit
-          =deposit.entityid
+        %td RESOURCENO
+       %td ENO
+       %td ZONE NAME
+       %td DEPOSIT NAME
+      -@resources.each do |resource|
+       %tr
+          %td
+            =resource.resourceno
+          %td
+            =resource.eno
+          %td
+            -zone = resource.zone
+            =zone.entityid
+          %td
+            -deposit = zone.deposit
+            =deposit.entityid
+         %td
+            = check_box_tag "resources[]", resource.id
 =content_for :sidebar do
   = form_tag url_for(params), :method => :get do  
     %table
