@@ -83,14 +83,6 @@ class DepositsController < ApplicationController
   
 
   def jorc
-    if params[:commodity] and params[:commodity] != "All"
-      if CommodityType.aliases.keys.include?(params[:commodity])
-        @commodity = CommodityType.aliases[params[:commodity]]
-      else
-        @commodity = params[:commodity]
-      end
-
-	  end
     @deposits=@scope
     
     respond_to do |format|
