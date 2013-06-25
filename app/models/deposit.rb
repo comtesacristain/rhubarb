@@ -104,9 +104,6 @@ class Deposit < Entity
     deposit_status.atlas_status?
   end
 
-  def quality_checked?
-    return qa_status_code == "C"
-  end
 
   def open_access?
     return access_code == "O"
