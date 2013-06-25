@@ -7,7 +7,7 @@ var select;
 
 var defaultLayers = {
     //"powerstations": ["renewable" , "fossil fuel" ],
-    "major_projects" : [null],
+    //"major_projects" : [null],
     "occurrences": [null],
     "deposits" : ["historic mine" ,"mineral deposit" ,"operating mine"]
 }
