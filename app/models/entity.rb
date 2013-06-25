@@ -57,4 +57,18 @@ class Entity < ActiveRecord::Base
   # Change to match other methods
   scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
   
+  def quality_checked?
+    return qa_status_code == "C"
+  end
+
+  def qaed?
+    return quality_checked?
+  end
+
+  def qa_record(date,user)
+    self.qadate=date
+    self.qaby=user
+    self.qa_status_code='C'
+    self.save
+  end
 end
