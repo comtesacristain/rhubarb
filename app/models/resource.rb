@@ -2,6 +2,7 @@ class Resource < ActiveRecord::Base
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "mgd.resources"
 	self.primary_key = :resourceno
+  
   set_date_columns :recorddate, :entrydate, :qadate, :lastupdate
 
 	has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => :resourceno
@@ -11,7 +12,7 @@ class Resource < ActiveRecord::Base
 
   has_one :deposit_status, :through => :deposit
 
-  default_scope :order => "recorddate desc"
+  #default_scope :order => "recorddate desc"
 
   scope :recent, where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
 	
@@ -82,7 +83,7 @@ class Resource < ActiveRecord::Base
 	end
   #TODO This should not be in the Resource model. Try lookups or similar.
   def self.users
-    return {"Daisy"=>["DSUMMERFIELD","U01086"],"Michael"=>"MSEXTON1","Keith"=>"KPORRITT"}
+    return {"Daisy"=>["DSUMMERFIELD","U01086"],"Michael"=>"MSEXTON1","Keith"=>"KPORRITT", "Allison"=>["ABRITT","U87263"], "Roy"=>["RTOWNER","U76749"]}
   end
 
 end
