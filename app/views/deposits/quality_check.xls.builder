@@ -98,7 +98,7 @@ xml.Workbook({
               xml.Cell 'ss:StyleID'=>visibility_style do
                 xml.Data atlas_visible ? 'Yes' : 'No', 'ss:Type' => 'String'
               end
-              latest_resource =  z.resources.last
+              latest_resource =  z.resources.recent.last
               resource_visibility_style = 'Default'
               if latest_resource.try(:pvr).to_i == 0 and  latest_resource.try(:pbr).to_i == 0 and latest_resource.try(:ppr).to_i == 0 and latest_resource.try(:mrs).to_i == 0 and latest_resource.try(:idr).to_i == 0 and latest_resource.try(:mid).to_i == 0 and latest_resource.try(:ifr).to_i == 0 and latest_resource.try(:other).to_i == 0
                 zeroed = true
