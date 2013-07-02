@@ -1,5 +1,5 @@
 class Zone < Entity
-
+  connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :parent
 	has_many :resources, :class_name => "Resource",  :foreign_key => :eno
 
