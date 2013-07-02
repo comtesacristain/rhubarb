@@ -1,11 +1,13 @@
 <%= raw CSV.generate_line create_resource_headers, :row_sep => "\r" -%>
 <%#TODO Year should be integer year - not date. Date should be date. Change Resource model to reflect that -%>
-<%- @deposits.each do |deposit| -%>   
-  <%- if @commodity.in?(['Cbl', 'Cbr'])-%>
+<%- @deposits.each do |deposit| -%>
+  <%# TODO Make this a lookup in commodtypes%>
+  <%- coal = ["Cbl","Cbr","Coal"]-%>
+  <%- if !(@commodity & coal).empty? -%>
     <%- recoverable = deposit.resources.merge(Resource.mineral(@commodity).recoverable.nonzero.year(@year)).all -%>
     <%- insitu = deposit.resources.merge(Resource.mineral(@commodity).insitu.nonzero.year(@year)).all -%>
     <%- recoverable_row = build_resource_csv(recoverable)-%>
-    <%- insitu_row = build_resource_csv(insitu)-%>
+    <%- insitu_row = build_resdource_csv(insitu)-%>
     <%- resources_row = recoverable_row + insitu_row -%>
   <%- else -%>
     <%- resources = deposit.resources.merge(Resource.nonzero.year(@year).includes(:resource_grades)).all -%>
