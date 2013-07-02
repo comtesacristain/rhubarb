@@ -89,6 +89,7 @@ module DepositsHelper
       #TODO Should this be a Hash or Arrays?
       
       jorc_row = Array.new
+
       units=Array.new
       proven=Array.new
       probable = Array.new
@@ -99,15 +100,19 @@ module DepositsHelper
       measured_indicated = Array.new 
       inferred = Array.new
       other = Array.new
+
        
       commodities.each do |c|
+          puts c
+          
         if c.in?(identified_resources.commodities)
+          
           #TODO Fix this so there is a global units accessor
           jorc_row << identified_resources.proven[c][:units][:ore] << identified_resources.proven[c][:units][:mineral] << identified_resources.proven[c][:units][:grade] rescue String.new
           jorc_row << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
           jorc_row << identified_resources.probable[c][:ore] << identified_resources.probable[c][:mineral] << identified_resources.probable[c][:grade]
           jorc_row << identified_resources.proven_probable[c][:ore] << identified_resources.proven_probable[c][:mineral] << identified_resources.proven_probable[c][:grade]
-          
+
           jorc_row << identified_resources.measured[c][:ore] << identified_resources.measured[c][:mineral] << identified_resources.measured[c][:grade]
           
           jorc_row << identified_resources.indicated[c][:ore] << identified_resources.indicated[c][:mineral] << identified_resources.indicated[c][:grade]
@@ -117,13 +122,13 @@ module DepositsHelper
           jorc_row << identified_resources.other[c][:ore] << identified_resources.other[c][:mineral] << identified_resources.other[c][:grade]
           
         end
-          
+          #puts commodities
       end
-      jorc_row
+    
        #return units + proven + probable + proven_probable + measured + indicated + measured_indicated + inferred + other
     end
     
-    
+      return jorc_row
   end
   
   
