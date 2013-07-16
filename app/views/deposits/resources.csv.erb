@@ -7,7 +7,7 @@
     <%- recoverable = deposit.resources.merge(Resource.mineral(@commodity).recoverable.nonzero.year(@year)).all -%>
     <%- insitu = deposit.resources.merge(Resource.mineral(@commodity).insitu.nonzero.year(@year)).all -%>
     <%- recoverable_row = build_resource_csv(recoverable)-%>
-    <%- insitu_row = build_resdource_csv(insitu)-%>
+    <%- insitu_row = build_resource_csv(insitu)-%>
     <%- resources_row = recoverable_row + insitu_row -%>
   <%- else -%>
     <%- resources = deposit.resources.merge(Resource.nonzero.year(@year).includes(:resource_grades)).all -%>
