@@ -12,6 +12,8 @@ class IdentifiedResource
     @submarginal = @economic.dup
     @inferred_resource = @economic.dup
     @inclusive = resource.inclusive
+    #TODO: Change this to entrydate
+    @update = resource.entrydate
     @date = resource.recorddate
     @material = resource.material
     set_jorc(resource,grade)
@@ -151,6 +153,9 @@ class IdentifiedResource
     return @material
   end
   
+  def update
+    return @update
+  end
   private
 
   # Pass resource and grade records into JORC code structured objects
