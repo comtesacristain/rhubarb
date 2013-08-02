@@ -103,12 +103,17 @@ module DepositsHelper
 
        
       commodities.each do |c|
-          puts c
-          
+     
         if c.in?(identified_resources.commodities)
           
+          
+          
           #TODO Fix this so there is a global units accessor
-          jorc_row << identified_resources.proven[c][:units][:ore] << identified_resources.proven[c][:units][:mineral] << identified_resources.proven[c][:units][:grade] rescue String.new
+          jorc_row << identified_resources.date[:start] <<   identified_resources.update << identified_resources.inclusive << c
+          
+          jorc_row << identified_resources.proven[c][:units][:ore] << identified_resources.proven[c][:units][:mineral] << identified_resources.proven[c][:units][:grade] rescue String.new 
+          
+
           jorc_row << identified_resources.proven[c][:ore] << identified_resources.proven[c][:mineral] << identified_resources.proven[c][:grade] 
           jorc_row << identified_resources.probable[c][:ore] << identified_resources.probable[c][:mineral] << identified_resources.probable[c][:grade]
           jorc_row << identified_resources.proven_probable[c][:ore] << identified_resources.proven_probable[c][:mineral] << identified_resources.proven_probable[c][:grade]
