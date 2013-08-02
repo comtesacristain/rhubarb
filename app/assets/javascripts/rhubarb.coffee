@@ -1,7 +1,8 @@
 class @Rhubarb
   baseLayers: [new OpenLayers.Layer.Google 'Google Streets'
-    new OpenLayers.Layer.Google 'Google Hybrid'
-      type: google.maps.MapTypeId.HYBRID]
+    new OpenLayers.Layer.Google 'Google Hybrid',
+      type: google.maps.MapTypeId.HYBRID
+    ]
   
   map: null
   
