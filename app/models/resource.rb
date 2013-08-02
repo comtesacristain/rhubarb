@@ -1,4 +1,5 @@
 class Resource < ActiveRecord::Base
+#  acts_as_xlsx
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "mgd.resources"
 	self.primary_key = :resourceno
