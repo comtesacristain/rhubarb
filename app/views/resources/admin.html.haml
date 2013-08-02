@@ -1,0 +1,32 @@
+%p
+  =form_tag url_for(:action=>:qa) , :method => :post do
+    %p
+      =label_tag :entered_by, "Entered By"
+      =text_field_tag :entered_by, params[:entered_by]
+      =label_tag :entered_by, "Date Entered"
+      =text_field_tag :entry_date, params[:entry_date]
+    %p
+      =label_tag :qaby, "QAed By:"
+      =text_field_tag :qaby, params[:qaby]
+      =label_tag :qadate, "QA Date:"
+      =text_field_tag :qadate, params[:qadate]
+    %table
+      %tr
+        %td RESOURCENO
+        %td ENO
+        %td DEPOSIT NAME
+        %td ZONE NAME
+        %td ENTRY DATE
+      -@resources.each do |resource|
+        -zone = resource.zone
+        -deposit = zone.deposit
+        %tr
+          %td= resource.resourceno
+          %td= resource.eno
+          %td= deposit.entityid
+          %td= zone.entityid
+          %td= resource.entrydate
+          %td= check_box_tag "resource_ids[]", resource.resourceno
+    =submit_tag "Search", :name=>:commit
+    =submit_tag "Update", :name=>:commit
+=will_paginate(@resources)
