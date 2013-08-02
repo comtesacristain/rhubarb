@@ -1,7 +1,7 @@
 class IdentifiedResourceSet < Hash
   # 
   
-  attr_reader :date, :material, :units
+  attr_reader :date, :material, :units, :inclusive,:update
   @@unit_codes= Hash[UnitCode.all.map {|u| [u.unitcode,u.unitvalue.to_f]}]
   
   def initialize (resource)
@@ -17,12 +17,16 @@ class IdentifiedResourceSet < Hash
         end
         set_date(r.recorddate)
         set_material(r.material)
+        set_inclusive(r.inclusive)
+        set_update(r.entrydate)
         
         #@units = identified.units
       end
     elsif resource.class == Resource
       set_date(resource.recorddate)
       set_material(resource.material)
+      set_inclusive(resource.inclusive)
+      set_update(resource.entrydate)
       grades = resource.resource_grades
       grades.each do |g|
         identified = IdentifiedResource.new(resource,g)
@@ -191,6 +195,25 @@ class IdentifiedResourceSet < Hash
       @date[:start] = date
     elsif @date[:end] < date
       @date[:end] = date
+    end
+  end
+  
+  def set_update(update)
+    #TODO define better
+    
+    if @update.nil?
+      @update=update
+    elsif update > @update
+      @update=update
+    end
+  end
+
+  
+  def set_inclusive(inclusive)
+    #TODO define better
+    
+    if @inclusive.nil?
+      @inclusive=inclusive
     end
   end
 
