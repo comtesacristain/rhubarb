@@ -8,7 +8,9 @@ gem 'ruby-oci8'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'activerecord-oracle_enhanced-adapter'
 
-
+gem 'axlsx_rails'
+gem 'acts_as_xlsx'
+gem 'axlsx'
 
 #gem 'sqlite3'
 gem 'i18n'
