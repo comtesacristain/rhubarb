@@ -13,11 +13,11 @@
 <%-submarginal += @identified_resources.submarginal[k][:mineral] rescue 0-%>
 <%-inferred += @identified_resources.inferred[k][:mineral] rescue 0-%>
 <%- end -%>
-"reserves":{"mineral": <%=reserves-%>},
-"economic":{"mineral": <%=economic-%>},
-"paramarginal":{"mineral": <%=paramarginal-%>},
-"submarginal":{"mineral": <%=submarginal-%>},
-"inferred":{"mineral": <%=inferred-%>},
+"reserves":{"commodity": <%=reserves-%>},
+"economic":{"commodity": <%=economic-%>},
+"paramarginal":{"commodity": <%=paramarginal-%>},
+"submarginal":{"commodity": <%=submarginal-%>},
+"inferred":{"commodity": <%=inferred-%>},
 "commodity_unit":"<%=@identified_resources.units[:mineral] rescue "-"%>"
 <%-else-%>
 "reserves":{"ore":<%= @identified_resources.reserves[params[:commodity]][:ore] -%>,
