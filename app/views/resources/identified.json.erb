@@ -19,6 +19,25 @@
 "dms":{"commodity": <%=submarginal-%>},
 "ifr":{"commodity": <%=inferred-%>},
 "commodity_unit":"<%=@identified_resources.units[:mineral] rescue "-"%>"
+<%-when "rare_earths"-%>
+<%-reserves = 0.0-%>
+<%-economic = 0.0-%>
+<%-paramarginal = 0.0-%>
+<%-submarginal = 0.0-%>
+<%-inferred = 0.0-%>
+<%- @identified_resources.keys.each do |k| -%>
+<%-reserves += @identified_resources.reserves[k][:mineral] rescue 0-%>
+<%-economic += @identified_resources.economic[k][:mineral] rescue 0-%>
+<%-paramarginal += @identified_resources.paramarginal[k][:mineral] rescue 0-%> 
+<%-submarginal += @identified_resources.submarginal[k][:mineral] rescue 0-%>
+<%-inferred += @identified_resources.inferred[k][:mineral] rescue 0-%>
+<%- end -%>
+"reserves":{"commodity": <%=reserves-%>},
+"edr":{"commodity": <%=economic-%>},
+"dmp":{"commodity": <%=paramarginal-%>},
+"dms":{"commodity": <%=submarginal-%>},
+"ifr":{"commodity": <%=inferred-%>},
+"commodity_unit":"<%=@identified_resources.units[:mineral] rescue "-"%>"
 <%-else-%>
 "reserves":{"ore":<%= @identified_resources.reserves[params[:commodity]][:ore] -%>,
 "commodity":<%= @identified_resources.reserves[params[:commodity]][:mineral] -%>,
