@@ -133,9 +133,7 @@ end
     resources = scope.all
 
     @identified_resources = IdentifiedResourceSet.new(resources)
-    #case params[:commodity] 
-    #when 'platinum_group_elements'
-    #end
+
     respond_to do |format|
       format.json #{ render :json => @grades.to_json }# grade.html.erb
     end
