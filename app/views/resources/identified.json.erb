@@ -1,22 +1,23 @@
 {
 <%-case params[:commodity]-%>
-<%--when "platinum_group_elements%>
-"reserves":{"ore":
-<%=  @identified_resources.reserves[params[:commodity]][:ore] -%>,
-"commodity":<%= @identified_resources.reserves[params[:commodity]][:mineral] -%>,
-"grade":<%= @identified_resources.reserves[params[:commodity]][:grade] -%>},
-"edr":{"ore":<%= @identified_resources.economic[params[:commodity]][:ore] -%>,
-"commodity":<%= @identified_resources.economic[params[:commodity]][:mineral] -%>,
-"grade":<%= @identified_resources.economic[params[:commodity]][:grade] -%>},
-"dmp":{"ore":<%= @identified_resources.paramarginal[params[:commodity]][:ore] -%>,
-"commodity":<%= @identified_resources.paramarginal[params[:commodity]][:mineral] -%>,
-"grade":<%= @identified_resources.paramarginal[params[:commodity]][:grade] -%>},
-"dms":{"ore":<%= @identified_resources.submarginal[params[:commodity]][:ore] -%>,
-"commodity":<%= @identified_resources.submarginal[params[:commodity]][:mineral] -%>,
-"grade":<%= @identified_resources.submarginal[params[:commodity]][:grade] -%>},
-"ifr":{"ore":<%= @identified_resources.inferred[params[:commodity]][:ore] -%>,
-"commodity":<%= @identified_resources.inferred[params[:commodity]][:mineral] -%>,
-"grade":<%= @identified_resources.inferred[params[:commodity]][:grade] -%>},
+<%--when "platinum_group_elements"-%>
+<%-reserves = 0.0-%>
+<%-economic = 0.0-%>
+<%-paramarginal = 0.0-%>
+<%-submarginal = 0.0-%>
+<%-inferred = 0.0-%>
+<%- @identified_resources.keys.each do |k| -%>
+<%-reserves += @identified_resources.reserves[params[k]][:mineral] -%>
+<%-economic += @identified_resources.economic[params[k]][:mineral] -%>
+<%-paramarginal += @identified_resources.paramarginal[params[k]][:mineral] -%> 
+<%-submarginal += @identified_resources.submarginal[params[k]][:mineral] -%>
+<%-inferred += @identified_resources.inferred[params[k]][:mineral] -%>
+<%- end -%>
+"reserves":{"mineral": <%=reserves-%>},
+"economic":{"mineral": <%=economic-%>},
+"paramarginal":{"mineral": <%=paramarginal-%>},
+"submarginal":{"mineral": <%=submarginal-%>},
+"inferred":{"mineral": <%=inferred-%>},
 "commodity_unit":"<%=@identified_resources.units[:mineral] rescue "-"%>"
 <%-else-%>
 "reserves":{"ore":<%= @identified_resources.reserves[params[:commodity]][:ore] -%>,
