@@ -7,11 +7,11 @@
 <%-submarginal = 0.0-%>
 <%-inferred = 0.0-%>
 <%- @identified_resources.keys.each do |k| -%>
-<%-reserves += @identified_resources.reserves[params[k]][:mineral] rescue 0-%>
-<%-economic += @identified_resources.economic[params[k]][:mineral] rescue 0-%>
-<%-paramarginal += @identified_resources.paramarginal[params[k]][:mineral] rescue 0-%> 
-<%-submarginal += @identified_resources.submarginal[params[k]][:mineral] rescue 0-%>
-<%-inferred += @identified_resources.inferred[params[k]][:mineral] rescue 0-%>
+<%-reserves += @identified_resources.reserves[k][:mineral] rescue 0-%>
+<%-economic += @identified_resources.economic[k][:mineral] rescue 0-%>
+<%-paramarginal += @identified_resources.paramarginal[k][:mineral] rescue 0-%> 
+<%-submarginal += @identified_resources.submarginal[k][:mineral] rescue 0-%>
+<%-inferred += @identified_resources.inferred[k][:mineral] rescue 0-%>
 <%- end -%>
 "reserves":{"mineral": <%=reserves-%>},
 "economic":{"mineral": <%=economic-%>},
