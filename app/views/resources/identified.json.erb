@@ -25,12 +25,13 @@
 <%-paramarginal = 0.0-%>
 <%-submarginal = 0.0-%>
 <%-inferred = 0.0-%>
-<%- @identified_resources.keys.each do |k| -%>
-<%-reserves += @identified_resources.reserves[k][:mineral] rescue 0-%>
-<%-economic += @identified_resources.economic[k][:mineral] rescue 0-%>
-<%-paramarginal += @identified_resources.paramarginal[k][:mineral] rescue 0-%> 
-<%-submarginal += @identified_resources.submarginal[k][:mineral] rescue 0-%>
-<%-inferred += @identified_resources.inferred[k][:mineral] rescue 0-%>
+<%- ["REO","Y2O3"].each do |k| -%>
+<%- factor = k=='Y2O3' ? 0.001 : 1-%>
+<%-reserves += @identified_resources.reserves[k][:mineral] *factor rescue 0-%>
+<%-economic += @identified_resources.economic[k][:mineral] *factor rescue 0-%>
+<%-paramarginal += @identified_resources.paramarginal[k][:mineral] *factor rescue 0-%> 
+<%-submarginal += @identified_resources.submarginal[k][:mineral] *factor rescue 0-%>
+<%-inferred += @identified_resources.inferred[k][:mineral] *factor rescue 0-%>
 <%- end -%>
 "reserves":{"commodity": <%=reserves-%>},
 "edr":{"commodity": <%=economic-%>},
