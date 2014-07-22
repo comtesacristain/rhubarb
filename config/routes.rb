@@ -5,7 +5,7 @@ Rhubarb::Application.routes.draw do
   #TODO Clean this up!
  
   
-  resources :mineral_projects, :countries, :major_projects, :references, :blobs, :zones, :commodity_types
+  resources :mineral_projects, :companies, :countries, :major_projects, :references, :blobs, :zones, :commodity_types
   
   resources :websites do
     collection do

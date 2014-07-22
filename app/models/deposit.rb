@@ -4,6 +4,10 @@ class Deposit < Entity
     where(:entity_type => 'MINERAL DEPOSIT')
   end
 
+  has_many :ownerships, :class_name => "Ownership", :foreign_key => :eno
+  
+  has_many :companies, :through=>:ownerships, :class_name => "Company", :foreign_key => :companyid
+  
   has_one :deposit_status, :class_name => "DepositStatus", :foreign_key => :eno
 
   has_one :commodity_list, :class_name => "CommodityList",  :foreign_key => :idno
