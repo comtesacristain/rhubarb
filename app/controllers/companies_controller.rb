@@ -10,7 +10,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
   end
   
-  def companies
+  def names
     unless params[:q].blank?
       @companies=Company.by_name(params[:q]).find_with_deposit_as_keys
     else
