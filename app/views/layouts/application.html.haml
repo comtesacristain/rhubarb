@@ -35,7 +35,12 @@
                         =# link_to "Register", new_user_path
                         //|
                         = link_to "Login", login_path
-                -if params[:controller]=="deposits"
+                -if params[:controller]=="mineral_projects"
+                    %b Mineral Projects
+                -else
+                    =link_to "Mineral Projects", mineral_projects_path
+                |
+				-if params[:controller]=="deposits"
                     %b Deposits
                 -else
                     =link_to "Deposits", deposits_path
@@ -54,11 +59,6 @@
                     %b Provinces
                 -else
                     =link_to "Provinces", provinces_path
-                |
-                -if params[:controller]=="powerstations"
-                    %b Powerstations
-                -else
-                    =link_to "Powerstations", powerstations_path
                 |
                 -if params[:controller]=="companies"
                     %b Companies
