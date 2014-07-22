@@ -1,16 +1,4 @@
-%h3=header_generator
+%h3
 %p
-    #deposits
-        =render('deposits')
-        %p= will_paginate @deposits, :inner_window => 3
-- content_for(:sidebar) do
-    %p= render :partial => "deposits/query"
-- content_for(:controller_nav) do
-    %p= render :partial => "deposits/links"
-- content_for(:sidebar_download) do
-    %p= render :partial => "deposits/format"
-- content_for(:title_bar) do
-    ==Deposits: Index
-    - unless params[:commodity].blank?
-        == - #{params[:commodity].titleize}
-                
+    #companies
+        =render('companies')
