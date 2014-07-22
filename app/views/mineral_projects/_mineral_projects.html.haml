@@ -1,0 +1,32 @@
+%p
+    - for mineral_project in @mineral_projects
+        - unless mineral_project.atlas_visible?
+            - mineral_project_class = [:invisible,:deposit]
+        - else
+            - mineral_project_class = :deposit
+        %div{:class=>mineral_project_class}
+            %div.coordinates
+                - unless mineral_project.geom.nil?
+                    =link_to mineral_project_path(mineral_project, :format=> :kml), :title=> "Click for KML" do
+                        = image_tag( 'globe-icon.png', :size=>'12x12')
+                        ==#{'%3.4f' % mineral_project.try(:longitude) rescue nil}, #{'%3.4f' % mineral_project.try(:latitude) rescue nil}
+                - else
+                    No coordinates
+                ="(#{mineral_project.mineral_project_status.try(:state)})"
+            %div.eno
+                =mineral_project.eno
+            %div.name
+                - status=mineral_project.mineral_project_status.operating_status rescue ""
+                - case status
+                - when 'operating mine'
+                    - image = 'red-circle.png'
+                - when 'mineral deposit'
+                    - image = 'yellow-circle.png'
+                - when 'historic mine'
+                    - image = 'green-circle.png'
+                - else
+                    - image = 'blank-circle.png'
+                =image_tag(image, :alt=>status.titleize, :title=>status.titleize)
+                =link_to mineral_project.entityid.truncate(25), mineral_project, :title=>mineral_project.entityid
+            %div.commodities
+                

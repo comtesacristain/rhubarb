@@ -1,0 +1,16 @@
+%h3 Mineral Projects
+%p
+    #mineral_project
+        =render('mineral_projects')
+        -# %p= will_paginate @mineral_project, :inner_window => 3
+-# - content_for(:sidebar) do
+    -# %p= render :partial => "mineral_project/query"
+-# - content_for(:controller_nav) do
+    -# %p= render :partial => "mineral_project/links"
+-# - content_for(:sidebar_download) do
+    -# %p= render :partial => "mineral_project/format"
+- content_for(:title_bar) do
+    ==mineral_project: Index
+    - unless params[:commodity].blank?
+        == - #{params[:commodity].titleize}
+                

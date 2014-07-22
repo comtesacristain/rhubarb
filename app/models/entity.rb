@@ -43,7 +43,11 @@ class Entity < ActiveRecord::Base
     conditions = ["SDO_ANYINTERACT(#{table_name}.geom, #{g.as_sdo_geometry}) = 'TRUE'"]
     return conditions
   end
-  
+ 
+  def self.distance(lon, lat, distance, units)
+    geometry = "SDO_GEOMETRY(3001, 8311, SDO_POINT_TYPE(#{lon},#{lat},NULL), NULL, NULL)"
+    where("SDO_WITHIN_DISTANCE(#{table_name}.geom,#{geometry},'distance=#{distance} units=#{units}') ='TRUE'")
+  end 
   
   # TODO Probably should pass object, check whether object is of type Entity, then use that Entity's id.
   def self.intersect(id)
@@ -59,6 +63,14 @@ class Entity < ActiveRecord::Base
   
   def quality_checked?
     return qa_status_code == "C"
+  end
+  
+  def open_access?
+    return access_code == "O"
+  end
+
+  def confidential?
+    return access_code == "C"
   end
 
   def qaed?
