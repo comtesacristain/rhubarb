@@ -1,0 +1,4 @@
+%h1=link_to @company.company_name, @company.url
+- @deposits = @company.deposits
+- unless @deposits.length == 0
+    = render :partial => 'deposits/deposits'
