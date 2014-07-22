@@ -5,5 +5,5 @@
 			%div.eno=company.id
 			%div.name 
 				-image_txt = "http://www.google.com/s2/favicons?domain=#{company.url}"
-				=image_tag(image_txt, :alt=>status.titleize, :title=>status.titleize)
+				=image_tag(image_txt, :alt=>company.company_name.titleize, :title=>company.company_name.titleize)
 				=link_to company.company_name.truncate(25), company, :title=>company.company_name
