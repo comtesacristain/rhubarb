@@ -48,7 +48,7 @@ $(function () {
   	prePopulate: $('#province_id').data('pre')
   	});
   	
-  	$('#company_id').tokenInput('/websites/companies.json', { 
+  	$('#company_id').tokenInput('/companies/names.json', { 
   	crossDomain: false,
   	preventDuplicates: true,
   	resultsLimit: 20,
