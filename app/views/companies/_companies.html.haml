@@ -1,0 +1,8 @@
+%p
+    - for company in @companies
+        %div{:class=>:deposit}
+            %div.coordinates
+            %div.eno
+                =company.id
+            %div.name
+                =link_to company.company_name.truncate(25), company, :title=>company.company_name
