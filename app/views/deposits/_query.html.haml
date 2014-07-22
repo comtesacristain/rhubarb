@@ -23,7 +23,7 @@
                 %td= text_field_tag "province_id", '' , 'data-tokenLimit' => 1, 'data-pre' => ( Province.find_with_deposit_as_keys(params[:province_id]).to_json unless params[:province_id].blank? )
             %tr
                 %td= label_tag :company_id, "Company:"
-                %td= text_field_tag "company_id", '' , 'data-pre' => ( Website.find_with_deposit_as_keys(params[:company_id]).to_json unless params[:company_id].blank? )
+                %td= text_field_tag "company_id", '' , 'data-pre' => ( Company.find_with_deposit_as_keys(params[:company_id]).to_json unless params[:company_id].blank? )
             - unless params[:commodity].blank?
                 %tr
                     %td Year:
