@@ -228,7 +228,7 @@ class DepositsController < ApplicationController
     
     
     unless params[:company_id].blank?
-      scope = scope.joins(:websites).where(:websites=>{:websiteno=>params[:company_id]})
+      scope = scope.joins(:companies).where(:companies=>{:company_id=>params[:company_id]})
     end
     
     unless (current_user ) #&& current_user.ozmin?
