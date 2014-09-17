@@ -1,7 +1,4 @@
 Rhubarb::Application.routes.draw do
-  resources :companies
-
-
   #TODO Clean this up!
  
   

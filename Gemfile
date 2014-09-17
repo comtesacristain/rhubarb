@@ -12,6 +12,8 @@ gem 'axlsx_rails'
 gem 'acts_as_xlsx'
 gem 'axlsx'
 
+gem 'safe_attributes'
+
 #gem 'sqlite3'
 gem 'i18n'
 gem 'jquery-rails'
