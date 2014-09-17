@@ -169,6 +169,9 @@ class IdentifiedResourceSet < Hash
     c[:ore] += ore / @@unit_codes[c[:units][:ore]]
     c[:mineral] += mineral / @@unit_codes[c[:units][:mineral]]
     #m=c[:mineral]*@@unit_codes[c[:units][:mineral]]
+    puts key
+    puts code
+    puts self.date
     c[:grade] = mineral/ore / @@unit_codes[c[:units][:grade]] unless c[:ore].zero?
     return c
   end
