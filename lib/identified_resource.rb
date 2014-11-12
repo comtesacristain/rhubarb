@@ -171,11 +171,12 @@ class IdentifiedResource
 
   # Set reserves with calculation
   def set_reserves(r, g, code, acc)
+    puts @commodity
     ore = r.send(code).to_f  * @@unit_codes[r.unit_quantity]
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
     resource = {:ore=>ore,:grade=>grade,:mineral=>mineral}
-    puts @commodity
+
     classes=Hash["#{code}_class1"=>"#{code}_pcnt1","#{code}_class2"=>"#{code}_pcnt2"]
     identify_resources(g, resource, classes)
 
