@@ -87,6 +87,7 @@ class IdentifiedResource
     i=Hash.new
     i[:ore] = inferred_raw[:ore] / @@unit_codes[@units[:ore]]
     i[:mineral] = inferred_raw[:mineral] / @@unit_codes[@units[:mineral]]
+    puts @commodity
     i[:grade] = inferred_raw[:grade] / @@unit_codes[@units[:grade]]
     i[:units] = @units
     return i
