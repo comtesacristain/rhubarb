@@ -174,7 +174,7 @@ class IdentifiedResource
     grade = g.send(code).to_f * @@unit_codes[g.unit_grade]
     mineral = calculate_contained_mineral(r, g, code)
     resource = {:ore=>ore,:grade=>grade,:mineral=>mineral}
-    
+    puts @commodity
     classes=Hash["#{code}_class1"=>"#{code}_pcnt1","#{code}_class2"=>"#{code}_pcnt2"]
     identify_resources(g, resource, classes)
 
