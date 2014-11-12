@@ -93,7 +93,6 @@ module DepositsHelper
         commodities = @commodity
       end
 
-      identified_resources.commodities
       
       jorc_row = Array.new
 
