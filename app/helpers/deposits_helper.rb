@@ -80,13 +80,20 @@ module DepositsHelper
     if resources.empty?
       return Array.new
     else
-      if @commodity.class == String
+      
+      identified_resources=IdentifiedResourceSet.new(resources)
+      #TODO Should this be a Hash or Arrays?
+      
+      case @commodity.class
+      when String
         commodities=[@commodity]
+      when NilClass
+        commodities = identified_resources.commodities
       else
         commodities = @commodity
       end
-      identified_resources=IdentifiedResourceSet.new(resources)
-      #TODO Should this be a Hash or Arrays?
+
+      identified_resources.commodities
       
       jorc_row = Array.new
 
