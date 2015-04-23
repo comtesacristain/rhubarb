@@ -10,6 +10,9 @@
       =text_field_tag :qaby, params[:qaby]
       =label_tag :qadate, "QA Date:"
       =text_field_tag :qadate, params[:qadate]
+    %p
+      =label_tag :range, "Range:"
+      =select_tag :range, options_for_select({"Week"=>:week,"Month"=>:month,"Year"=>:year})
     %table
       %tr
         %td RESOURCENO

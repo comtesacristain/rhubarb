@@ -74,7 +74,7 @@ class ResourcesController < ApplicationController
     commit =params[:commit].downcase.to_sym
     case commit
       when :search
-        redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :qadate=>params[:qadate], :entered_by=>params[:entered_by]
+        redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :qadate=>params[:qadate], :entered_by=>params[:entered_by], :range => params[:range]
       when :update
     
         unless params[:resource_ids].blank?
@@ -98,7 +98,7 @@ class ResourcesController < ApplicationController
     unless resource_ids.blank?
       flash[:notice] = "#{resource_ids.length} Resources have passed QA"
     end
-    redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate]
+    redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate], :range=>params[:range]
   end
 end
   # GET /zones/1
@@ -155,7 +155,7 @@ end
     scope = scope.entered_by(@entered_by)
     end
     unless @entry_date.blank?
-    entry_range = (@entry_date-7)..(@entry_date+7)
+    entry_range = (@entry_date-1.send(params[:range]))..(@entry_date+1.send(params[:range]))
     scope = scope.entry_date_range(entry_range)
     end
     @scope = scope
