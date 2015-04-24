@@ -75,32 +75,31 @@ class ResourcesController < ApplicationController
     case commit
       when :search
         redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :qadate=>params[:qadate], :entered_by=>params[:entered_by], :range => params[:range]
-      when :update
-    
+      when :update  
         unless params[:resource_ids].blank?
           resource_ids = params[:resource_ids]
           resource_ids.each do |id|
-          resource=Resource.find(id)
-          zone = resource.zone
-          deposit = zone.deposit
-          resource.qa_status_code="C"
-          resource.qaby = params[:qaby]
-          resource.qadate = params[:qadate].to_date
-          resource.save
-          unless zone.qaed?
-            zone.qa_record(params[:qadate].to_datetime,params[:qaby])
+            resource=Resource.find(id)
+            zone = resource.zone
+            deposit = zone.deposit
+            resource.qa_status_code="C"
+            resource.qaby = params[:qaby]
+            resource.qadate = params[:qadate].to_date
+            resource.save
+            unless zone.qaed?
+              zone.qa_record(params[:qadate].to_datetime,params[:qaby])
+            end
+            unless deposit.qaed?
+              deposit.qa_record(params[:qadate].to_datetime,params[:qaby])
+            end
           end
-          unless deposit.qaed?
-            deposit.qa_record(params[:qadate].to_datetime,params[:qaby])
-          end
+          flash[:notice] = "#{resource_ids.length} Resources have passed QA"
         end
+        redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate], :range=>params[:range]
+      end
     end
-    unless resource_ids.blank?
-      flash[:notice] = "#{resource_ids.length} Resources have passed QA"
-    end
-    redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate], :range=>params[:range]
   end
-end
+  
   # GET /zones/1
   # GET /zones/1.xml
   def identified
@@ -119,9 +118,9 @@ end
     scope = Resource.mineral(commodity).year(year).nonzero
 
     if params[:recoverability] == 'recoverable'
-    scope=scope.recoverable
-    elsif params[:recoverability] == 'insitu'
-    scope=scope.insitu
+      scope=scope.recoverable 
+    elsif params[:recoverability] == 'insitu' 
+      scope=scope.insitu 
     end
 
     if !params[:state].blank? || !params[:status].blank?
