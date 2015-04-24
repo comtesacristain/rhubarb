@@ -1,9 +1,8 @@
 class Navigation < Entity
   
-  
-  #XXX There _MUST_ be a better way of doing this
   def self.default_scope
-    self.where(:entity_type => 'SURVEY').merge(super)
+    self.where(:entity_type => 'SURVEY')
   end
 
+  belongs_to :survey, :class_name => "Survey", :foreign_key => :eno
 end
