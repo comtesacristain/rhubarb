@@ -185,6 +185,7 @@ end
     @year = params[:year].to_i
     @qa_status = params[:qa_status]
     @entered_by = params[:entered_by]
+    @range = params[:range]
   end
   
   def entry_date
