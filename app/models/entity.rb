@@ -5,7 +5,6 @@ class Entity < ActiveRecord::Base
 	self.table_name = "a.entities"
   set_primary_key :eno
 	set_date_columns :entrydate, :qadate, :lastupdate, :effective_date, :acquisition_date, :expiry_date
-  ignore_table_columns :confid_until
 
   has_many :entity_attributes, :class_name => "EntityAttribute",  :foreign_key => :eno
 
@@ -13,9 +12,9 @@ class Entity < ActiveRecord::Base
   
   
   # XXX Required due to bad data in the confid_until field
-  def self.default_scope
-    self.where(:confid_until=>nil)
-  end 
+  #def self.default_scope
+  #  self.where(:confid_until=>nil)
+  #end 
 
   def name
     entityid
