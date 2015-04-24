@@ -187,7 +187,7 @@ end
     @entered_by = params[:entered_by]
   end
   
-  def @entry_date
+  def entry_date
     if params[:entry_date].blank?
       return Date.today
     else 
