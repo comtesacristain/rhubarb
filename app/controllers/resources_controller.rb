@@ -154,7 +154,7 @@ end
     unless @entered_by.blank?
     scope = scope.entered_by(@entered_by)
     end
-    unless @entry_date.blank?
+    unless @range.blank?
       entry_range = get_range(@entry_date)
       scope = scope.entry_date_range(entry_range)
     end
@@ -185,6 +185,13 @@ end
     @year = params[:year].to_i
     @qa_status = params[:qa_status]
     @entered_by = params[:entered_by]
-    @entry_date = params[:entry_date].to_date rescue Date.today
+  end
+  
+  def @entry_date
+    if params[:entry_date].blank?
+      return Date.today
+    else 
+      return params[:entry_date].to_date
+    end
   end
 end
