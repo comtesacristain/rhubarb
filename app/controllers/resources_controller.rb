@@ -163,13 +163,13 @@ end
   
   def get_range(date)
     case params[:range]
-    when :year
+    when "year"
       return (date-1.year)..(date+1.year)
-    when :six_months
+    when "six_months"
       return (date-6.months)..(date+6.months)
-    when :month
+    when "month"
       return (date-1.month)..(date+1.month)
-    when :week
+    when "week"
       return (date-1.week)..(date+1.week)
     end
   end
