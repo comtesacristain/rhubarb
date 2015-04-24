@@ -25,4 +25,16 @@ module ResourcesHelper
     end
   end
   
+  def admin_options
+    return {"All"=>nil,"Week"=>:week,"Month"=>:month,"Six Months"=>:six_months,"Year"=>:year}
+  end
+  
+  def admin_option_default
+    if params[:range].blank?
+      return :week
+    else
+      return params[:range] 
+    end
+  end
+  
 end
