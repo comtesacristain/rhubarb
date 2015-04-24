@@ -12,7 +12,7 @@
       =text_field_tag :qadate, params[:qadate]
     %p
       =label_tag :range, "Range:"
-      =select_tag :range, options_for_select({"Week"=>:week,"Month"=>:month,"Year"=>:year})
+      =select_tag :range, options_for_select(admin_options), admin_options_default
     %table
       %tr
         %td RESOURCENO
