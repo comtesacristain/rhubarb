@@ -185,6 +185,7 @@ class ResourcesController < ApplicationController
     @qa_status = params[:qa_status]
     @entered_by = params[:entered_by]
     @range = params[:range]
+    @entry_date = entry_date
   end
   
   def entry_date
@@ -193,6 +194,9 @@ class ResourcesController < ApplicationController
     else 
       return params[:entry_date].to_date
     end
+  end
+  
+  def state
   end
 end
 
