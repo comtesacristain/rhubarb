@@ -63,7 +63,7 @@ function getData(options) {
     
 
     request = OpenLayers.Request.GET({
-        url: "/provinces/"+options.eno+".kml",
+        url: "/surveys/"+options.eno+".kml",
             
         callback: drawLayer
     });
