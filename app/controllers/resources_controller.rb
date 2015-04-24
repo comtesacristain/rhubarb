@@ -15,7 +15,6 @@ class ResourcesController < ApplicationController
 
     @resources = @scope
     respond_to do |format|
-
       format.html # index.html.erb
       format.xml  { render :xml => @resources }
     end
@@ -24,7 +23,7 @@ class ResourcesController < ApplicationController
   def show
     resource = Resource
     unless (current_user && current_user.ozmin?)
-    resource = resource.public
+      resource = resource.public
     end
     @resource = resource.find(params[:id])
   end
@@ -73,32 +72,33 @@ class ResourcesController < ApplicationController
   def qa
     commit =params[:commit].downcase.to_sym
     case commit
-      when :search
-        redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :qadate=>params[:qadate], :entered_by=>params[:entered_by], :range => params[:range]
-      when :update  
-        unless params[:resource_ids].blank?
-          resource_ids = params[:resource_ids]
-          resource_ids.each do |id|
-            resource=Resource.find(id)
-            zone = resource.zone
-            deposit = zone.deposit
-            resource.qa_status_code="C"
-            resource.qaby = params[:qaby]
-            resource.qadate = params[:qadate].to_date
-            resource.save
-            unless zone.qaed?
-              zone.qa_record(params[:qadate].to_datetime,params[:qaby])
-            end
-            unless deposit.qaed?
-              deposit.qa_record(params[:qadate].to_datetime,params[:qaby])
-            end
+    when :search
+      redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :qadate=>params[:qadate], :entered_by=>params[:entered_by], :range => params[:range]
+    when :update  
+      unless params[:resource_ids].blank?
+        resource_ids = params[:resource_ids]
+        resource_ids.each do |id|
+          resource=Resource.find(id)
+          zone = resource.zone
+          deposit = zone.deposit
+          resource.qa_status_code="C"
+          resource.qaby = params[:qaby]
+          resource.qadate = params[:qadate].to_date
+          resource.save
+          unless zone.qaed?
+            zone.qa_record(params[:qadate].to_datetime,params[:qaby])
           end
-          flash[:notice] = "#{resource_ids.length} Resources have passed QA"
+          unless deposit.qaed?
+            deposit.qa_record(params[:qadate].to_datetime,params[:qaby])
+          end
         end
-        redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate], :range=>params[:range]
+        flash[:notice] = "#{resource_ids.length} Resources have passed QA"
       end
+      redirect_to :action => :admin, :qaby=>params[:qaby], :entry_date=>@entry_date, :entered_by=>params[:entered_by], :qadate=>params[:qadate], :range=>params[:range]
     end
   end
+  
+  
   
   # GET /zones/1
   # GET /zones/1.xml
@@ -144,14 +144,14 @@ class ResourcesController < ApplicationController
 
     scope = Resource
     unless (current_user && current_user.ozmin?)
-    scope = scope.public
+      scope = scope.public  
     end
 
     unless @qa_status.blank?
       scope = scope.where(:qa_status_code => @qa_status)
     end
     unless @entered_by.blank?
-    scope = scope.entered_by(@entered_by)
+      scope = scope.entered_by(@entered_by)
     end
     unless @range.blank?
       entry_range = get_range(@entry_date)
@@ -195,3 +195,4 @@ class ResourcesController < ApplicationController
     end
   end
 end
+
