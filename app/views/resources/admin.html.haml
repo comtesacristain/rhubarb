@@ -20,6 +20,8 @@
         %td DEPOSIT NAME
         %td ZONE NAME
         %td ENTRY DATE
+        %td RESOURCE DATE
+        %td REPORT DATE
       -@resources.each do |resource|
         -zone = resource.zone
         -deposit = zone.deposit
@@ -29,6 +31,7 @@
           %td= deposit.entityid
           %td= zone.entityid
           %td= resource.entrydate
+          %td= resource.recorddate
           %td= check_box_tag "resource_ids[]", resource.resourceno
     =submit_tag "Search", :name=>:commit
     =submit_tag "Update", :name=>:commit
