@@ -9,12 +9,10 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") do
     end
     xml << render(:partial => 'deposits/style')
     xml.tag! "Placemark" do
-      xml.description @province.entityid
-      xml.name @province.entityid
+      xml.description @survey.surveyname
+      xml.name @survey.surveyname
       xml.styleUrl "#province"
-      xml << @province.geom.as_georuby.as_kml unless @province.geom.nil?
+      xml << @navigation.geom.as_georuby.as_kml unless @navigation.geom.nil?
     end
-    #@deposits = @province.deposits
-    #xml << render(:partial => 'deposits/deposits')
   end
 end
