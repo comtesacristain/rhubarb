@@ -16,6 +16,7 @@ class IdentifiedResource
     @update = resource.entrydate
     @date = resource.recorddate
     @material = resource.material
+    #Rails.logger.debug(grade.commodid)
     set_jorc(resource,grade)
     commod = grade.commodid
     set_commodity(commod)
@@ -160,6 +161,8 @@ class IdentifiedResource
 
   # Pass resource and grade records into JORC code structured objects
   def set_jorc(resource,grade)
+    puts grade.commodid
+    puts resource.eno
     jorc_reserves.each do |code, accessor|
       set_reserves(resource,grade,code,accessor)
     end
