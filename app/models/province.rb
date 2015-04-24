@@ -1,6 +1,6 @@
 class Province < Entity
   def self.default_scope
-    where(:entity_type => 'PROVINCE').merge(super)
+    where(:entity_type => 'PROVINCE')
   end
 
   has_one :province_status, :class_name => "ProvinceStatus", :foreign_key => :eno
