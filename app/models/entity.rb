@@ -1,16 +1,11 @@
 class Entity < ActiveRecord::Base
-  ENTITIES = {
-    "MINERAL DEPOSIT" => Deposit,
-    "MINERALISED ZONE" => Zone,
-    "MINERAL PROJECT" => MineralProject,
-    "SURVEY" => Navigation
-  }
+  self.inheritance_column = "entity_type"
   
   def self.find_sti_class(type_name)
-     ENTITIES[type_name] || Entity
+     self
   end
 
-  self.inheritance_column = :entity_type
+  
   
   
 	self.table_name = "a.entities"
