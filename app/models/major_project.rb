@@ -1,9 +1,9 @@
 class MajorProject < Entity
- 
-  self.sti_name = "MINERAL PROJECT"
- # def self.default_scope
-#    where(:entity_type => 'RESOURCE PROJECT')
-#  end
+
+
+  def self.default_scope
+    where(:entity_type => 'RESOURCE PROJECT')
+  end
 
   
 

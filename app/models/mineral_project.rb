@@ -1,5 +1,6 @@
 class MineralProject < Entity 
-  # attr_accessible :title, :body
+  self.sti_name = "MINERAL PROJECT"
+    # attr_accessible :title, :body
   def self.default_scope
     where(:entity_type => 'MINERAL PROJECT')
   end

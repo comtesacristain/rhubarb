@@ -1,6 +1,24 @@
 class Entity < ActiveRecord::Base
+  ENTITIES = {
+    "MINERAL DEPOSIT" : Deposit,
+    "MINERALISED ZONE" : Zone,
+    "MINERAL PROJECT" : MineralProject
+  }
+  
+  class << self
+    def find_sti_class(type_name)
+      ENTITIES[type_name] or super
+    end
+    
+    def sti_name
+        ENTITIES.invert[self]
+      end
+  end
+  
   #self.abstract_class = true
-   self.inheritance_column = :entity_type
+  self.inheritance_column = :entity_type
+  
+  
 
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "a.entities"
