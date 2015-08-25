@@ -7,7 +7,7 @@ class Entity < ActiveRecord::Base
   }
   
   def self.find_sti_class(type_name)
-     ENTITIES[type_name] or super
+     ENTITIES[type_name] || super
   end
 
   self.inheritance_column = :entity_type
