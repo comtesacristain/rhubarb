@@ -1,5 +1,6 @@
 class Entity < ActiveRecord::Base
-  self.abstract_class = true
+  #self.abstract_class = true
+   self.inheritance_column = :entity_type
 
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "a.entities"
