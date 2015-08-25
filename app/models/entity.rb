@@ -11,6 +11,9 @@ class Entity < ActiveRecord::Base
     ENTITIES[type_name].nil? ?  Entity : ENTITIES[type_name].constantize
   end
 
+  def self.sti_name
+    ENTITIES.invert(self)
+  end
   
   
   
