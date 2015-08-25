@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
     c.validate_email_field = false
   end
 
-  default_scope :order => 'login_count DESC'
+  def self.default_scope 
+    self.order('login_count DESC')
+  end
 
 
   def owns?(object)
