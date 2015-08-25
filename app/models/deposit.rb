@@ -62,11 +62,13 @@ class Deposit < Entity
   #scope :by_name, lambda { |name| { :include=>:deposit_status, :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name) or UPPER(mgd.deposits.synonyms) like UPPER(:name)",{:name=> "%#{name}%"}] } }
 
   def self.major
-     self.includes(:commodities).where(commodities:{ "commorder < 10"})
+     commorder = Commodity.arel_table[:commorder]
+     self.includes(:commodities).where(commodities:commorder.lt(10))
   end
   
   def self.major
-     self.includes(:commodities).where(commodities:{ "commorder > 9"})
+      commorder = Commodity.arel_table[:commorder]
+     self.includes(:commodities).where(commodities:commorder.gt(9))
   end
 
   def self.public
