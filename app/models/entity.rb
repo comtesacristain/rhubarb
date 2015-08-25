@@ -18,7 +18,7 @@ class Entity < ActiveRecord::Base
 
   connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "a.entities"
-  self.primary_key :eno
+  self.primary_key = :eno
 	set_date_columns :entrydate, :qadate, :lastupdate, :effective_date, :acquisition_date, :expiry_date
 
   has_many :entity_attributes, :class_name => "EntityAttribute",  :foreign_key => :eno
