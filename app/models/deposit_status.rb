@@ -3,8 +3,8 @@ class DepositStatus < ActiveRecord::Base
   # TODO Ugly name for the model. Think of a better one. Maybe worth calling _this_ the deposit model and the other one 'coordinates'
 
 
-  self.table_name "mgd.deposits"
-  self.primary_key :eno
+  self.table_name  = "mgd.deposits"
+  self.primary_key  = :eno
   set_date_columns :entrydate, :qadate, :lastupdate
   
   
