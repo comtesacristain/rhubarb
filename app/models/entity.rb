@@ -6,9 +6,9 @@ class Entity < ActiveRecord::Base
     
   }
   
-    def find_sti_class(type_name)
+  def self.find_sti_class(type_name)
       self
-    end
+  end
 
   
   #self.abstract_class = true
