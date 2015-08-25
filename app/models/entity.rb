@@ -1,4 +1,6 @@
 class Entity < ActiveRecord::Base
+	self.table_name = "a.entities"
+  self.primary_key = :eno
   self.inheritance_column = "entity_type"
   
   ENTITIES = {"MINERAL DEPOSIT" => "Deposit",
@@ -20,8 +22,7 @@ class Entity < ActiveRecord::Base
   
   
   
-	self.table_name = "a.entities"
-  self.primary_key = :eno
+	
 	set_date_columns :entrydate, :qadate, :lastupdate, :effective_date, :acquisition_date, :expiry_date
 
   has_many :entity_attributes, :class_name => "EntityAttribute",  :foreign_key => :eno
