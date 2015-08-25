@@ -5,7 +5,7 @@ gem 'rails'
 
 
 gem 'ruby-oci8'
-gem 'sqlite'3
+gem 'sqlite3'
 gem 'activerecord-oracle_enhanced-adapter'
 
 gem 'axlsx_rails'
