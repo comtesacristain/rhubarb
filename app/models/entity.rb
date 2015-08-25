@@ -1,8 +1,8 @@
 class Entity < ActiveRecord::Base
   ENTITIES = {
-    "MINERAL DEPOSIT" : Deposit,
-    "MINERALISED ZONE" : Zone,
-    "MINERAL PROJECT" : MineralProject
+    "MINERAL DEPOSIT" => Deposit,
+    "MINERALISED ZONE" => Zone,
+    "MINERAL PROJECT" => MineralProject
   }
   
   class << self
