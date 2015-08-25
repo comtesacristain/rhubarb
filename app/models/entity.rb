@@ -4,6 +4,9 @@ class Entity < ActiveRecord::Base
   ENTITIES = {"MINERAL DEPOSIT" => "Deposit",
     "MINERALISED ZONE" => "Zone",
     "MINERAL PROJECT" => "MineralProject",
+    "RESOURCE PROJECT" => "MajorProject",
+    "PROVINCE" => "Province",
+    "COUNTRY" => "Country",
     "SURVEY" => "Navigation"
   }
   
@@ -12,7 +15,6 @@ class Entity < ActiveRecord::Base
   end
 
   def self.sti_name
-    puts self
     ENTITIES.invert[self.to_s]
   end
   
