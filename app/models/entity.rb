@@ -1,8 +1,10 @@
 class Entity < ActiveRecord::Base
   self.inheritance_column = "entity_type"
   
+  ENTITIES = {"MINERAL DEPOSIT" => "Deposit"}
+  
   def self.find_sti_class(type_name)
-     self
+    ENTITIES[type_name].constantize || Entity
   end
 
   
