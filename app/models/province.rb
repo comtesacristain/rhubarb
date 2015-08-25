@@ -1,7 +1,5 @@
 class Province < Entity
-  def self.default_scope
-    where(:entity_type => 'PROVINCE')
-  end
+  self.sti_name = "PROVINCE"
 
   has_one :province_status, :class_name => "ProvinceStatus", :foreign_key => :eno
 

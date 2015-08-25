@@ -1,8 +1,6 @@
 class Navigation < Entity
   
-  def self.default_scope
-    self.where(:entity_type => 'SURVEY')
-  end
+  self.sti_name = "SURVEY"
 
   belongs_to :survey, :class_name => "Survey", :foreign_key => :eno
 end

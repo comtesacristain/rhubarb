@@ -9,10 +9,6 @@ class Entity < ActiveRecord::Base
     def find_sti_class(type_name)
       ENTITIES[type_name] or super
     end
-    
-    def sti_name
-        ENTITIES.invert[self]
-      end
   end
   
   #self.abstract_class = true

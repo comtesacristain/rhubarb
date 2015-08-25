@@ -1,8 +1,6 @@
 class Deposit < Entity
   attr_reader :province_tokens  
-  def self.default_scope
-    where(:entity_type => 'MINERAL DEPOSIT')
-  end
+  self.sti_name = "MINERAL DEPOSIT"
 
   has_many :ownerships, :class_name => "Ownership", :foreign_key => :eno
   

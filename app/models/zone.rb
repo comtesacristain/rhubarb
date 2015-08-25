@@ -9,9 +9,8 @@ class Zone < Entity
   has_one :status, :class_name => "DepositStatus", :primary_key=>:eno, :foreign_key => :eno
   scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 
-	def self.default_scope
-	  where(:entity_type => 'MINERALISED ZONE')
-	end
+
+  self.sti_name = "MINERALISED ZONE"
 
   scope :public, :conditions=> "a.entities.access_code = 'O'"
 
