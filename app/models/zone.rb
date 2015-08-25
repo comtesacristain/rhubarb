@@ -10,8 +10,9 @@ class Zone < Entity
   scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 
 
-  self.sti_name = "MINERALISED ZONE"
-
+  def self.sti_name
+    "MINERALISED ZONE"
+  end
   scope :public, :conditions=> "a.entities.access_code = 'O'"
 
 end

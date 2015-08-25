@@ -1,6 +1,8 @@
 class Province < Entity
-  self.sti_name = "PROVINCE"
-
+  def self.sti_name
+    "PROVINCE"
+  end
+  
   has_one :province_status, :class_name => "ProvinceStatus", :foreign_key => :eno
 
   #Province parent/child

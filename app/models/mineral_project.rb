@@ -1,6 +1,8 @@
 class MineralProject < Entity 
     # attr_accessible :title, :body
-  self.sti_name = "MINERAL PROJECT"
+  def self.sti_name
+    "MINERAL PROJECT"
+  end
   
   has_one :mineral_project_status, :class_name => "DepositStatus", :foreign_key => :eno
   

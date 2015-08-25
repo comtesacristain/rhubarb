@@ -1,8 +1,9 @@
 class MajorProject < Entity
 
 
-  self.sti_name = "RESOURCE PROJECT"
-
+  def self.sti_name 
+    "RESOURCE PROJECT"
+  end
   
 
   scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
