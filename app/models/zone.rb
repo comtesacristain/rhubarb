@@ -7,12 +7,15 @@ class Zone < Entity
 
   has_one :deposit_status, :class_name => "DepositStatus", :primary_key=>:parent, :foreign_key => :eno
   has_one :status, :class_name => "DepositStatus", :primary_key=>:eno, :foreign_key => :eno
+  
   scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 
 
   def self.sti_name
     "MINERALISED ZONE"
   end
-  scope :public, :conditions=> "a.entities.access_code = 'O'"
-
+  
+  def self.public 
+    where(access_code:"O")
+  end
 end
