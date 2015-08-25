@@ -1,5 +1,4 @@
 class MineralProject < Entity 
-    # attr_accessible :title, :body
   def self.sti_name
     "MINERAL PROJECT"
   end
