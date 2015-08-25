@@ -1,3 +1,5 @@
 class Country < Entity
-  self.sti_name = "COUNTRY"
+  def self.sti_name 
+     "COUNTRY"
+   end
 end
