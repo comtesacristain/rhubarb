@@ -1,4 +1,7 @@
 class Deposit < Entity
+  def self.sti_name 
+     "MINERAL DEPOSIT"
+  end
   attr_reader :province_tokens  
   
   has_many :ownerships, :class_name => "Ownership", :foreign_key => :eno
