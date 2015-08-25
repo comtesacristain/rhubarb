@@ -8,7 +8,7 @@ class Entity < ActiveRecord::Base
   }
   
   def self.find_sti_class(type_name)
-    if ENTITIES[type_name].nil? ?  Entity : ENTITIES[type_name].constantize
+    ENTITIES[type_name].nil? ?  Entity : ENTITIES[type_name].constantize
   end
 
   
