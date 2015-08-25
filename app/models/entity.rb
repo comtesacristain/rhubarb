@@ -12,7 +12,7 @@ class Entity < ActiveRecord::Base
   end
 
   def self.sti_name
-    ENTITIES.invert(self)
+    ENTITIES.invert[self]
   end
   
   
