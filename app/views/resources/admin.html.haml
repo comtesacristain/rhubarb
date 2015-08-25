@@ -23,13 +23,11 @@
         %td RESOURCE DATE
         %td REPORT DATE
       -@resources.each do |resource|
-        -zone = resource.zone
-        -deposit = zone.deposit
-        %tr
+        %tr{:class=admin_row_class(resource)}
           %td= resource.resourceno
           %td= resource.eno
-          %td= deposit.entityid
-          %td= zone.entityid
+          %td= resource.zone.deposit.entityid
+          %td= resource.zone.entityid
           %td= resource.entrydate
           %td= resource.recorddate
           %td= check_box_tag "resource_ids[]", resource.resourceno

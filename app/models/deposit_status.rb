@@ -1,10 +1,10 @@
 class DepositStatus < ActiveRecord::Base
    #TODO set relation with State
   # TODO Ugly name for the model. Think of a better one. Maybe worth calling _this_ the deposit model and the other one 'coordinates'
-  connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 
-  set_table_name "mgd.deposits"
-  set_primary_key :eno
+
+  self.table_name "mgd.deposits"
+  self.primary_key :eno
   set_date_columns :entrydate, :qadate, :lastupdate
   
   

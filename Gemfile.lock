@@ -118,12 +118,12 @@ GEM
       actionpack (= 4.2.1)
       activesupport (= 4.2.1)
       rake (>= 0.8.7)
-      thor (>= 0.18.1, < 2.0)
-    rake (10.4.2)
-    request_store (1.2.0)
-    ruby-oci8 (2.1.8)
-    ruby-oci8 (2.1.8-x86-mingw32)
-    rubyzip (1.0.0)
+      rdoc (~> 3.4)
+      thor (>= 0.14.6, < 2.0)
+    rake (10.0.3)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    rubyzip (0.9.9)
     safe_attributes (1.0.10)
       activerecord (>= 3.0.0)
     sass (3.4.17)
@@ -167,8 +167,12 @@ DEPENDENCIES
   i18n
   jquery-rails
   net-ldap
+<<<<<<< HEAD
   rails (= 4.2.1)
   ruby-oci8
+=======
+  rails
+>>>>>>> fc41ca59a593ea064ebf09a735bbee49c0c05ecf
   safe_attributes
   sass
   sprockets

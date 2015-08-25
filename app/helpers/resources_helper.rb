@@ -25,6 +25,8 @@ module ResourcesHelper
     end
   end
   
+  ## ADMIN HELPERS
+  
   def admin_options
     return {"All"=>nil,"Week"=>:week,"Month"=>:month,"Six Months"=>:six_months,"Year"=>:year}
   end
@@ -34,6 +36,14 @@ module ResourcesHelper
       return :week
     else
       return params[:range] 
+    end
+  end
+  
+  def admin_row_class(resource)
+    if resource.recorddate == resource.entrydate 
+      return "exact-dates"
+    else 
+      return nil
     end
   end
   
