@@ -34,7 +34,7 @@ class Resource < ActiveRecord::Base
   scope :recoverable, -> { where(:rec_recoverable => 'Y') }
   scope :insitu, -> { where(:rec_recoverable => 'N') }
 
-  scope :public, -> {
+  scope :published, -> {
     where( "mgd.resources.access_code = 'O' and mgd.resources.qa_status_code = 'C'")
   }
 
