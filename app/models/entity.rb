@@ -4,7 +4,7 @@ class Entity < ActiveRecord::Base
   ENTITIES = {"MINERAL DEPOSIT" => "Deposit",
     "MINERALISED ZONE" => "Zone",
     "MINERAL PROJECT" => "MineralProject",
-    "SURVEY" => "Navigation",
+    "SURVEY" => "Navigation"
   }
   
   def self.find_sti_class(type_name)
@@ -12,7 +12,8 @@ class Entity < ActiveRecord::Base
   end
 
   def self.sti_name
-    ENTITIES.invert[self]
+    puts self
+    ENTITIES.invert[self.to_s]
   end
   
   
