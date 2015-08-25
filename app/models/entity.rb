@@ -2,8 +2,8 @@ class Entity < ActiveRecord::Base
   ENTITIES = {
     "MINERAL DEPOSIT" => Deposit,
     "MINERALISED ZONE" => Zone,
-    "MINERAL PROJECT" => MineralProject
-    
+    "MINERAL PROJECT" => MineralProject,
+    "SURVEY" => Navigation
   }
   
   def self.find_sti_class(type_name)
