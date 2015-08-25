@@ -7,16 +7,12 @@ class Entity < ActiveRecord::Base
   }
   
   def self.find_sti_class(type_name)
-      self
+     ENTITIES[type_name.to_i] or super
   end
 
-  
-  #self.abstract_class = true
   self.inheritance_column = :entity_type
   
   
-
-  connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "a.entities"
   self.primary_key = :eno
 	set_date_columns :entrydate, :qadate, :lastupdate, :effective_date, :acquisition_date, :expiry_date
