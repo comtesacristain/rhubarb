@@ -3,13 +3,13 @@ class Entity < ActiveRecord::Base
     "MINERAL DEPOSIT" => Deposit,
     "MINERALISED ZONE" => Zone,
     "MINERAL PROJECT" => MineralProject
+    
   }
   
-  class << self
     def find_sti_class(type_name)
-      ENTITIES[type_name] or super
+      self
     end
-  end
+
   
   #self.abstract_class = true
   self.inheritance_column = :entity_type
