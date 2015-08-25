@@ -49,7 +49,7 @@ Rhubarb::Application.routes.draw do
 
   resources :users
 
-  resources :user_sessions do
+  resources :user_sessions
   match 'login',  :to => "user_sessions#new", :as => :login, via: :get
   match 'logout',  :to => "user_sessions#destroy", :as => :logout, via: :get
     
