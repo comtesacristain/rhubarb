@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
 
   def create
     return nil if @username.nil?
-    user = User.find_or_initialize_by_username(@username)
+    user = User.find_or_initialize_by(username:@username)
     @user_session = UserSession.new(user)
     if user.authenticate_against_ga_ldap(params[:user_session][:password])
       user.save if user.id.blank?
