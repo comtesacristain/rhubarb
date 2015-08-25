@@ -15,7 +15,7 @@ class Resource < ActiveRecord::Base
 
   #default_scope :order => "recorddate desc"
 
-  scope :recent -> {
+  scope :recent, -> {
     where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
 	}
   
@@ -23,18 +23,20 @@ class Resource < ActiveRecord::Base
 
   #scope :mineral, joins(:resource_grades) & ResourceGrade.mineral
 
-  scope :zeroed, where({:pvr=>0,:pbr=>0,:ppr=>0,:mrs=>0,:idr=>0,:mid=>0,:ifr=>0,:other=>0})
+  scope :zeroed, -> {where({:pvr=>0,:pbr=>0,:ppr=>0,:mrs=>0,:idr=>0,:mid=>0,:ifr=>0,:other=>0}) }
   
   # XXX Arel may provide a way to implement this as the complement of 'zeroed'
-  scope :nonzero, where("(mgd.resources.pvr <> 0 or mgd.resources.pbr <> 0 or mgd.resources.ppr <> 0 or mgd.resources.mrs <> 0 or mgd.resources.idr <> 0 or mgd.resources.mid <> 0 or mgd.resources.ifr <> 0 or mgd.resources.other <> 0)")
+  scope :nonzero, -> { where("(mgd.resources.pvr <> 0 or mgd.resources.pbr <> 0 or mgd.resources.ppr <> 0 or mgd.resources.mrs <> 0 or mgd.resources.idr <> 0 or mgd.resources.mid <> 0 or mgd.resources.ifr <> 0 or mgd.resources.other <> 0)") }
 
-  scope :qaed, where(:qa_status_code=>'C')
-  scope :not_qaed, where(:qa_status_code=>'U')
+  scope :qaed, -> { where(:qa_status_code=>'C') }
+  scope :not_qaed, -> { where(:qa_status_code=>'U') }
   # For coal
-  scope :recoverable, :conditions => {:rec_recoverable => 'Y'}
-  scope :insitu, :conditions => {:rec_recoverable => 'N'}
+  scope :recoverable, -> { where(:rec_recoverable => 'Y') }
+  scope :insitu, -> { where(:rec_recoverable => 'N') }
 
-  scope :public, :conditions=> "mgd.resources.access_code = 'O' and mgd.resources.qa_status_code = 'C'"
+  scope :public, -> {
+    where( "mgd.resources.access_code = 'O' and mgd.resources.qa_status_code = 'C'")
+  }
 
   def identify
     return IdentifiedResourceSet.new(self)
