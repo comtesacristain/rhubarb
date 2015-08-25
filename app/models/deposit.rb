@@ -61,11 +61,17 @@ class Deposit < Entity
 	#scope :status, lambda { |os| { :include=>:deposit_status, :conditions=> ["mgd.deposits.operating_status = ?", os] } }
   #scope :by_name, lambda { |name| { :include=>:deposit_status, :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name) or UPPER(mgd.deposits.synonyms) like UPPER(:name)",{:name=> "%#{name}%"}] } }
 
-  scope :major, :include=>:commodities, :conditions=> "commorder < 10"
-  scope :minor, :include=>:commodities, :conditions=> "commorder >= 9"
+  def self.major
+     self.includes(:commodities).where(commodities:{ "commorder < 10"})
+  end
+  
+  def self.major
+     self.includes(:commodities).where(commodities:{ "commorder > 9"})
+  end
 
-  scope :public, :include=>:commodities, :conditions=> "a.entities.access_code = 'O' and a.entities.qa_status_code = 'C'"
-
+  def self.public
+    self.includes(:commodities).where(access_code:"O",qa_status_code:"C")
+  end 
   self.per_page = 10
 
   
