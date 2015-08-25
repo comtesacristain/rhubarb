@@ -38,10 +38,6 @@ Rhubarb::Application.routes.draw do
     collection do
       get :deposits
     end
-#    resources :deposits do
-#      collection do
-#        'resources'
-#      end
   end
 
   resources :resources do
@@ -53,11 +49,11 @@ Rhubarb::Application.routes.draw do
 
   resources :users
 
-  resources :user_sessions
-  match 'login',  :to => "user_sessions#new", :as => :login
-  match 'logout',  :to => "user_sessions#destroy", :as => :logout
+  resources :user_sessions do
+  match 'login',  :to => "user_sessions#new", :as => :login, via: :get
+  match 'logout',  :to => "user_sessions#destroy", :as => :logout, via: :get
     
-  match 'account', :to => "users#index"
+  match 'account', :to => "users#index", via: :get
 
   resources :occurrences do
     collection do
@@ -70,9 +66,9 @@ Rhubarb::Application.routes.draw do
       get 'new_features', 'help', 'search'
     end
   end
-  match 'help', :to => "home#help"
-  match 'new_features', :to => "home#new_features"
-  match 'search', :to => "home#search"
+  match 'help', :to => "home#help", via: :get
+  match 'new_features', :to => "home#new_features", via: :get
+  match 'search', :to => "home#search", via: :get
 
   resources :deposits do
     collection do
