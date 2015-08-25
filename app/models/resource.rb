@@ -33,7 +33,8 @@ class Resource < ActiveRecord::Base
   # For coal
   scope :recoverable, -> { where(:rec_recoverable => 'Y') }
   scope :insitu, -> { where(:rec_recoverable => 'N') }
-
+  
+  #TODO: Change all instances of public to published
   scope :published, -> {
     where( "mgd.resources.access_code = 'O' and mgd.resources.qa_status_code = 'C'")
   }
