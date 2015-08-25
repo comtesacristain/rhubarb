@@ -28,11 +28,6 @@ class Entity < ActiveRecord::Base
 
   scope :bounds, lambda { |bbox| { :conditions => bounds_conditions(bbox) } }
   
-  
-  # XXX Required due to bad data in the confid_until field
-  #def self.default_scope
-  #  self.where(:confid_until=>nil)
-  #end 
 
   def name
     entityid
