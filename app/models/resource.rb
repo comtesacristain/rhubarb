@@ -15,8 +15,10 @@ class Resource < ActiveRecord::Base
 
   #default_scope :order => "recorddate desc"
 
-  scope :recent, where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
-	
+  scope :recent -> {
+    where("mgd.resources.recorddate in (select MAX(r.recorddate) from mgd.resources r where r.eno = mgd.resources.eno)")
+	}
+  
 	scope :mineral, lambda { |min| { :include=>:resource_grades, :conditions=> ["mgd.resource_grades.commodid in (:mineral)", {:mineral => min}] } }
 
   #scope :mineral, joins(:resource_grades) & ResourceGrade.mineral
