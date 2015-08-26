@@ -1,5 +1,4 @@
 class Survey < ActiveRecord::Base
-  connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
   self.table_name = "a.surveys"
   
   has_one :navigation, :class_name=>"Navigation", :foreign_key => :eno

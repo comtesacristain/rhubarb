@@ -1,10 +1,8 @@
 class Occurrence < ActiveRecord::Base
-	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-
-	set_table_name "mgd.v_minloc"
+	self.table_name "mgd.v_minloc"
 	#set_table_name "mgd.occurrences"
 	ignore_table_columns :class
-	set_primary_key :minlocno
+	self.primary_key :minlocno
 
 	has_many :occurrence_commodities, :class_name => "OccurrenceCommodity",  :foreign_key => "minlocno"
 	#has_one :occurrence_commodity_list, :class_name => "OccurrenceCommodityList",  :foreign_key => "idno"

@@ -1,5 +1,4 @@
 class UnitCode < ActiveRecord::Base
-	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "mgd.unit_codes"
 	self.primary_key = :unitcode
 

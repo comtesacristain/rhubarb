@@ -1,8 +1,7 @@
 class Reference < ActiveRecord::Base
-  connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "georef.references"
+	self.table_name "georef.references"
 
-	set_primary_key :refid
+	self.primary_key :refid
 
 	has_many :resource_references, :class_name => "ResourceReference", :foreign_key => :refid
   has_many :resources, :through => :resource_references, :class_name => "Resource", :foreign_key => :resourceno

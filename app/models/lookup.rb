@@ -1,10 +1,9 @@
 class Lookup < ActiveRecord::Base
-	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "mgd.lookups"
+	self.table_name "mgd.lookups"
 
-	set_primary_key :code
+	self.primary_key :code
 
-  set_inheritance_column :ruby_type
+  self.inheritance_column :ruby_type
   
 	set_date_columns :entrydate, :qadate, :lastupdate
   

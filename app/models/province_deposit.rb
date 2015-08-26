@@ -8,5 +8,4 @@ class ProvinceDeposit < ActiveRecord::Base
 
 	set_date_columns :entrydate, :qadate, :lastupdate
 	
-	
 end

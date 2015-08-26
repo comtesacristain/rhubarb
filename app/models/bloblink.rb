@@ -1,5 +1,4 @@
 class Bloblink < ActiveRecord::Base
-	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
 	self.table_name = "npm.bloblink"
     
 	self.primary_key = :eno

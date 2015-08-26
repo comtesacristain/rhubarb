@@ -1,7 +1,6 @@
 class DepositAttribute < ActiveRecord::Base
-	connection.execute("ALTER SESSION set NLS_DATE_FORMAT ='DD-MON-FXYYYY'")
-	set_table_name "mgd.deposdata"
-	set_primary_key :eno
+	self.table_name "mgd.deposdata"
+	self.primary_key :eno
 	scope :regname, :conditions => "attribname = 'REGNAME'"
 	scope :minage_gp, :conditions => "attribname = 'MINAGE_GP'"
 	scope :minsys_gp, :conditions => "attribname = 'MINSYS_GP'"
