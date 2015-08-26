@@ -7,9 +7,9 @@ class ResourceGrade < ActiveRecord::Base
 
 	#named_scope :recent, :conditions => "recorddate in (select MAX(recorddate) from mgd.resources r where r.eno = mgd.resources.eno"
 
-  scope :public, :conditions=> "mgd.resource_grades.access_code = 'O'"
+  scope :published, -> {where  access_code: "O"}
 
-  default_scope :order =>'mgd.resource_grades.access_code desc, commodid asc'
+  default_scope -> { order access_code: :desc, :commodid }
 
 	scope :mineral, lambda { |min| { :conditions=> ["mgd.resource_grades.commodid in (?)", min] } }
 end
