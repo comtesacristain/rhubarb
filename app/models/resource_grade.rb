@@ -9,7 +9,7 @@ class ResourceGrade < ActiveRecord::Base
 
   scope :published, -> {where  access_code: "O"}
 
-  default_scope { order access_code: :desc, :commodid }
+  default_scope { order ({access_code: :desc}, :commodid) }
 
 	scope :mineral, lambda { |min| { :conditions=> ["mgd.resource_grades.commodid in (?)", min] } }
 end
