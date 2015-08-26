@@ -36,7 +36,7 @@ class IdentifiedResourceSet < Hash
         self[identified.identified_commodity]<<identified          
       end
     else
-      #raise ArgumentError, "Must be a Resource"
+      raise ArgumentError, "Must be a Resource"
     end
   end
 
