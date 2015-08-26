@@ -1,8 +1,8 @@
 class Weblink < ActiveRecord::Base
 
-	self.table_name "mgd.webdata"
+	self.table_name = "mgd.webdata"
 
-	self.primary_key :eno
+	self.primary_key  = :eno
 
 	belongs_to :deposit, :class_name => "Deposit", :foreign_key => :eno
 	belongs_to :website, :class_name => "Website", :foreign_key => :websiteno
