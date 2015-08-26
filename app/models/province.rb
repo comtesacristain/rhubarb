@@ -15,7 +15,7 @@ class Province < Entity
   has_many :relations, :class_name => "Province", :through => :province_relations
 
   #Province relation types
-  has_many :adjoining_provinces,  :class_name => "Province", :through => :province_relations, :source =>:relation, :conditions => ["provreltype = 'adjoins'"]
+  has_many :adjoining_provinces, -> {where province: {provreltype: 'adjoins'} }, :class_name => "Province", :through => :province_relations, :source =>:relation
   has_many :overlying_provinces,  :class_name => "Province", :through => :province_relations, :source =>:relation, :conditions => ["provreltype = 'overlies'"]
   has_many :underlying_provinces,  :class_name => "Province", :through => :province_relations, :source =>:relation, :conditions => ["provreltype = 'underlies'"]
   has_many :intruding_provinces,  :class_name => "Province", :through => :province_relations, :source =>:relation, :conditions => ["provreltype = 'intrudes'"]
