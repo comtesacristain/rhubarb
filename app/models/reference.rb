@@ -1,7 +1,7 @@
 class Reference < ActiveRecord::Base
-	self.table_name "georef.references"
+	self.table_name = "georef.references"
 
-	self.primary_key :refid
+	self.primary_key = :refid
 
 	has_many :resource_references, :class_name => "ResourceReference", :foreign_key => :refid
   has_many :resources, :through => :resource_references, :class_name => "Resource", :foreign_key => :resourceno
