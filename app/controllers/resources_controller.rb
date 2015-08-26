@@ -63,7 +63,7 @@ class ResourcesController < ApplicationController
 
   def admin
     @scope = @scope.where(:qa_status_code=>'U').order(:entrydate)
-    @resources = @scope.paginate :page => params[:page] , :order => 'recorddate DESC'
+    @resources = @scope.paginate :page => params[:page]
     respond_to do |format|
       format.html # qa.html.haml
     end
