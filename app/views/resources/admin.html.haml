@@ -23,7 +23,7 @@
         %td RESOURCE DATE
         %td REPORT DATE
       -@resources.each do |resource|
-        %tr{:class=admin_row_class(resource)}
+        %tr{:class=>admin_row_class(resource)}
           %td= resource.resourceno
           %td= resource.eno
           %td= resource.zone.deposit.entityid
