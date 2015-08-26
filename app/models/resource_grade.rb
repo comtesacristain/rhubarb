@@ -1,6 +1,6 @@
 class ResourceGrade < ActiveRecord::Base
-	self.table_name "mgd.resource_grades"
-	self.primary_key :rescommno
+	self.table_name = "mgd.resource_grades"
+	self.primary_key = :rescommno
   set_date_columns :entrydate, :qadate, :confid_until, :lastupdate
 
   belongs_to :resource, :class_name => "Resource", :foreign_key => :resourceno
