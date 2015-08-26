@@ -15,6 +15,7 @@ class Province < Entity
   has_many :relations, :class_name => "Province", :through => :province_relations
 
   #Province relation types
+  #TODO: Investigate polymorhpic types
   has_many :adjoining_provinces, -> {where province: {provreltype: 'adjoins'} }, :class_name => "Province", :through => :province_relations, :source =>:relation
   has_many :overlying_provinces, -> {where province: {provreltype: 'overlies'} }, :class_name => "Province", :through => :province_relations, :source =>:relation
   has_many :underlying_provinces, -> {where province: {provreltype: 'underlies'} }, :class_name => "Province", :through => :province_relations, :source =>:relation
