@@ -5,7 +5,7 @@ class IdentifiedResourceSet < Hash
   @@unit_codes= Hash[UnitCode.all.map {|u| [u.unitcode,u.unitvalue.to_f]}]
   
   def initialize (resource)
-    if resource.class.in?([Resource::ActiveRecord_Relation,ActiveRecord::AssociationRelation])
+    if resource.class <  ActiveRecord::Relation
       resource.each do |r|
         grades = r.resource_grades
         grades.each do |g|
@@ -22,7 +22,7 @@ class IdentifiedResourceSet < Hash
         
         #@units = identified.units
       end
-    elsif resource.class == Resource
+    elsif resource.class < Resource
       set_date(resource.recorddate)
       set_material(resource.material)
       set_inclusive(resource.inclusive)
