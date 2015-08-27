@@ -11,5 +11,6 @@ resources.each do |resource|
     else
       puts "For resource #{resource.resourceno}, the following comment has a date in it:\n"
       puts comments
+    end
   end
 end
