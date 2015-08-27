@@ -9,8 +9,8 @@ resources.each do |resource|
       puts "For resource #{resource.resourceno}, the following comment has no date in it:\n"
       puts comments
     else
-      puts "For resource #{resource.resourceno}, the following comment has a date in it:\n"
-      puts comments
+     # puts "For resource #{resource.resourceno}, the following comment has a date in it:\n"
+     # puts comments
     end
   end
 end
