@@ -190,7 +190,7 @@ class DepositsController < ApplicationController
   def define_scope
     
     # Define scope depending on whether Province or Deposits 
-    
+    puts params
     scope = Deposit
     
     #TODO Possibly change to be like Websites below  
@@ -263,22 +263,6 @@ class DepositsController < ApplicationController
       end
     end
     
-    
-    #
-    
-    #unless params[:commodity].blank?
-    #  if CommodityType.aliases.keys.include?(params[:commodity])
-    #    @commodity = CommodityType.aliases[params[:commodity]]
-    #  else
-    #    @commodity = params[:commodity].split(",")
-    #  end
-    #  unless (current_user && current_user.ozmin?)
-    #    scope = scope.mineral(@commodity).merge(Commodity.public)
-    #  else
-    #    scope = scope.mineral(@commodity)
-    #  end
-	  #end
-    #
     unless params[:state].blank?
       @state=params[:state].split(",")
       scope = scope.state(@state)
@@ -294,7 +278,7 @@ class DepositsController < ApplicationController
 	  
 	  scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  @scope = scope
-	 @total_deposits = scope.count
+	  @total_deposits = scope.count
 	end
 
   #TODO Should this be in a helper?
