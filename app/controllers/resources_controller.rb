@@ -8,7 +8,7 @@ class ResourcesController < ApplicationController
   def index
 
     unless params[:format]
-      @scope = @scope.paginate :page => params[:page] , :order => 'recorddate DESC' if !params[:format]
+      @scope = @scope.order(recorddate: :desc).paginate :page => params[:page]
     else
       @scope = @scope.all
     end
