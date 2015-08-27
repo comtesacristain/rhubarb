@@ -41,7 +41,7 @@ class Deposit < Entity
   #scope :mineral, lambda { |min| { :include=>:commodities, :conditions=> ["mgd.commods.commodid in (?)", min] } }
 	
 	def self.mineral(mineral)
-	  self.includes(:commodities).merge(Commodity.mineral(mineral))
+	  self.joins(:commodities).where(Commodity.arel_table[:commodid].eq(mineral))
 	end
 	
 	#scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
