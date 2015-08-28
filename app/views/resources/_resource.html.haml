@@ -65,7 +65,7 @@
     - unless @resource.zero?
         - grades = @resource.resource_grades
         - unless (current_user && current_user.ozmin?)
-            - grades = grades.public
+            - grades = grades.published
         - grades.each do |grade|
             - style = String.new
             - unless grade.access_code == "O"
