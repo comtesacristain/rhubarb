@@ -27,8 +27,12 @@ class Entity < ActiveRecord::Base
 
   has_many :entity_attributes, :class_name => "EntityAttribute",  :foreign_key => :eno
 
-  scope :bounds, lambda { |bbox| { :conditions => bounds_conditions(bbox) } }
+  #scope :bounds, lambda { |bbox| { :conditions => bounds_conditions(bbox) } }
   
+  
+  def self.bounds(bbox)
+    where(bounds_conditions(bbox))
+  end
 
   def name
     entityid
