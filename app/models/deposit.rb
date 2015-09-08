@@ -52,7 +52,7 @@ class Deposit < Entity
 	
 	
 	def self.status(status)
-    self.joins(:deposit_status).where(:operating_status=>status)
+    self.joins(:deposit_status).where(:deposit_status=>{:operating_status=>status})
   end
   
 	
