@@ -290,7 +290,7 @@ class DepositsController < ApplicationController
     end
  	  
 	  # TODO ugh no!
-	  scope = scope.bounds(eval("["+params[:bbox]+"]")) unless params[:bbox].blank?
+	  #scope = scope.bounds(eval("["+params[:bbox]+"]")) unless params[:bbox].blank?
 	  
 	  scope = scope.by_name(params[:name]) unless params[:name].blank?
 	  @scope = scope
