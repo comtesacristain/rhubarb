@@ -115,11 +115,11 @@ class DepositsController < ApplicationController
     @geometry = scope.where(Deposit.arel_table[:geom].not_eq(nil)).count
     @no_geometry = scope.where(:geom=>nil).count
     
-    @has_provinces = scope.includes(:province_deposits).where("provdepos.eno is not null").count
-    @no_provinces = scope.includes(:province_deposits).where(ProvinceDeposit.table_name=> {:eno => nil}).count
+    @has_provinces = scope.joins(:province_deposits).where("provdepos.eno is not null").count
+    @no_provinces = scope.joins(:province_deposits).where(ProvinceDeposit.table_name=> {:eno => nil}).count
 
-    @has_websites = scope.includes(:websites).where("websites.websiteno is not null").count
-    @no_websites = scope.includes(:websites).where(:websites=>{:websiteno=>nil}).count
+    @has_websites = scope.joins(:websites).where("websites.websiteno is not null").count
+    @no_websites = scope.joins(:websites).where(:websites=>{:websiteno=>nil}).count
 
    
     @bad_deposits =  scope.includes(:province_deposits).where(ProvinceDeposit.table_name=> {:eno => nil}).where(:qa_status_code=>'U').where(:geom=>nil)

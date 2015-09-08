@@ -24,7 +24,7 @@
         %td QA?
       -@resources.each do |resource|
         %tr{:class=>admin_row_class(resource)}
-          %td= resource.resourceno
+          %td= link_to resource.resourceno, resource
           %td= resource.eno
           %td= resource.zone.deposit.entityid
           %td= resource.zone.entityid
@@ -34,3 +34,5 @@
     =submit_tag "Search", :name=>:commit
     =submit_tag "Update", :name=>:commit
 =will_paginate(@resources)
+- content_for(:title_bar) do
+  ==Resources: Admin

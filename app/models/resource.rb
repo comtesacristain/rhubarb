@@ -1,11 +1,14 @@
 class Resource < ActiveRecord::Base
-	self.table_name = "mgd.resources"
-	self.primary_key = :resourceno
+  self.table_name = "mgd.resources"
+  self.primary_key = :resourceno
   
   set_date_columns :recorddate, :entrydate, :qadate, :lastupdate
 
-	has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => :resourceno
+  has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => :resourceno
   has_many :resource_references, :class_name => "ResourceReference", :foreign_key => :resourceno
+  
+  has_many :references, :through => :resource_references
+  
   belongs_to :zone, :class_name => "Zone", :foreign_key => :eno
   has_one :deposit, :through => :zone
 
@@ -93,7 +96,9 @@ class Resource < ActiveRecord::Base
 	end
   #TODO This should not be in the Resource model. Try lookups or similar.
   def self.users
-    return {"Daisy"=>["DSUMMERFIELD","U01086"],"Michael"=>"MSEXTON1","Keith"=>"KPORRITT", "Allison"=>["ABRITT","U87263"], "Roy"=>["RTOWNER","U76749"]}
+    return {"DaisySummerfield"=>["DSUMMERFIELD","U01086"], "MichaelSexton"=>"MSEXTON1",
+		"KeithPorritt"=>"KPORRITT", "AllisonBritt"=>["ABRITT","U87263"], "RoyTowner"=>["RTOWNER","U76749"], "PaulKay"=>["PKAY","U32129"],
+		"AlanWhitaker" => ["AWHITAKE"]}
   end
 
 end

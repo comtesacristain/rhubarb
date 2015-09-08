@@ -3,7 +3,7 @@ class ReferencesController < ApplicationController
   #before_filter :require_user
   def index
     unless params[:format]
-      @scope = @scope.paginate :page => params[:page] , :order => 'source ASC' unless params[:format]
+      @scope = @scope.order(source: :asc).paginate :page => params[:page] 
 	  else
       @scope = @scope.all
 	  end
@@ -25,7 +25,7 @@ class ReferencesController < ApplicationController
   private
   def define_scope
 	  scope = Reference
-    scope = scope.by_source(params[:source]) unless params[:source].nil?
+	  scope = scope.by_source(params[:source]) unless params[:source].nil?
 	  @scope = scope
 	end
 end
