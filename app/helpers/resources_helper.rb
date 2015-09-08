@@ -25,6 +25,16 @@ module ResourcesHelper
     end
   end
   
+  def reference_link(reference)
+	reference_link =  link_to [reference.source, reference.year, reference.title].compact.join(", "), reference
+	if reference.trimref.nil?
+	  return reference_link
+	else
+	  trim_link = link_to "TRIM", "http://rmweb/trimlinks/?RecId=#{reference.trimref}"
+	  return "#{reference_link} (#{trim_link})"
+	end  
+  end
+  
   ## ADMIN HELPERS
   
   def admin_options
