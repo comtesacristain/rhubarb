@@ -38,6 +38,9 @@ gem 'exception_notification', :require => 'exception_notifier'
 # Use unicorn as the web server
 # gem 'unicorn'
 
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
 # Deploy with Capistrano
 # gem 'capistrano'
 
