@@ -7,15 +7,15 @@ class DepositsController < ApplicationController
   before_filter :filename_generator
 
   def index
-    if params[:year].blank?
-      params[:year] = Date.today.year - 1 
+    if deposit_params[:year].blank?
+      deposit_params[:year] = Date.today.year - 1 
     end
     #TODO set paginate according to flag
-    #if params[:page] == 'all'
+    #if deposit_params[:page] == 'all'
     # Deposit.per_page=@total_deposits
     #end 
-    unless params[:format]
-      @scope = @scope.page(params[:page]).order('entityid ASC')
+    unless deposit_params[:format]
+      @scope = @scope.page(deposit_params[:page]).order('entityid ASC')
 	  else
       @scope = @scope.all
 	  end
@@ -47,19 +47,19 @@ class DepositsController < ApplicationController
 
   def resources
     
-    # if !params[:type]
-      # params[:type] = ['ore','commodity','grade']
+    # if !deposit_params[:type]
+      # deposit_params[:type] = ['ore','commodity','grade']
     # end
-    # if !params[:resource]
-      # params[:resource] = ['total']
+    # if !deposit_params[:resource]
+      # deposit_params[:resource] = ['total']
     # end
     
     #TODO Fix the below so aliases are included
-    #if params[:commodity] and params[:commodity] != "All"
-    #  if CommodityType.aliases.keys.include?(params[:commodity])
-    #    @commodity = CommodityType.aliases[params[:commodity]]
+    #if deposit_params[:commodity] and deposit_params[:commodity] != "All"
+    #  if CommodityType.aliases.keys.include?(deposit_params[:commodity])
+    #    @commodity = CommodityType.aliases[deposit_params[:commodity]]
     #  else
-    #    @commodity = params[:commodity]
+    #    @commodity = deposit_params[:commodity]
     #  end
  	  #end
  	  #Check for all commodities. Better if split
@@ -67,8 +67,8 @@ class DepositsController < ApplicationController
  	  #  @commodity=@commodity.split(",")
  	  #end
 
-    unless params[:format]
-      @scope = @scope.page(params[:page]).order('entityid ASC')
+    unless deposit_params[:format]
+      @scope = @scope.page(deposit_params[:page]).order('entityid ASC')
     else
       @scope = @scope.all
     end
@@ -132,7 +132,7 @@ class DepositsController < ApplicationController
     unless (current_user) # && current_user.ozmin?)
       deposit = deposit.public
     end
-    @deposit = deposit.find(params[:id].to_i)
+    @deposit = deposit.find(deposit_params[:id].to_i)
     
     
     # TODO When fetching resource records check if public
@@ -155,7 +155,7 @@ class DepositsController < ApplicationController
   end
   
   def edit
-    id=params[:id].to_i
+    id=deposit_params[:id].to_i
     @deposit=Deposit.find(id)
     @deposit.province_deposits.build
     @provinces = @deposit.provinces
@@ -166,9 +166,9 @@ class DepositsController < ApplicationController
   end
   
   def update
-    id=params[:id].to_i
-    @deposit = Deposit.find(params[:id])
-    attributes=params[:deposit]
+    id=deposit_params[:id].to_i
+    @deposit = Deposit.find(deposit_params[:id])
+    attributes=deposit_params[:deposit]
     #attributes[:province_deposits][:province]=attributes[:province_deposits][:province].split(",")
     @deposit.update_attributes(attributes) ?
       redirect_to(deposit_path(@deposit )) : render(:action => :edit)
@@ -177,7 +177,7 @@ class DepositsController < ApplicationController
   # JSON look ups
   
   def names
-    names=Deposit.order(:entityid).names(params[:q])
+    names=Deposit.order(:entityid).names(deposit_params[:q])
     @names = names.collect  {|name| Hash[:id,name,:name,name]}
     respond_to do |format|
       format.json {render :json => @names}
@@ -187,6 +187,11 @@ class DepositsController < ApplicationController
   # Private
 
   private
+  
+  def depositt_params
+    params.permit(:status,:state)
+  end
+  
   def define_scope
     
     # Define scope depending on whether Province or Deposits 
@@ -204,14 +209,14 @@ class DepositsController < ApplicationController
     
     # QA Status Code first 
   
-    unless params[:qa_status_code].blank?
-      scope= scope.where(:qa_status_code=> params[:qa_status_code])
+    unless deposit_params[:qa_status_code].blank?
+      scope= scope.where(:qa_status_code=> deposit_params[:qa_status_code])
     end
     
     # Does the deposit have coordinates?
     
-    unless params[:coordinates].blank?
-      if params[:coordinates] == 'Y'
+    unless deposit_params[:coordinates].blank?
+      if deposit_params[:coordinates] == 'Y'
          #TODO will change in Rails 4
          scope = scope.where(Deposit.arel_table[:geom].not_eq(nil))
       else
@@ -222,13 +227,13 @@ class DepositsController < ApplicationController
     
     # Is this set of deposits limited to a particular province
     #TODO Ask about this problem
-    unless params[:province_id].blank?
-      scope = scope.joins(:province_deposits).where(ProvinceDeposit.table_name=>{:eno=>params[:province_id]})
+    unless deposit_params[:province_id].blank?
+      scope = scope.joins(:province_deposits).where(ProvinceDeposit.table_name=>{:eno=>deposit_params[:province_id]})
     end
     
     
-    unless params[:company_id].blank?
-      scope = scope.joins(:companies).where(:companies=>{:companyid=>params[:company_id]})
+    unless deposit_params[:company_id].blank?
+      scope = scope.joins(:companies).where(:companies=>{:companyid=>deposit_params[:company_id]})
     end
     
     unless (current_user ) #&& current_user.ozmin?
@@ -245,9 +250,9 @@ class DepositsController < ApplicationController
     # 6. Make sure that aliases are part of the prepopulated look ups (and possibly override or give different names)
     
     # TEST CODE
-    unless params[:commodity].blank?
+    unless deposit_params[:commodity].blank?
       
-      @commodity = params[:commodity].split(",")
+      @commodity = deposit_params[:commodity].split(",")
       @commodity.each do |c|
         if CommodityType.aliases.keys.include?(c)
         @commodity += CommodityType.aliases[c]
@@ -266,11 +271,11 @@ class DepositsController < ApplicationController
     
     #
     
-    #unless params[:commodity].blank?
-    #  if CommodityType.aliases.keys.include?(params[:commodity])
-    #    @commodity = CommodityType.aliases[params[:commodity]]
+    #unless deposit_params[:commodity].blank?
+    #  if CommodityType.aliases.keys.include?(deposit_params[:commodity])
+    #    @commodity = CommodityType.aliases[deposit_params[:commodity]]
     #  else
-    #    @commodity = params[:commodity].split(",")
+    #    @commodity = deposit_params[:commodity].split(",")
     #  end
     #  unless (current_user && current_user.ozmin?)
     #    scope = scope.mineral(@commodity).merge(Commodity.public)
@@ -279,20 +284,20 @@ class DepositsController < ApplicationController
     #  end
 	  #end
     #
-    unless params[:state].blank?
-      @state=params[:state].split(",")
+    unless deposit_params[:state].blank?
+      @state=deposit_params[:state].split(",")
       scope = scope.state(@state)
     end
     
-    unless params[:status].blank?
-      @status=params[:status].split(",")
+    unless deposit_params[:status].blank?
+      @status=deposit_params[:status].split(",")
       scope = scope.status(@status)
     end
  	  
 	  # TODO ugh no!
-	  scope = scope.bounds(eval("["+params[:bbox]+"]")) unless params[:bbox].blank?
+	  scope = scope.bounds(eval("["+deposit_params[:bbox]+"]")) unless deposit_params[:bbox].blank?
 	  
-	  scope = scope.by_name(params[:name]) unless params[:name].blank?
+	  scope = scope.by_name(deposit_params[:name]) unless deposit_params[:name].blank?
 	  @scope = scope
 	 @total_deposits = scope.count
 	end
@@ -301,31 +306,31 @@ class DepositsController < ApplicationController
 
 	def filename_generator
 		parameter_array = Array.new
-		unless params[:name].blank?
-			parameter_array << params[:name]
+		unless deposit_params[:name].blank?
+			parameter_array << deposit_params[:name]
 		end
 		
-		unless params[:state].blank?
-			parameter_array << params[:state]
+		unless deposit_params[:state].blank?
+			parameter_array << deposit_params[:state]
 		 end
 		
-		unless params[:commodity].blank?
-			parameter_array << params[:commodity]
+		unless deposit_params[:commodity].blank?
+			parameter_array << deposit_params[:commodity]
 		end
 		
 		
-		 unless params[:status].blank?
-			 parameter_array << params[:status].pluralize.parameterize.underscore
+		 unless deposit_params[:status].blank?
+			 parameter_array << deposit_params[:status].pluralize.parameterize.underscore
 		 else
-			 parameter_array << params[:controller]
+			 parameter_array << deposit_params[:controller]
 		 end
 				 
-		 unless params[:action] == 'index'
-			parameter_array << params[:action]
+		 unless deposit_params[:action] == 'index'
+			parameter_array << deposit_params[:action]
 		 end
 		 
-		 if params[:action].in?(["jorc","resources"])
-			parameter_array << "for_#{params[:year]}" unless params[:year].blank?
+		 if deposit_params[:action].in?(["jorc","resources"])
+			parameter_array << "for_#{deposit_params[:year]}" unless deposit_params[:year].blank?
 		 end
 				
 		parameter_array <<  Date.today.to_s.gsub(/-/,'')
@@ -333,11 +338,13 @@ class DepositsController < ApplicationController
 		@filename = parameter_array.join('_')
 	end
 
+  
+
   def define_year
-    if params[:year].blank?
+    if deposit_params[:year].blank?
       @year = 2010
     else
-      @year = params[:year].to_i
+      @year = deposit_params[:year].to_i
     end
   end
   
