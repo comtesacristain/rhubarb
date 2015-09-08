@@ -1,7 +1,7 @@
 class State < ActiveRecord::Base
   #TODO set relation with DepositStatus
-  self.table_name "a.states"
-  self.primary_key :stateid
+  self.table_name = "a.states"
+  self.primary_key = :stateid
 
   def self.by_name(name)
      self.where("upper(statename) like ?","%#{name.upcase}%")
