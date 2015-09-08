@@ -4,10 +4,10 @@
         = link_to date, @resource
     - else
         = date
-    - @resource.resource_references.each do |rr|
+    - @resource.references.each do |reference|
         %p
             %i
-                == #{rr.reference.source}, #{rr.reference.year}, #{rr.reference.title}
+                = raw reference_link(reference)
 - tonnage_style = String.new
 - if @resource.access_code != "O"  or @resource.access_code == "U"
     - tonnage_style="invisible"
