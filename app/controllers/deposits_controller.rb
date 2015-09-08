@@ -188,7 +188,7 @@ class DepositsController < ApplicationController
 
   private
   
-  def depositt_params
+  def deposit_params
     params.permit(:status,:state)
   end
   
