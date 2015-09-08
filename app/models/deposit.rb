@@ -47,6 +47,7 @@ class Deposit < Entity
 	#scope :state, lambda { |s| { :include=>:deposit_status, :conditions=> ["mgd.deposits.state = ?", s] } }
 	
 	def self.state(state)
+    puts state
 	  self.joins(:deposit_status).where(DepositStatus.arel_table[:state].eq(state))
 	end
 	
