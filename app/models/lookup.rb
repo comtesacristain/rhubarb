@@ -1,7 +1,7 @@
 class Lookup < ActiveRecord::Base
-	self.table_name "mgd.lookups"
+	self.table_name= "mgd.lookups"
 
-	self.primary_key :code
+	self.primary_key=:code
 
   self.inheritance_column :ruby_type
   
