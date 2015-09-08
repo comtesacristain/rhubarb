@@ -3,7 +3,7 @@ class Lookup < ActiveRecord::Base
 
 	self.primary_key=:code
 
-  self.inheritance_column :ruby_type
+  self.inheritance_column = nil
   
 	set_date_columns :entrydate, :qadate, :lastupdate
   
