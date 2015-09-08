@@ -4,8 +4,8 @@ class ResourceReference < ActiveRecord::Base
 
 	self.primary_key = :resourceno
 
-	belongs_to :resource, :class_name => "Deposit", :foreign_key => :resourceno
-	belongs_to :reference, :class_name => "Reference", :foreign_key => :refid
+	belongs_to :resource, :foreign_key => :resourceno
+	belongs_to :reference, :foreign_key => :refid
 
 
 	set_date_columns :entrydate, :qadate, :lastupdate
