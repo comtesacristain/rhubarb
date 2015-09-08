@@ -7,6 +7,7 @@ class DepositsController < ApplicationController
   before_filter :filename_generator
 
   def index
+    puts params
     if params[:year].blank?
       params[:year] = Date.today.year - 1 
     end
