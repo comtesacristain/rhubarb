@@ -4,6 +4,8 @@ class Resource < ActiveRecord::Base
   
   set_date_columns :recorddate, :entrydate, :qadate, :lastupdate
 
+  default_scope { order(:recorddate) } 
+
   has_many :resource_grades, :class_name => "ResourceGrade",  :foreign_key => :resourceno
   has_many :resource_references, :class_name => "ResourceReference", :foreign_key => :resourceno
   
