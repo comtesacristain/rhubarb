@@ -25,7 +25,7 @@ class Resource < ActiveRecord::Base
 	#scope :mineral, lambda { |min| { :include=>:resource_grades, :conditions=> ["mgd.resource_grades.commodid in (:mineral)", {:mineral => min}] } }
 
   def self.mineral(mineral)
-    return includes(:resource_grades).where(resource_grades:{:commodid: mineral}).references(:resource_grades)
+    return includes(:resource_grades).where(resource_grades:{commodid: mineral}).references(:resource_grades)
   end
 
   #scope :mineral, joins(:resource_grades) & ResourceGrade.mineral
