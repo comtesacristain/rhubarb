@@ -138,9 +138,9 @@ class DepositsController < ApplicationController
     
     # TODO When fetching resource records check if public
     @zones=@deposit.zones
-    current_zones = @zones.joins(:resources).merge(Resource.recent.nonzero).all
-    zeroed_zones = @zones.joins(:resources).merge(Resource.recent.zeroed).all
-    empty_zones = @zones.joins(:resources).where(:resources => {:eno => nil}).all
+    current_zones = @zones.includes(:resources).merge(Resource.recent.nonzero).references(:resources).all
+    zeroed_zones = @zones.includes(:resources).merge(Resource.recent.zeroed).references(:resources).all
+    empty_zones = @zones.includes(:resources).where(:resources => {:eno => nil}).references(:resources).all
     @zone_array = [current_zones,zeroed_zones,empty_zones]
     @current_resources = @deposit.resources.recent.nonzero.all
     @provinces = @deposit.provinces
