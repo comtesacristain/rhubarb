@@ -31,8 +31,11 @@ class Province < Entity
   # Commodities
   has_many :commodities, :through => :deposits
 
-  scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
+  # scope :by_name, lambda { |name| { :conditions=> ["UPPER(a.entities.entityid) like UPPER(:name)",{:name=> "%#{name}%"}] } }
   
+  def self.by_name(name)
+    return self.where("upper (entityid) like upper('%#{name}%')")
+  end 
   
   # Key Lookups
   def self.find_with_deposit_as_keys(id=nil)
